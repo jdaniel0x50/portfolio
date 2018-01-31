@@ -2,12 +2,15 @@
 /portfolio/settings_sensitive.py
 /portfolio/settings_sensitive.pyc
 
-/.git
+.git/
 *.pyc
 .env
 venv
 staticfiles
 db.sqlite3
 
-/apps/main/static/js/particles-js
-/apps/main/static/js/scrollpos-styler
+/apps/main/migrations/
+/apps/main/templates/email/
+/apps/main/static/base/img/
+/apps/main/static/base/js/particles-js/
+/apps/main/static/base/js/scrollpos-styler/
