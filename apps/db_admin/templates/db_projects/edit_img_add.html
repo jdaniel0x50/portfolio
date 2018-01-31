@@ -1,0 +1,62 @@
+<form 
+    id="img-add-form" 
+    class="col-sm-12 text-dark bg-shadeorange p-2" 
+    action="{% url 'db_admin:pimage_add' id=project.id %}" 
+    enctype="multipart/form-data" 
+    method="POST">
+    <div class="container">
+        {% csrf_token %}
+        {% if form_errors == True %}
+        <div class="row">
+            <h6 class="font-weight-bold text-danger">There were errors in the attempt to upload this file. Please try again.</h6>
+        </div>
+        {% endif %}
+        <input type="hidden" name="project" value="{{project.id}}">
+        <div class="form-group row px-0">
+            <label for="img_url" class="col-sm-2 col-form-label">New Image</label>
+            <input type="file" name="img_url" class="form-control col-sm-10">
+            <!-- Field Specific Errors -->
+            {% for field in form %}
+                {% if field.errors and field == "img_url" %} 
+                    {% for error in field.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %} 
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="form-group row px-0">
+            <label for="caption" class="col-sm-2 col-form-label">Caption</label>
+            <input type="text" name="caption" class="form-control col-sm-10">
+            <!-- Field Specific Errors -->
+            {% for field in form %}
+                {% if field.errors and field == "caption" %} 
+                    {% for error in field.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %} 
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="form-group row px-0">
+            <label for="order" class="col-sm-2 col-form-label">Order</label>
+            <input type="number" name="order" class="form-control col-md-2 col-sm-6">
+            <!-- Field Specific Errors -->
+            {% for field in form %}
+                {% if field.errors and field == "order" %} 
+                    {% for error in field.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %} 
+                {% endif %}
+            {% endfor %}
+            <!-- Form Errors -->
+            {% if form.non_field_errors %} 
+                {% for error in form.non_field_errors %}
+                    <p class="text-danger">{{ error }}</p>
+                {% endfor %} 
+            {% endif %} 
+        </div>
+        <div class="form-group row justify-content-end px-0 my-2">
+            <button type="reset" class="btn btn-secondary font-weight-bold mx-3">Cancel</button>
+            <button type="submit" id="project-img-add" class="btn btn-primary font-weight-bold">Add</button>
+        </div>
+    </div>
+</form>

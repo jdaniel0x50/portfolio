@@ -1,0 +1,74 @@
+{% extends 'db_admin/modal.html' %} {% block modal-body %}
+<div class="row col-md-12 justify-content-center">
+    <div class="pedit-image-container col-md-4 col-sm-11">
+        <div class="text-center col-sm-12 mx-0 px-0">
+            <img class="pedit-image-img" src="/media/{{image.img_url}}" alt="Project Image">
+        </div>
+        <div class="row mx-0 px-0">
+            <div class="img-order"><sm><strong>{{ image.order }}</strong></sm></div>
+            <div class="text-dark col-sm-10 px-0">
+                <small><em>{{ image.caption }}</em></small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form 
+    id="img-edit-form" 
+    class="col-sm-12 text-dark bg-shadeorange p-2" 
+    action="{% url 'db_admin:pimage_post_update' id=project.id image_id=image.id %}" 
+    enctype="multipart/form-data" 
+    method="POST">
+    <div class="container">
+        {% csrf_token %}
+        {% if form_errors == True %}
+        <div class="row">
+            <h6 class="font-weight-bold text-danger">There were errors in your submission. Please try again.</h6>
+        </div>
+        {% endif %}
+        <input type="hidden" name="project" value="{{project.id}}">
+        <div class="form-group row px-0">
+            <label for="caption" class="col-sm-2 col-form-label">Caption</label>
+            <input 
+                type="text" 
+                name="caption" 
+                class="form-control col-sm-10"
+                value="{{image.caption}}">
+            <!-- Field Specific Errors -->
+            {% for field in form %}
+                {% if field.errors and field == "caption" %} 
+                    {% for error in field.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %} 
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="form-group row px-0">
+            <label for="order" class="col-sm-2 col-form-label">Order</label>
+            <input 
+                type="number" 
+                name="order" 
+                class="form-control col-md-2 col-sm-6"
+                value={{image.order}}>
+            <!-- Field Specific Errors -->
+            {% for field in form %}
+                {% if field.errors and field == "order" %} 
+                    {% for error in field.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %} 
+                {% endif %}
+            {% endfor %}
+            <!-- Form Errors -->
+            {% if form.non_field_errors %} 
+                {% for error in form.non_field_errors %}
+                    <p class="text-danger">{{ error }}</p>
+                {% endfor %} 
+            {% endif %} 
+        </div>
+        <div class="form-group row justify-content-end px-0 my-2">
+            <button type="reset" class="btn btn-secondary font-weight-bold mx-3">Cancel</button>
+            <button type="submit" id="project-img-edit" class="btn btn-primary font-weight-bold">Update</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

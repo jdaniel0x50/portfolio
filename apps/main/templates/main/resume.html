@@ -1,0 +1,37 @@
+<div class="container-fluid px-0 mx-0" id="resume">
+    <h2 class="section_heading">Resume</h2>
+    <hr class="section_hr mb-5">
+    <a type="button" class="btn btn-primary mx-5" data-toggle="modal" data-target="#resume_modal">
+        View Resume
+    </a>
+    <a type="button" class="btn btn-primary mx-5" href="/static/base/img/JoshuaDaniel_resume.pdf" download>
+        Download
+    </a>
+</div>
+
+<div id="resume_modal" class="modal fade" tabindex="-1" role="dialog">
+    <div id="resume_modalView" class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                        <h5 class="modal-title">Resume</h5>
+                        <button id="btn_previous_top" type="button" class="close btn btn-primary">Previous</button>
+                        <button id="btn_next_top" type="button" class="close btn btn-primary">Next</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+            </div>
+            <div class="modal-body text-center">
+                <canvas id="pdf_canvas"></canvas>
+            </div>
+            <div class="modal-footer text-center">
+                <button id="btn_previous_btm" type="button" class="btn btn-primary">Previous</button>
+                <button id="btn_next_btm" type="button" class="btn btn-primary">Next</button>
+                &nbsp; &nbsp;
+                <span>Page:
+                    <span id="page_num"></span> /
+                    <span id="page_count"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

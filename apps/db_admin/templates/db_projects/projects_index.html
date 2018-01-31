@@ -1,0 +1,20 @@
+{% extends 'db_admin/admin_base.html' %}
+{% block content %}
+
+<div class="row p-0 m-0">
+    <div class="row col-sm-12 px-0 mx-0 mt-2 mb-3">
+        <!-- New Project Form -->
+        {% include 'db_projects/projects_form.html' %}
+    </div>
+    <div class="row col-sm-12 px-0 mx-0 my-3">
+        <!-- List of Projects -->
+        {% include 'db_projects/projects_list.html' %}
+    </div>
+    <div class="row col-sm-12 px-0 mx-0 my-3">
+        <!-- Edit Project Modal -->
+        {% include 'db_projects/project_edit.html' %}
+    </div>
+    <div id="projectModal"></div>
+</div>
+
+{% endblock %}

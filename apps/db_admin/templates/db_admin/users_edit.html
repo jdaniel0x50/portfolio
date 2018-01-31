@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <link rel="stylesheet" href={% static '/css/normalize.css' %}>
+    <link rel="stylesheet" href={% static '/css/skeleton.css' %}>
+    <title>Edit User Record</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h4 class="header_column five bluetext">Edit User Record</h4>
+            <h6 class="header_column four rightalign">Welcome {{ user_first_name }}</h6>
+            <form class="header_column two rightalign" action="/users/logout" method="GET"><input type="submit" value="logout"></form>
+        </div>
+
+        <form class='user_login columns eight' action='/users/{{ user.id }}/edit/update' method='POST'>
+            {% csrf_token %}
+            <h3>User ID #{{ user.id }} ({{ user.username }})</h3>
+            <div class="row">
+                <label class="columns three" for="username">Username:</label><input class="columns eight" type="text" name="username" id="username" value="{{ user.username }}">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "username error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <label class="columns four" for="first_name">First Name:</label><input class="columns eight" type="text" name="first_name" id="first_name" value="{{ user.first_name }}">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "first_name error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <label class="columns four" for="last_name">Last Name:</label><input class="columns eight" type="text" name="last_name" id="last_name" value="{{ user.last_name }}">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "last_name error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <label class="columns four" for="email">Email:</label><input class="columns eight" type="text" name="email" id="email" value="{{ user.email }}">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "email error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <label class="columns four" for="birthdate">Birthdate:</label><input class="columns eight" type="date" name="birthdate"
+                    id="birthdate", value={{ user.birthdate }}>
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "birthdate error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+    
+            <div class="row">
+                <input type="submit" value="Update">
+            </div>
+            <div class="row">
+                <a href="/users/{{ user.id }}">Show</a>
+                <a href="/users/all">Go Back</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

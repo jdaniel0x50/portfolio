@@ -1,0 +1,3 @@
+My background as a career changer provides me with a unique perspective in my approach to coding. I have a strong bias toward <strong><span class="text-info">impact</span></strong>, <strong><span class="text-info">results</span></strong> and <strong><span class="text-info">user application</span></strong>, and can quickly see how small pieces fit in the larger picture.
+
+I have built projects in Python/Django, C#/.NET Core Entity Framework, and Node.js/Angular (MEAN). I enjoy working in both front-end and back-end applications but gravitate naturally toward back-end data management in SQL or NoSQL databases. 

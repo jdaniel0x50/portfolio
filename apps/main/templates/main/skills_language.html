@@ -1,0 +1,38 @@
+<div class="card bg-white">
+    <div class="card-header" role="tab" id="headingOne">
+        <h5 class="mb-0">
+            <a class="collapse_link" 
+                data-toggle="collapse" 
+                href="#collapseOne" 
+                role="button" 
+                aria-expanded="true" 
+                aria-controls="collapseOne">
+                Languages
+            </a>
+        </h5>
+    </div>
+    <div id="collapseOne" 
+        class="collapse show" 
+        role="tabpanel" 
+        aria-labelledby="headingOne" 
+        data-parent="#accordionOne">
+        <div class="card-body">
+            {% load static %}
+            {% for skill in skills_language %}
+            <img 
+                class="logo" 
+                src="{% static skill.logo_url %}" 
+                alt="{{skill.skill_name}}" 
+                data-toggle="tooltip" 
+                data-placement="top"
+                title="{{skill.skill_name}}">
+            {% endfor %}
+            <hr class="bg-primary">
+            <div class="row justify-content-center">
+                {% for skill in skills_language %}
+                <span class="badge badge-pill badge-primary m-1 p-1">{{skill.skill_name}}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

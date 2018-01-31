@@ -1,0 +1,46 @@
+<div class="container-fluid px-0 mx-0" id="contact">
+    <h2 class="section_heading">Contact</h2>
+    <hr class="section_hr">
+    <div class="col-md-12 mx-0 px-0 justify-content-center">
+        <div class="col-md-9 mx-auto">
+            {% load content_file_filters %}
+            <p class="my-4">{{ contact_file|print_file_content|safe }}</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-sm-10">
+            <form action="#" method="POST">
+                {% csrf_token %}
+                <a id="email_link" class="contact_link" href="javascript:void(0);">
+                    <i class="fa fa-envelope-o icon icon-about" style="font-size: 2rem" aria-hidden="true"></i>
+                    <div class="row col-md-12 px-0 mx-0 justify-content-center">
+                        <small>Send me an email</small>
+                    </div>
+                </a>
+                <div class="col-md-12 mx-0 px-0 justify-content-center">
+                    <div class="col-md-8 col-sm-10 mx-auto text-xs-center">
+                        <div id="recaptcha" class="text-center mx-auto"></div>
+                    </div>
+                </div>
+            </form>
+            <script src="https://www.google.com/recaptcha/api.js?onload=onclickCallback&render=explicit" async defer>
+            </script>
+        </div>
+        <div class="col-md-4 col-sm-10">
+            <a class="contact_link" href="https://www.linkedin.com/in/joshua-daniel-profile/">
+                <i class="fa fa-linkedin icon icon-about" style="font-size: 2rem" aria-hidden="true"></i>
+                <div class="row col-md-12 px-0 mx-0 justify-content-center">
+                    <small>Connect with me on LinkedIn</small>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 col-sm-10">
+            <a class="contact_link" href="https://github.com/jdjustdata">
+                <i class="fa fa-github icon icon-about" style="font-size: 2rem" aria-hidden="true"></i>
+                <div class="row col-md-12 px-0 mx-0 justify-content-center">
+                    <small>Check out my projects on GitHub</small>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

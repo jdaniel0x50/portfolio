@@ -1,0 +1,129 @@
+<form 
+    id="edit-project-form" 
+    class="col-sm-12 bg-shadeorange p-2" 
+    action="{% url 'db_admin:project_edit' id=project.id %}" 
+    method="POST">
+    {% csrf_token %}
+    <div class="form-group row col-md-12">
+        <input id="formEditErrors" type="hidden" value="{{edit_errors}}">
+        {% if edit_errors == True %}
+        <h6 class="font-weight-bold text-danger">The project was not updated. Please correct the errors identified below.</h6>
+        {% endif %}
+
+    </div>
+    <div class="form-group row">
+        {% for field in edit_form %}
+            {% if "description" in field.html_name or "impact" in field.html_name %}
+                <div class="col-md-6 col-sm-12 px-0 my-3">
+                    <label 
+                        for="{{field.html_name}}" 
+                        class="col-form-label col-sm-12 my-0 py-0 text-dark">
+                        <small>{{field.label}}</small>
+                    </label>
+                    <div class="col-sm-12">
+            {% else %}
+                <div class="col-sm-12 row px-0 mx-0">
+                    <label 
+                        for="{{field.html_name}}" 
+                        class="col-form-label col-sm-12 col-md-2 text-dark">
+                        <small>{{field.label}}</small>
+                    </label>
+                    <div class="col-sm-12 col-md-10">
+            {% endif %}
+                {% if "skills" not in field.html_name %}
+                    {% if "description" in field.html_name or "impact" in field.html_name %}
+                        <textarea 
+                            rows=4
+                    {% elif "feat_order" in field.html_name %}
+                        <input
+                            type="number"
+                            data-toggle="popover"
+                            data-placement="top"
+                            data-content="{{field.help_text}}"
+                            data-trigger="click hover focus"
+                            data-animation="true"
+                    {% elif "project_timeline" in field.html_name %}
+                        <input
+                            type="date"
+                            data-toggle="popover"
+                            data-placement="top"
+                            data-content="{{field.help_text}}"
+                            data-trigger="click hover focus"
+                            data-animation="true"
+                    {% else %}
+                        <input 
+                            type="text" 
+                    {% endif %} 
+                            class="form-control form-control-sm 
+                                {% if 'feat_order' in field.html_name or 'project_timeline' in field.html_name %} 
+                                col-md-3 col-sm-6 
+                                {% endif %}" 
+                            id="{{field.html_name}}_edit"
+                            name="{{field.html_name}}" 
+                            placeholder="{{field.label}}" 
+                            {% if field.value %}
+                                {% if "description" not in field.html_name and "impact" not in field.html_name %}
+                                value="{{field.value}}" 
+                                {% endif %}
+                            {% endif %}>{% if "description" in field.html_name or "impact" in field.html_name %}{% if field.value %}{{ field.value }}{% endif %}</textarea>
+                    {% endif %}
+                {% else %}
+                    <select 
+                        class="form-control form-control-sm select_skillChoices"
+                        id="{{field.html_name}}_edit"
+                        name="{{field.html_name}}"
+                        multiple>
+                        {% for key, choice in field.field.choices %}
+                        <option 
+                            id="skillOptionEdit_{{key}}" 
+                            value={{key}}
+                            {% if key in field.value %}
+                            selected="selected"
+                            {% endif %}>
+                            {{choice}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <div id="skillChoices" class="justify-content-center">
+                        <h6 class="col-sm-12 my-2 text-dark"><u>Select Skills Used for this Project</u></h6>
+                        {% for key, choice in field.field.choices %}
+                        <label for "{{key}}" 
+                            id="{{key}}_lbEdt"
+                            class="col-md-5 
+                                col-sm-12 
+                                text-dark 
+                                onClickSkillChoice
+                                {% if key in field.value %}
+                                choiceSelected
+                                {% endif %}">
+                            <input 
+                                type="checkbox" 
+                                id="{{key}}_editCheck" 
+                                name="{{key}}"
+                                {% if key in field.value %}
+                                checked="checked"
+                                {% endif %}>
+                            {{choice}}
+                        </label>
+                        {% endfor %}
+
+                    </div>
+                {% endif %}
+                        
+                <!-- Field Specific Errors -->
+                {% if field.errors %} 
+                    {% for error in field.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %} 
+                {% endif %}
+                <!-- Form Errors -->
+                {% if form.non_field_errors %} 
+                    {% for error in form.non_field_errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %} 
+                {% endif %} 
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</form>

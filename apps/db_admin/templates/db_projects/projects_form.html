@@ -1,0 +1,155 @@
+<div id="accordionProjectForm" role="tablist" class="col-sm-12 px-0 mb-3">
+    <div class="card col-sm-12 px-0 bg-lightorange">
+        <div class="card-header col-sm-12 px-0" role="tab" id="form_heading">
+            <a class="collapse_link collapsed bg-lightorange"
+                data-toggle="collapse"
+                href="#form_body"
+                role="button"
+                aria-expanded="false"
+                aria-controls="form_body">
+                <h5 class="px-4 mb-0">
+                    Add a New Project
+                </h5>
+            </a>
+        </div>
+        <div id="form_body"
+            class="collapse col-sm-12 px-0"
+            role="tabpanel"
+            aria-labelledby="form_heading"
+            data-parent="#accordionProjectForm">
+            <div class="card-body col-sm-12">
+                <form 
+                    class="col-sm-12" 
+                    action="{% url 'db_admin:project_create'%}" 
+                    method="POST">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <input id="formErrors" type="hidden" value="{{errors}}">
+                        {% if errors == True %}
+                        <div class="row">
+                            <h6 class="font-weight-bold text-danger">The project was not added. Please correct the errors identified below.</h6>
+                        </div>
+                        {% endif %}
+                        {% for field in form %}
+                            {% if "description" in field.html_name or "impact" in field.html_name %}
+                                <div class="col-md-6 col-sm-12 px-0 my-3">
+                                    <label 
+                                        for="{{field.html_name}}" 
+                                        class="col-form-label col-sm-12 my-0 py-0 text-dark">
+                                        <small>{{field.label}}</small>
+                                    </label>
+                                    <div class="col-sm-12">
+                            {% else %}
+                                <div class="col-sm-12 row px-0 mx-0">
+                                    <label 
+                                        for="{{field.html_name}}" 
+                                        class="col-form-label col-sm-2 col-lg-1 text-dark">
+                                        <small>{{field.label}}</small>
+                                    </label>
+                                    <div class="col-sm-10 col-lg-11">
+                            {% endif %}
+                                {% if "skills" not in field.html_name %}
+                                    {% if "description" in field.html_name or "impact" in field.html_name %}
+                                        <textarea 
+                                            rows=4
+                                    {% elif "feat_order" in field.html_name %}
+                                        <input
+                                            type="number"
+                                            data-toggle="popover"
+                                            data-placement="top"
+                                            data-content="{{field.help_text}}"
+                                            data-trigger="click hover focus"
+                                            data-animation="true"
+                                    {% elif "project_timeline" in field.html_name %}
+                                        <input
+                                            type="date"
+                                            data-toggle="popover"
+                                            data-placement="top"
+                                            data-content="{{field.help_text}}"
+                                            data-trigger="click hover focus"
+                                            data-animation="true"
+                                    {% else %}
+                                        <input 
+                                            type="text" 
+                                    {% endif %} 
+                                            class="form-control form-control-sm 
+                                                {% if 'feat_order' in field.html_name or 'project_timeline' in field.html_name %} 
+                                                col-md-3 col-sm-6 
+                                                {% endif %}" 
+                                            id="{{field.html_name}}"
+                                            name="{{field.html_name}}" 
+                                            placeholder="{{field.label}}" 
+                                            {% if field.value %}
+                                                {% if "description" not in field.html_name and "impact" not in field.html_name %}
+                                                value="{{field.value}}" 
+                                                {% endif %}
+                                            {% endif %}>{% if "description" in field.html_name or "impact" in field.html_name %}{% if field.value %}{{ field.value }}{% endif %}</textarea>
+                                    {% endif %}
+                                {% else %}
+                                    <select 
+                                        class="form-control form-control-sm select_skillChoices"
+                                        id="{{field.html_name}}_new"
+                                        name="{{field.html_name}}"
+                                        multiple>
+                                        {% for key, choice in field.field.choices %}
+                                        <option 
+                                            id="skillOptionNew_{{key}}" 
+                                            value={{key}}
+                                            {% if key|stringformat:'s' in field.value %}
+                                            selected="selected"
+                                            {% endif %}>
+                                            {{choice}}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    <div id="skillChoices">
+                                        <h4 class="col-sm-12 my-2 text-dark"><u>Select Skills Used for this Project</u></h4>
+                                        {% for key, choice in field.field.choices %}
+                                        <label for "{{key}}" 
+                                            id="{{key}}_lbNew"
+                                            class="col-lg-5 
+                                                col-sm-12 
+                                                text-dark 
+                                                onClickSkillChoice
+                                                {% if key|stringformat:'s' in field.value %}
+                                                choiceSelected
+                                                {% endif %}">
+                                            <input 
+                                                type="checkbox" 
+                                                id="{{key}}_newCheck" 
+                                                name="{{key}}"
+                                                {% if key|stringformat:'s' in field.value %}
+                                                checked="checked"
+                                                {% endif %}>
+                                            {{choice}}
+                                        </label>
+                                        {% endfor %}
+
+                                    </div>
+                                {% endif %}
+                                        
+                                <!-- Field Specific Errors -->
+                                {% if field.errors %} 
+                                    {% for error in field.errors %}
+                                        <p class="text-danger">{{ error }}</p>
+                                    {% endfor %} 
+                                {% endif %}
+                                <!-- Form Errors -->
+                                {% if form.non_field_errors %} 
+                                    {% for error in form.non_field_errors %}
+                                        <p class="text-danger">{{ error }}</p>
+                                    {% endfor %} 
+                                {% endif %} 
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="row col-md-12 px-0 mx-0 justify-content-end my-2">
+                        <button type="reset" class="btn btn-secondary font-weight-bold mx-3">Cancel</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

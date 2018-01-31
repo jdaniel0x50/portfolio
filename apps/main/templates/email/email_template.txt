@@ -1,0 +1,18 @@
+Hello {{ sender_name }},
+
+Thank you for contacting me through my portfolio page! I will read your message and respond, if neccessary, at the earliest convenience.
+
+Best of Regards,
+Joshua Daniel
+Aspiring Software Developer
+
+__________________
+Original Message:
+Sent: {{ message_sent }}
+From: {{ sender_name }} <{{ sender_email }}>
+Subject: {{ subject }}
+
+Message:
+{{ message_text|safe|striptags }}
+__________________
+* This is an automatically generated message, sent to you because you submitted a message through my website. If you did not send this message, or believe you are receiving this messasge in error, please contact me by replying to this message.

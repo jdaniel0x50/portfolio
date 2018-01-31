@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <link rel="stylesheet" href={% static '/css/normalize.css' %}>
+    <link rel="stylesheet" href={% static '/css/skeleton.css' %}>
+    <title>Show User</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h4 class="header_column five bluetext">Users</h4>
+            <h6 class="header_column four rightalign">Welcome {{ user_first_name }}</h6>
+            <form class="header_column two rightalign" action="/users/logout" method="GET"><input type="submit" value="logout"></form>
+        </div>
+        <h4>User ID #{{ user.id }} ({{ user.username }})</h4>
+        <p><span class="bold">Full Name:</span> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><span class="bold">Username:</span> {{ user.username }}</p>
+        <p><span class="bold">Email:</span> {{ user.email }}</p>
+        <p><span class="bold">Birthdate:</span> {{ user.birthdate }}</p>
+        <p><span class="bold">Created at:</span> {{ user.created_at }}</p>
+        <p><span class="bold">Last Updated:</span> {{ user.updated_at }}</p>
+        <div class="row">
+            <a href="/users/{{ user.id }}/edit">Edit</a>
+            <a href="/users/{{ user.id }}/destroy">Delete</a>
+            <a href="/users/all">Go Back</a>
+        </div>
+    </div>
+</body>
+</html>

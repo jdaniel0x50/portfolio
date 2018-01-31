@@ -1,0 +1,66 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Skill
+                <a href="/admin/skill/index/sort=-skill" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="/admin/skill/index/sort=skill" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Category
+                <a href="/admin/skill/index/sort=-category" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="/admin/skill/index/sort=category" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th class="text-center" scope="col">Logo</th>
+            <th class="text-center" scope="col">
+                Skill Level
+                <a href="/admin/skill/index/sort=-level" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="/admin/skill/index/sort=level" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Date Added
+                <a href="/admin/skill/index/sort=-date" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="/admin/skill/index/sort=date" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    {% load static %}
+    {% for skill in skills %}
+    <tr>
+        <td>{{skill.skill_name}}</td>
+        <td>{{skill.get_skill_type_display}}</td>
+        <td class="text-center"><img class="logo-sm" src="{% static skill.logo_url %}"></td>
+        <td class="text-center">{{skill.skill_level}}</td>
+        <td>{{skill.created_at}}</td>
+        <td>
+            <a 
+                href="/admin/skill/edit/{{skill.id}}" 
+                class="badge badge-pill badge-warning">
+                Edit
+            </a>
+            <a
+                href="/admin/skill/destroy/{{skill.id}}"
+                class="badge badge-pill badge-danger destroy_action">
+                Remove
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

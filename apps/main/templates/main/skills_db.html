@@ -1,0 +1,38 @@
+<div class="card bg-white">
+    <div class="card-header" role="tab" id="headingAlpha">
+        <h5 class="mb-0">
+            <a class="collapse_link" 
+                data-toggle="collapse" 
+                href="#collapseAlpha" 
+                role="button" 
+                aria-expanded="true" 
+                aria-controls="collapseAlpha">
+                Databases and Database Languages
+            </a>
+        </h5>
+    </div>
+    <div id="collapseAlpha" 
+        class="collapse show" 
+        role="tabpanel" 
+        aria-labelledby="headingAlpha" 
+        data-parent="#accordionTwo">
+        <div class="card-body">
+            {% load static %}
+            {% for skill in skills_db %}
+            <img 
+                class="logo" 
+                src="{% static skill.logo_url %}" 
+                alt="{{skill.skill_name}}" 
+                data-toggle="tooltip" 
+                data-placement="top"
+                title="{{skill.skill_name}}">
+            {% endfor %}
+            <hr>
+            <div class="row justify-content-center">
+                {% for skill in skills_db %}
+                <span class="badge badge-pill badge-primary m-1 p-1">{{skill.skill_name}}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

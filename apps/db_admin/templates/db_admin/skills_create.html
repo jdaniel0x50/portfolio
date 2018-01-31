@@ -1,0 +1,69 @@
+    <form class="col-sm-12" action="/admin/skill/create" method="POST">
+        {% csrf_token %}
+        <h5>Add a New Skill</h5>
+        
+        <div class="form-row">
+            {% for field in form %}
+            {% if "logo_url" in field.html_name %}
+                <div class="col-md-5">
+            {% elif "skill_level" in field.html_name %}
+                <div class="col-md-1">
+            {% else %}
+                <div class="col-md-3">
+            {% endif %}
+                <label for="{{field.html_name}}" class="form-label my-0">
+                    <small>{{field.label}}</small>
+                </label>
+                <div class="my-0">
+                    {% if "skill_type" not in field.html_name %}
+                        <input 
+                            {% if "skill_level" in field.html_name %} 
+                            type="number" 
+                            min="1"
+                            max="5"
+                            {% else %} 
+                            type="text" 
+                            {% endif %} 
+                            class="form-control form-control-sm" 
+                            id="{{field.html_name}}"
+                            name="{{field.html_name}}" 
+                            placeholder="{{field.label}}" 
+                            {% if field.value %} 
+                            value="{{field.value}}" 
+                            {% endif %}>
+                    {% else %}
+                        <select 
+                            class="form-control form-control-sm"
+                            id="{{field.html_name}}"
+                            name="{{field.html_name}}" 
+                            placeholder="{{field.label}}" 
+                            {% if field.value %} 
+                            value="{{field.value}}" 
+                            {% endif %}>
+                            {% for key, choice in field.field.choices %}
+                            <option value="{{key}}">{{choice}}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+                            
+                    <!-- Field Specific Errors -->
+                    {% if field.errors %} 
+                    {% for error in field.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %} 
+                    {% endif %}
+                    <!-- Form Errors -->
+                    {% if form.non_field_errors %} 
+                        {% for error in form.non_field_errors %}
+                            <p class="text-danger">{{ error }}</p>
+                        {% endfor %} 
+                    {% endif %} 
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row col-md-12 px-0 mx-0 justify-content-end my-2">
+            <button type="reset" class="badge badge-secondary font-weight-bold mx-3">Cancel</button>
+            <button type="submit" class="badge badge-primary font-weight-bold">Add</button>
+        </div>
+    </form>

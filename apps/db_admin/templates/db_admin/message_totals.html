@@ -1,0 +1,61 @@
+<table class="table table-striped table-secondary mb-0">
+    <thead>
+        <tr>
+            <h5>Message Totals</h5>
+        </tr>
+        <tr>
+            <th scope="col" class="text-center text-dark">All Messages</th>
+            <th scope="col" class="text-center text-dark">
+                <a 
+                    data-toggle="tooltip" 
+                    data-original-title="Messages received in the past day are calculated by the last 24 hours."
+                    data-placement="top">
+                    Past Day *
+                </a>
+            </th>
+            <th scope="col" class="text-center text-dark">
+                <a 
+                    data-toggle="tooltip" 
+                    data-original-title="Messages received in the past week exclude messages sent in the last day." 
+                    data-placement="top">
+                    Past Week *
+                </a>
+            </th>
+            <th scope="col" class="text-center text-dark">
+                <a 
+                    data-toggle="tooltip" 
+                    data-original-title="Messages received 2 weeks ago exclude messages sent in the last week." 
+                    data-placement="top">
+                    2 Weeks Ago *
+                </a>
+            </th>
+            <th scope="col" class="text-center text-dark">
+                <a 
+                    data-toggle="tooltip" 
+                    data-original-title="Messages received in past month include all messages received in last 1-4 weeks." 
+                    data-placement="top">
+                    Past Month *
+                </a>
+            </th>
+            <th scope="col" class="text-center text-dark">
+                <a 
+                    data-toggle="tooltip" 
+                    data-original-title="Messages received two months ago include all messages received 5-8 weeks ago." 
+                    data-placement="top">
+                    2 Months Ago *
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <th scope="row" class="text-center">{{ email_totals.total }}</th>
+        <td class="text-center">{{ email_totals.1day }}</td>
+        <td class="text-center">{{ email_totals.1week }}</td>
+        <td class="text-center">{{ email_totals.2week }}</td>
+        <td class="text-center">{{ email_totals.1month }}</td>
+        <td class="text-center">{{ email_totals.2month }}</td>
+    </tr>
+</table>
+<div class="row col-sm-12 mt-0 mx-1">
+    <small>* Hover over column headings for further information about how totals were calculated.</small>
+</div>

@@ -1,0 +1,69 @@
+.container-admin {
+    padding: 50px 50px 50px 50px;
+}
+.icon-sorting {
+    margin: 0rem 0.1rem;
+}
+
+/* Skill Form Styles */
+.select_skillChoices {
+    display: none;
+}
+.choiceSelected {
+    background-color: var(--orange);
+    color: var(--white);
+    font-weight: bold;
+
+   transition: background-color .25s ease-in-out;
+   -moz-transition: background-color .25s ease-in-out;
+   -webkit-transition: background-color .25s ease-in-out;
+}
+#skillChoices {
+    border: 0.75px solid var(--secondary);
+    border-radius: 5px;
+    padding: 10px;
+}
+#skillChoices input {
+    margin-right: 10px;
+}
+#skillChoices label {
+    font-size: 70%;
+}
+
+#projectEdit {
+    overflow-y: scroll;
+}
+
+/* Project Image Content */
+.img-order {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 5;
+    color: var(--dark);
+}
+.img-featured-text {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 5;
+    color: var(--dark);
+}
+.img-featured-text span {
+    font-weight: bolder;
+    font-size: 60%;
+    text-decoration: underline;
+    color: var(--dark);
+}
+.img-featured {
+    background-color: var(--orange) !important;
+}
+.pedit-image-container {
+    border: 0.5px solid slategray;
+    padding: 8px;
+}
+.pedit-image-img {
+    max-height: 120px;
+    max-width: 100%;
+    margin: 0 auto;
+}

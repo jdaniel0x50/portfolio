@@ -1,0 +1,16 @@
+# Template file that will be included in the Git Repository
+# The following settings will be needed for this project
+# This template overwrites the settings with non-sensitive data
+# To use this project, you will need to overwrite these settings with your own
+# Remove the .template from the file extension
+
+# Django Application Secret Key
+SECRET_KEY = ''
+
+# Email Server Settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'testing@example.com'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+EMAIL_PORT = 1025

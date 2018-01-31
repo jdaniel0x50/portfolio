@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-md navbar-light bg-warning sticky-top" id="navbar_admin">
+    <a class="navbar-brand" href="/">
+        <h4 class="mb-0">Joshua O. Daniel</h4>
+        <small>You are on the Administrative Page</small>
+    </a>
+    <button class="navbar-toggler" type="button" 
+        data-toggle="collapse" 
+        data-target="#navAdminCollapse" 
+        aria-controls="navAdminCollapse"
+        aria-expanded="false" 
+        aria-label="Toggle Navigation" 
+        style="">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    {% if user %}
+    <div class="navbar-collapse collapse show text-right justify-content-end" id="navAdminCollapse" style="">
+        <ul class="navbar-nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/skill/index">Skills</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/project/index">Projects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/message/index">Messages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">Return Home</a>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
+</nav>
+{% if user %}
+<div class="row px-5 mx-0 text-right justify-content-end">
+    <small>
+        Welcome, {{user.user_first}}
+        <span class="mx-3">|</span>
+        <em>(@{{user.username}})</em>
+        <span class="mx-1"></span>
+        <a href="/admin/logout" class="badge badge-pill badge-warning">Logout</a>
+    </small>
+</div>
+{% endif %}

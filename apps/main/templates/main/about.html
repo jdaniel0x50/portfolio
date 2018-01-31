@@ -1,0 +1,77 @@
+<div class="container-fluid px-0 mx-0" id="about">
+    <h2 class="section_heading">About Me</h2>
+    <hr class="section_hr">
+    {% load content_file_filters %}
+    {% load static %}
+    <div class="col-md-12 justify-content-center">
+        <p class="my-4">{{ about_file|print_file_content|safe }}</p>
+    </div>
+    <div class="row px-3">
+        <div class="col-md-6 col-sm-12 justify-content-center px-3">
+            <div class="col-sm-12">
+                <i class="fa fa-code icon icon-about" style="font-size: 2rem" aria-hidden="true"></i>
+                <p>{{ about_code_file|print_file_content|safe }}</p>
+            </div>
+            <div class="col-sm-12">
+                <i class="fa fa-users icon icon-about" style="font-size: 2rem" aria-hidden="true"></i>
+                <p>{{ about_culture_file|print_file_content|safe }}</p>
+            </div>
+            <div class="col-sm-12">
+                <div class="row justify-content-center">
+                    <div class="col-sm-12 col-md-6 col-lg-5">
+                        <div class="row">
+                            <div class="col-sm-6 justify-content-center">
+                                <img class="icon icon-about" src="{% static '/base/img/noun_31779_cc.svg' %}">
+                            </div>
+                            <div class="col-sm-6 text-center">
+                                <i class="fa fa-motorcycle icon icon-about" style="font-size: 2rem" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>{{ about_motorcycle_file|print_file_content|safe }}</p>
+            </div>
+        </div>
+        <div id="about_feats" class="col-md-6 col-sm-12 justify-content-center m-0">
+            <div class="container px-0 py-3">
+                <div class="about_feature">
+                    <div class="hex-wrap">
+                        <div class="hexagon">
+                            <i class="fa fa-street-view"></i>
+                        </div>
+                    </div>
+                    <h3 class="col-sm-10 mx-auto display-6 text-info">User-Focused</h3>
+                    <p class="col-sm-8 mx-auto text-center">Strong bias to make my products useful and beneficial for the end user</p>
+                </div>
+                <div class="about_feature">
+                    <div class="hex-wrap">
+                        <div class="hexagon">
+                            <i class="fa fa-comments"></i>
+                        </div>
+                    </div>
+                    <h3 class="col-sm-10 mx-auto display-6 text-info">Perceptive</h3>
+                    <p class="col-sm-8 mx-auto text-center">I strive to understand the user and the purpose behind requirements, and often perceive use cases before they occur.</p>
+                </div>
+                <div class="about_feature">
+                    <div class="hex-wrap">
+                        <div class="hexagon">
+                            <i class="fa fa-puzzle-piece"></i>
+                        </div>
+                    </div>
+                    <h3 class="col-sm-10 mx-auto display-6 text-info">Scalability</h3>
+                    <p class="col-sm-8 mx-auto text-center">Process-oriented and build my products to scale in future developments.</p>
+                </div>
+                <div class="about_feature">
+                    <div class="hex-wrap">
+                        <div class="hexagon">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                    <h3 class="col-sm-10 mx-auto display-6 text-info">Problem Solver</h3>
+                    <p class="col-sm-8 mx-auto text-center">The hardest bugs are the best opportunities for new learning and innovation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

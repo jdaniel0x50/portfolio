@@ -1,0 +1,84 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Project
+                <a href="{% url 'db_admin:projects_sort' sort_f='-project' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:projects_sort' sort_f='project' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th class="text-center" scope="col">
+                Order
+                <a href="{% url 'db_admin:projects_sort' sort_f='-order' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:projects_sort' sort_f='order' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">Featured Image</th>
+            <th class="text-center" scope="col">
+                # Skills
+            </th>
+            <th class="text-center" scope="col">
+                Languages
+            </th>
+            <th scope="col">
+                Project Timeline
+                <a href="{% url 'db_admin:projects_sort' sort_f='-date' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:projects_sort' sort_f='date' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    {% load static %}
+    {% for project in projects %}
+    <tr>
+        <td>{{project.project_name}}</td>
+        <td class="text-center">{{project.feat_order}}</td>
+        <td class="text-center">
+            {% if project.featimage_url %}
+            <img 
+                id="proj-list-logo-{{ project.id }}" 
+                class="logo-sm" 
+                src="/media/{{ project.featimage_url }}">
+            {% endif %}
+        </td>
+        <td class="text-center">{{project.skills.count}}</td>
+        <td class="text-center">
+            {% for skill in project.skills.all %}
+                {% if skill.skill_type == "LN" %}
+                {% if skill.skill_name != "HTML5" and skill.skill_name != "CSS3" and skill.skill_name != "JavaScript" %}
+                    {{skill.skill_name}}
+                {% endif %}
+                {% endif %}
+                {% if skill.skill_name == "MEAN" %}
+                {{ skill.skill_name }}
+                {% endif %}
+            {% endfor%}
+        </td>
+        <td>{{project.project_timeline}}</td>
+        <td>
+            <a 
+                id="edit_{{project.id}}"
+                proj="{{project.project_name}}"
+                href="{% url 'db_admin:project_edit' id=project.id %}" 
+                class="badge badge-pill badge-warning project-edit-link">
+                Edit
+            </a>
+            <a
+                href="{% url 'db_admin:project_remove' id=project.id %}"
+                class="badge badge-pill badge-danger destroy_action">
+                Remove
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

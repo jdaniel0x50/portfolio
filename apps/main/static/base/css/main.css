@@ -1,0 +1,498 @@
+/* Typography */
+.bold {
+    font-weight: bold;
+}
+.italic {
+	font-style: italic;
+}
+.underline {
+	text-decoration: underline;
+}
+.red {
+	color: var(--red);
+}
+.blue {
+	color: var(--blue);
+}
+
+.larger {
+	font-size: 145%;
+}
+.smaller {
+	font-size: 75%;
+}
+textarea {
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.bg-lightorange {
+  background-color: var(--lightorange) !important;
+  border-color: var(--orange) !important;
+}
+.bg-shadeorange {
+  background-color: var(--shadeorange) !important;
+}
+a.bg-lightorange:focus, a.bg-lightorange:hover,
+button.bg-lightorange:focus,
+button.bg-lightorange:hover {
+	color: var(--orange) !important;
+	background-color: var(--lightorange);
+}
+
+/* Hexagon Shape Generator */
+.hex-wrap {
+	text-align: center;
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+}
+.hexagon {
+	background-color: var(--info);
+	height: 100%;
+	width: calc(100% * 0.57735);
+	display: inline-block;
+}
+.hexagon:before,
+.hexagon:after {
+    position: absolute;
+    top: 0;
+    right: calc((100% / 2) - ((100% * 0.57735) / 2));
+    background-color: inherit;
+    height: inherit;
+    width: inherit;
+    content: '';
+}
+.hexagon:before {
+    transform: rotateZ(60deg);
+}
+.hexagon:after {
+    transform: rotateZ(-60deg);
+}
+.hexagon i {
+	position: absolute;
+    top: 20px;
+    font-size: 18pt;
+    color: #fff;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+/* Locally Defined Media Queries / Screen Width */
+@media only screen and (min-width: 680px) {
+	#width-medium {
+		display: block;
+	}
+	#width-small {
+		display: none;
+	}
+}
+@media only screen and (max-width: 679px) {
+	#width-medium {
+		display: none;
+	}
+	#width-small {
+		display: block;
+	}
+}
+/* End of Local Media Query Styles */
+
+
+/* Scrollbar Styles */
+.scroll {
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+body::-webkit-scrollbar {
+    width: 0.5em;
+}
+::-webkit-scrollbar {
+    width: 0.5em;
+}
+::-webkit-scrollbar-track {
+	background-color: var(--white);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: var(--primary);
+	outline: 1px solid var(--dark);
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+/* End of Scrollbar Styles */
+
+
+/* Navbar Scrolling Properties */
+#navbar {
+	width: 100%;
+}
+#navbar.sps--abv a {
+	color: white;
+}
+#navbar.sps--abv .navbar-brand {
+	font-size: 1.75rem;
+}
+.sps--blw {
+	background-color: var(--white);
+	color: var(--primary);
+	border-bottom: 1px solid var(--primary);
+	box-shadow: 0px 1px 2px var(--gray-dark);
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+#navbar.sps--blw .nav-item, #navbar.sps--blw .nav-pills {
+	padding: 0px;
+}
+#navbar.sps--blw .nav-link {
+	padding: 5px 8px;
+	margin: 0px 10px;
+}
+#navbar.sps--blw a {
+	color: var(--primary);
+}
+#navbar.sps--blw a.active {
+	color: var(--white);
+}
+.nav-item .nav-link {
+	border-radius: 0;
+}
+.nav-item .nav-link:hover {
+	background-color: var(--info);
+	color: white;
+}
+/* End of Navbar Scrolling Styles */
+
+
+/* Particles.js and Header Style Properties */
+#particles-js {
+	height: 100%;
+}
+#particles-overlay {
+	max-width: 60%;
+	position: absolute;
+	/* top and left position set by script.js */
+}
+#particles_link:hover, #particles_link:active {
+	color: var(--cyan);
+	text-decoration: none;
+}
+.portfolio_img {
+	border-radius: 100%;
+	max-height: 250px;
+	max-width: 70%;
+	margin: 35px auto;
+}
+
+/* Header Background Image */
+#header {
+	width: 100%;
+	min-height: 400px;
+	padding: 125px 0px;
+	text-align: center;
+}
+.parallax {
+    /* Set a specific height */
+	width: 100%;
+
+    /* Create the parallax scrolling effect */
+	background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.parallax-top {
+    /* The image used */
+    background-image: url('../img/42600.jpg');
+
+}
+.parallax-bottom {
+	background-image: url('../img/42600.jpg');
+}
+/* End of Particles.js and Header Styles */
+
+
+/* Section Properties */
+#email_modal a, .collapse_link.collapsed {
+	color: white;
+}
+#footer a, .collapse_link:not(.collapsed) {
+	color: var(--cyan);
+	text-decoration: underline;
+}
+#contact a {
+	color: var(--blue);
+}
+#contact a:hover, #projects a:hover, .collapse_link.collapsed:hover {
+	color: var(--cyan);
+}
+#about, #projects, #skills, #resume, #contact {
+	min-height: 350px;
+	text-align: center;
+	padding: 60px 20px;
+}
+#about, #contact {
+	background-color: white;
+	color: var(--blue);
+}
+#about hr, #contact hr {
+	background-color: var(--blue);	
+}
+#about p {
+	font-size: 1.1rem;
+	padding: 10px 35px;
+}
+#about_feats {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.about_feature:first-child {
+	margin-top: 0px;
+	margin-bottom: 3rem;
+}
+.about_feature:last-child {
+	margin-top: 3rem;
+	margin-bottom: 0px;
+}
+.about_feature {
+	margin: 3rem auto;
+}
+.about_feature .display-6 {
+	margin: 0;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+#about_feats p {
+	max-width: 55%;
+	font-size: 105%;
+	font-weight: lighter;
+	letter-spacing: -0.5px;
+	padding: 5px;
+}
+#skills {
+	background-color: var(--cyan);
+	color: white;
+}
+#skills hr {
+	background-color: white;
+}
+#projects, #resume {
+	background-color: var(--primary);
+	color: white;
+}
+#projects hr, #resume hr {
+	background-color: white;
+}
+#projects a.active {
+	background-color: var(--white);
+	color: var(--primary);
+	font-weight: bold;
+}
+.projects-filter {
+	padding: 10px;
+}
+#projects-gallery {
+	padding: 20px;
+}
+#projects .card {
+	border: none;
+	perspective: 1000px;
+}
+.card .flipper:hover, .card.hover .flipper {
+	-webkit-transform: rotateY(180deg) translateZ(2px);
+	transform: rotateY(180deg);
+}
+.flipper {
+	height: 100%;
+	position: relative;
+	transform-style: preserve-3d;
+    -webkit-transition: all 0.65s ease;
+    -moz-transition: all 0.65s ease;
+    -o-transition: all 0.65s ease;
+	transition: all 0.65s ease;
+}
+#projects .front, #projects .back {
+	backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#projects .front {
+	z-index: 2;
+	transform: rotateY(0deg);
+}
+#projects .back {
+	z-index: 0;
+	transform: rotateY(180deg);
+	border: 1px solid var(--dark);
+	box-shadow: 2px 2px var(--secondary);
+}
+.project-view {
+	border-radius: 0;
+}
+.project-img {
+	object-fit: contain !important;
+	max-height: 100%;
+}
+.project-hover .card-title {
+	text-align: center;
+	font-weight: bolder;
+	letter-spacing: 2px;
+	padding-bottom: 12px;
+}
+.project-subtitle {
+	color: white;
+}
+.project-hover button {
+	border-radius: 0;
+}
+
+/* Project Modal */
+#modal {
+	overflow-y: scroll;
+}
+#modal .modal-header, #modal .modal-body {
+	padding: 0;
+}
+#modal .modal-content {
+	border-radius: 0 !important;
+	color: var(--dark);
+}
+#modal .modal-header {
+	border-bottom: 2px solid var(--danger);
+}
+.carousel-indicators .active {
+	background-color: var(--dark) !important;
+}
+.carousel-indicators li {
+	background-color: var(--gray) !important;
+}
+.carousel-image {
+	max-height: 200px;
+	margin: 0 auto;
+}
+.carousel-caption {
+	position: absolute;
+	bottom: 0;
+	background: linear-gradient(180deg, transparent, lightgray);
+}
+.carousel-caption h5 {
+	color: var(--primary) !important;
+	text-shadow: 0px 0 white, 0 1px white, 1px 0 white, 0 0px white;
+	font-weight: bold;
+}
+.carousel-control-prev, 
+.carousel-control-next {
+	position: absolute;
+	top: auto !important;
+	bottom: 0px !important;
+	height: 30%;
+	background: linear-gradient(180deg, transparent, gray);
+	/* background: rgba(153, 153, 153, 0.4) !important; */
+}
+.carousel-control-prev:focus, .carousel-control-prev:hover,
+.carousel-control-next:focus,
+.carousel-control-next:hover {
+	background-color: var(--dark) !important;
+}
+.project-button {
+	margin: 5px 10px;
+	border-radius: 0;
+	background-color: var(--danger);
+	color: var(--white);
+	font-weight: 600;
+}
+.project-button:hover {
+	background-color: var(--white) !important;
+	color: var(--danger) !important;
+	border: none;
+}
+#modal .modal-footer {
+	background: linear-gradient(0deg, transparent, gray);
+}
+/* End of Section Styles */
+
+.center-vertical {
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Icon Images */
+.icon {
+	height: 2rem;
+}
+.icon-about {
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+}
+.logo {
+	height: 4rem;
+	margin: 1rem 1rem;
+}
+.logo-sm {
+	height: 1.5rem;
+	margin: 0px auto;
+}
+/* End of Icon Styles */
+
+
+/* Section Heading Text Properties */
+.section_heading {
+	letter-spacing: -2px;
+	font-weight: lighter;
+	font-variant: small-caps;
+	margin-bottom: 5px;
+}
+.section_hr {
+	width: 40%;
+	max-width: 100px;
+	height: 2px;
+	margin-top: 8px;
+	margin-bottom: 24px;
+}
+/* End of Heading Section Styles */
+
+
+/* Skills Section */
+#skills .card {
+	border-color: var(--dark);
+}
+
+/* Resume Modal Properties; pdf.js */
+/* override Bootstrap media queries to force modal width */
+@media (min-width: 250px) {
+	#resume_modalView {
+		max-width: 100%;
+		width: 90%;
+		margin: 1.75rem auto;
+	}
+}
+canvas {
+	max-width: 95%;
+}
+.close {
+	margin-left: 2rem;
+}
+
+/* Modifications to Bootstrap Navbar-Brand */
+.navbar-brand {
+	letter-spacing: 2px;
+	font-weight: lighter;
+	font-variant: small-caps;
+}
+
+.g-recaptcha {
+	display: inline-block;
+	margin: 0px;
+	padding: 0px;
+}
+
+/* Format box for credit references */
+#citations {
+	position: absolute;
+	background-color: var(--dark);
+	opacity: 0.4;
+}

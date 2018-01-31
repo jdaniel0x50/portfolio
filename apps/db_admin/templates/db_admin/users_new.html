@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <link rel="stylesheet" href={% static '/css/normalize.css' %}>
+    <link rel="stylesheet" href={% static '/css/skeleton.css' %}>
+    <title>New User</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h4 class="header_column five bluetext">Users</h4>
+            <h6 class="header_column four rightalign">Welcome {{ user_first_name }}</h6>
+            <form class="header_column two rightalign" action="/users/logout" method="GET"><input type="submit" value="logout"></form>
+        </div>
+        
+        <form class='user_login columns eight' action='/users/new/create' method='POST'>
+            {% csrf_token %}
+            <h5 class='underline'>Add New User</h5>
+            <div class="row">
+                <label class="columns three" for="username">Username:</label><input class="columns eight" type="text" name="username"
+                    id="username">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "username error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <label class="columns four" for="first_name">First Name:</label><input class="columns eight" type="text"
+                    name="first_name" id="first_name">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "first_name error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <label class="columns four" for="last_name">Last Name:</label><input class="columns eight" type="text" name="last_name"
+                    id="last_name">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "last_name error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <label class="columns four" for="email">Email:</label><input class="columns eight" type="email" name="email"
+                    id="email">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "email error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <label class="columns four" for="birthdate">Birthdate:</label><input class="columns eight" type="date" name="birthdate"
+                    id="birthdate">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "birthdate error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <label class="columns four" for="password">Password:</label><input class="columns eight" type="password"
+                    name="password" id="password">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "password error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="row">
+                <label class="columns four" for="pass_conf">Confirm Password:</label><input class="columns eight" type="password"
+                    name="password_conf" id="pass_conf">
+            </div>
+            {% if messages %}
+            <ul>
+                {% for message in messages %} {% if message.tags == "password_conf error" %}
+                <li class="red {% if message.tags %}{{message.tags}}{% endif %}">{{ message }}</li>
+                {% endif %} {% endfor %}
+            </ul>
+            {% endif %}
+    
+            <div class="row">
+                <input name="route_name" type="submit" value="Create">
+            </div>
+            <div class="row">
+                <a href="/users/all">Go Back</a>
+            </div>        
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<div class="container-fluid project-footer p-3">
+    <div class="row justify-content-center pb-3">
+        {% load static %}
+        {% for skill in project.skills.all %}
+        <img 
+            class="logo-sm" 
+            src="{% static skill.logo_url %}" 
+            alt="{{skill.skill_name}}" 
+            data-toggle="tooltip" 
+            data-placement="top"
+            title="{{skill.skill_name}}">
+        {% endfor %}
+    </div>
+    <div class="row justify-content-center pt-3">
+        {% for skill in project.skills.all %}
+        <span class="badge badge-pill badge-primary m-1">{{ skill.skill_name }}</span>
+        {% endfor %}
+    </div>
+</div>

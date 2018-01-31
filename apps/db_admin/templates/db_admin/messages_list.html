@@ -1,0 +1,61 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Sender
+                <a href="/admin/message/index/sort=-sender" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="/admin/message/index/sort=sender" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Sender Email
+                <a href="/admin/message/index/sort=-from_email" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="/admin/message/index/sort=from_email" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Subject
+                <a href="/admin/message/index/sort=-subject" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="/admin/message/index/sort=subject" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">Message</th>
+            <th scope="col">
+                Date Sent
+                <a href="/admin/message/index/sort=-date" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="/admin/message/index/sort=date" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    {% load static %} 
+    {% for msg in emails %}
+    <tr>
+        <td>{{msg.sender_name}}</td>
+        <td><a href="mailto:{{msg.sender_email}}">{{msg.sender_email}}</a></td>
+        <td>{{msg.subject}}</td>
+        <td>{{msg.message_text}}</td>
+        <td>{{msg.message_sent}}</td>
+        <td>
+            <a 
+                href="/admin/message/destroy/{{msg.id}}" 
+                class="badge badge-pill badge-danger destroy_action">
+                Remove
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

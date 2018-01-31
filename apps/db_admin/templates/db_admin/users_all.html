@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <link rel="stylesheet" href={% static '/css/normalize.css' %}>
+    <link rel="stylesheet" href={% static '/css/skeleton.css' %}>
+    <title>All Users Index</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h4 class="header_column five bluetext">Users</h4>
+            <h6 class="header_column four rightalign">Welcome {{ user_first_name }}</h6>
+            <form class="header_column two rightalign" action="/users/logout" method="GET"><input type="submit" value="logout"></form>
+        </div>
+        
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Username</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Birthdate</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td><a href="/users/{{ user.id }}">{{ user.username }}</a></td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.birthdate }}</td>
+                    <td>{{ user.created_at }}</td>
+                    <td>
+                        <a href="/users/{{ user.id }}">Show</a>
+                        <a href="/users/{{ user.id }}/edit">Edit</a>
+                        <a href="/users/{{ user.id }}/destroy">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h6><a href="/users/new">Add a new user</a></h6>
+    </div>
+</body>
+</html>

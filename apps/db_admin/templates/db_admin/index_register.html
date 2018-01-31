@@ -1,0 +1,49 @@
+    <form class="col-md-6 pl-4" action="/admin/register" method="POST">
+        {% csrf_token %}
+        <h4>Register New Administrator</h4>
+
+        {% for field in form %}
+            <div class="form-group row">
+                <label 
+                    for="{{field.html_name}}" 
+                    class="col-sm-2 col-md-3 col-lg-2 col-form-label">
+                    {{field.label}}
+                </label>
+                <div class="col-sm-10 col-md-9 col-lg-10">
+                    <input 
+                        {% if "password" in field.html_name  %}
+                        type="password"
+                        {% else %}
+                        type="text"
+                        {% endif %}
+                        class="form-control" 
+                        id="{{field.html_name}}" 
+                        name="{{field.html_name}}" 
+                        placeholder="{{field.label}}"
+                        {% if field.value %}
+                        value="{{field.value}}"
+                        {% endif %}>
+                    <!-- Field Specific Errors -->
+                    {% if field.errors %} 
+                    {% for error in field.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %} 
+                    {% endif %}
+                    <!-- Form Errors -->
+                    {% if field.html_name == "password_confirm" %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <p class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="form-group row">
+            <div class="col-sm-12 text-right">
+                <button type="reset" class="btn btn-secondary font-weight-bold">Cancel</button>
+                <button type="submit" class="btn btn-primary font-weight-bold">Register</button>
+            </div>
+        </div>
+    </form>

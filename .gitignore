@@ -1,0 +1,13 @@
+# Sensitive Keys and Settings
+/portfolio/settings_sensitive.py
+/portfolio/settings_sensitive.pyc
+
+/.git
+*.pyc
+.env
+venv
+staticfiles
+db.sqlite3
+
+/apps/main/static/js/particles-js
+/apps/main/static/js/scrollpos-styler

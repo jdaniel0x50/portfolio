@@ -1,0 +1,30 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="email_sent">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message Sent</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="col-sm-12 mb-4">
+                    <p class="text-white">Thank you for your message! A copy of this message was also sent to your address for your records.</p>
+                </div>
+                <div class="col-sm-12 my-4">
+                    <h6 class="col-sm-12 p-0"><u><strong>Message Sent:</strong></u></h6>
+                    <ul class="list-group col-sm-12">
+                        <li class="list-group-item col-sm-12">
+                            <span class="row">From: {{email.sender_name}} (<a href="{{email.sender_email}}">{{email.sender_email}}</a>)</span>
+                            <span class="row">To: Joshua Daniel (<a href="jdaniel.jobs@gmail.com">jdaniel.jobs@gmail.com</a>)</span>
+                            <span class="row">Subject: {{email.subject}}</span>
+                        </li>
+                        <li class="list-group-item col-sm-12">
+                            {{email.message_text}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
