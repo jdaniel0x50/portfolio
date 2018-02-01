@@ -7,10 +7,7 @@
 .env
 venv
 staticfiles
-# db.sqlite3
 
-# /apps/main/migrations/
-# /apps/db_admin/migrations/
 /apps/main/templates/email/
 /apps/main/static/base/img/
 /apps/main/static/base/js/particles-js/
