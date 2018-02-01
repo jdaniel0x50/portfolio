@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
-from portfolio.settings_sensitive import DOMAIN_NAME
+from portfolio.settings_environ import DOMAIN_NAME
 from datetime import date, datetime, timedelta
 import os
 

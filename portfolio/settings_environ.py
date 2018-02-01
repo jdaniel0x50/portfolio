@@ -5,8 +5,8 @@ import os
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # Domain Name
-# DOMAIN_NAME = os.environ.get('DOMAIN_NAME')
-# DOMAIN_URL = os.environ.get('DOMAIN_URL')
+DOMAIN_NAME = "joshuadanielcodes.com"
+DOMAIN_URL = "http://joshuadanielcodes.com"
 
 ADMINS = os.environ.get('ADMINS')
 
