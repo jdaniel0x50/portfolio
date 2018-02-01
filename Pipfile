@@ -1,0 +1,20 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+dj-database-url = "==0.4.2"
+django = "*"
+gunicorn = "==19.7.1"
+django-heroku = "*"
+"psycopg2" = "==2.7.3.2"
+whitenoise = "*"
+
+
+[requires]
+
+python_version = "2.7.13"
