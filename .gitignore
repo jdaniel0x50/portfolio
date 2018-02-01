@@ -7,7 +7,7 @@
 .env
 venv
 staticfiles
-db.sqlite3
+# db.sqlite3
 
 # /apps/main/migrations/
 # /apps/db_admin/migrations/
