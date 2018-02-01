@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, EmailValidator
 import re
 from .models import Message
-from portfolio.settings_sensitive import DOMAIN_NAME
+from portfolio.settings_environ import DOMAIN_NAME
 
 class NewMessageForm(forms.Form):
     sender_name = forms.CharField(

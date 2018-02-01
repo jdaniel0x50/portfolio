@@ -7,7 +7,7 @@ from django.template.loader import render_to_string, get_template
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
-from portfolio.settings_sensitive import DEFAULT_FROM_EMAIL
+from portfolio.settings_environ import DEFAULT_FROM_EMAIL
 
 from django.shortcuts import get_object_or_404
 from .models import Skill, Project, ProjectImage, Message
