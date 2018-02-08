@@ -1,5 +1,6 @@
 # deployment/production settings
 
+import os
 from settings import *
 from settings_environ import *
 
@@ -13,14 +14,17 @@ ALLOWED_HOSTS = ['*']
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'portfolio',
-        'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'portfolio',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'root',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432'
+    # }
 }
 
 # Change 'default' database configuration with $DATABASE_URL.
