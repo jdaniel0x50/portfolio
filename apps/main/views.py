@@ -36,13 +36,19 @@ def main_page(request):
     if 'recaptcha' in request.session:
         del request.session['recaptcha']
 
+    print "*** STARTING PAGE LOAD ***"
+    print "Base Directory: " + BASE_DIR
+    print "Project Root: " + settings.PROJECT_ROOT
+    print "Media Root: " + settings.MEDIA_ROOT
+    print "Static Root: " + settings.STATIC_ROOT
+
     # generate form context
     about_file = File(open(os.path.join(_file_path, 'about_me.txt')))
     about_code_file = File(open(os.path.join(_file_path, 'about_code.txt')))
     about_motorcycle_file = File(open(os.path.join(_file_path, 'about_motorcycle.txt')))
     about_culture_file = File(open(os.path.join(_file_path, 'about_culture.txt')))
     contact_file = File(open(os.path.join(_file_path, 'contact.txt')))
-
+    print contact_file
     # get skills by each type
     skills_language = Skill.objects.get_by_type("LN")
     skills_backend = Skill.objects.get_by_type("BE")
