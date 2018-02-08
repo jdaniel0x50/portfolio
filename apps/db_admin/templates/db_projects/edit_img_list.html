@@ -48,7 +48,7 @@
                     class="edit-img-remove" 
                     proj="{{img.project.id}}" 
                     img="{{img.id}}" 
-                    href="{% url 'db_admin:pimage_remove' id=project.id image_id=img.id %}">
+                    href="{% url 'db_admin:pimage_destroy' id=project.id image_id=img.id %}">
                     <small>
                         <i class="fa fa-trash-o text-danger" aria-hidden="true"></i>
                     </small>

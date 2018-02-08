@@ -5,9 +5,10 @@ from __future__ import unicode_literals
 import json
 from datetime import date, datetime
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from ...main.exceptions import method_not_allowed, admin_user_confirm, const
+from ...main.exceptions import method_not_allowed, const
 
 # import forms and related modules
 from django import forms
@@ -19,23 +20,10 @@ from .forms import NewProjectForm, NewImageForm, EditImageForm
 # import related models
 from django.shortcuts import get_object_or_404
 from ...main.models import Skill, Project, ProjectImage
-import bcrypt
-import ast
-
-
-def construct_session_context(request):
-    # use this function to construct the logged in user context
-    context = {}
-    if 'user_id' in request.session:
-        context = {
-            "username": request.session['username'],
-            "user_first": request.session['user_first']
-        }
-    return context
 
 
 def projects_index(request, sort_f="none"):
-    if not admin_user_confirm(request): 
+    if not request.user.is_authenticated():
         return redirect(const.redirect_403)
 
     # check if the user previously submitted a form with errors
@@ -68,25 +56,17 @@ def projects_index(request, sort_f="none"):
     # get all projects currently in the database
     projects = Project.objects.get_all(sort_model)
 
-    # logged in user
-    user = construct_session_context(request)
-
     context = {
         'form': form,
         'errors': errors,
         'projects': projects,
-        'user': user
     }
-    return render(request, 'db_projects/projects_index.html', context)
+    return render(request, 'db_projects/index.html', context)
 
 
 def projects_create(request):
-    if not admin_user_confirm(request):
+    if not request.user.is_authenticated():
         return redirect(const.redirect_403)
-
-    # setup return and redirect routes
-    redirect_error_route = "/admin/project/index"
-    redirect_success_route = "/admin/project/index"
 
     # use forms.py to validate form data
     form_context = {
@@ -98,8 +78,6 @@ def projects_create(request):
         'feat_order': request.POST['feat_order'],
         'deploy_url': request.POST['deploy_url'],
         'code_url': request.POST['code_url'],
-        # 'featimage_url': request.POST['featimage_url'],
-        # 'video_url': request.POST['video_url'],
         'skills': request.POST.getlist('skills')
     }
     form = NewProjectForm(form_context)
@@ -113,8 +91,6 @@ def projects_create(request):
             impact=form_context['impact'],
             deploy_url=form_context['deploy_url'],
             code_url=form_context['code_url'],
-            # featimage_url=form_context['featimage_url'],
-            # video_url=form_context['video_url'],
         )
 
         # create array of skill objects and many-to-many relationship
@@ -122,16 +98,14 @@ def projects_create(request):
             skill_obj = Skill.objects.get(id=skill)
             project.skills.add(skill_obj)
         project.save()
-
-        return redirect(redirect_success_route)
     else:
         # form data has validation errors
         request.session['form_values'] = form_context
-        return redirect(redirect_error_route)
+    return redirect(reverse('db_admin', 'projects'))
 
 
 def project_edit(request, id):
-    if not admin_user_confirm(request):
+    if not request.user.is_authenticated():
         return redirect(const.redirect_403)
 
     if request.method == "GET":
@@ -145,8 +119,6 @@ def project_edit(request, id):
             'feat_order': project.feat_order,
             'deploy_url': project.deploy_url,
             'code_url': project.code_url,
-            # 'featimage_url': project.featimage_url,
-            # 'video_url': project.video_url,
         }
         form_context['project_timeline'] = project.project_timeline.isoformat()
         skills = []
@@ -237,7 +209,7 @@ def project_edit(request, id):
 
 
 def img_upload(request, id):
-    if not admin_user_confirm(request):
+    if not request.user.is_authenticated():
         return redirect(const.redirect_403)
 
     if request.method == 'POST':
@@ -283,7 +255,7 @@ def img_upload(request, id):
 
 
 def img_getall(request, id):
-    if not admin_user_confirm(request):
+    if not request.user.is_authenticated():
         return redirect(const.redirect_403)
 
     project = Project.objects.get(id=id)
@@ -297,7 +269,7 @@ def img_getall(request, id):
 
 
 def img_edit(request, id, image_id):
-    if not admin_user_confirm(request):
+    if not request.user.is_authenticated():
         return redirect(const.redirect_403)
 
     if request.method == 'POST':
@@ -365,9 +337,9 @@ def img_edit(request, id, image_id):
 
 
 def img_mark_feature(request, id, image_id):
-    if not admin_user_confirm(request):
+    if not request.user.is_authenticated():
         return redirect(const.redirect_403)
-    
+
     if request.method == "POST":
         project = get_object_or_404(Project, id=id)
         image = get_object_or_404(ProjectImage, id=image_id)
@@ -379,18 +351,18 @@ def img_mark_feature(request, id, image_id):
         return response
 
 def destroy_project(request, id):
-    if not admin_user_confirm(request):
+    if not request.user.is_authenticated():
         return redirect(const.redirect_403)
-    
+
     images = ProjectImage.objects.filter(project=id)
     for image in images:
         image.delete()      # remove project images
     Project.objects.get(id=id).delete()
-    return redirect('/admin/project/index')
+    return redirect(reverse('projects'))
 
 
 def destroy_image(request, id, image_id):
-    if not admin_user_confirm(request):
+    if not request.user.is_authenticated():
         return redirect(const.redirect_403)
     
     ProjectImage.objects.get(id=image_id).delete()

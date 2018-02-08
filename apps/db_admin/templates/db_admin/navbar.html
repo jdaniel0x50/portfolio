@@ -12,33 +12,36 @@
         style="">
         <span class="navbar-toggler-icon"></span>
     </button>
-    {% if user %}
-    <div class="navbar-collapse collapse show text-right justify-content-end" id="navAdminCollapse" style="">
+    {% if user.is_authenticated %}
+    <div class="navbar-collapse collapse show text-right justify-content-end" id="navAdminCollapse">
         <ul class="navbar-nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" href="/admin/skill/index">Skills</a>
+                <a class="nav-link" href="{% url 'admin:index' %}">Admin Module</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/project/index">Projects</a>
+                <a class="nav-link" href="{% url 'db_admin:skills' %}">Skills</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/message/index">Messages</a>
+                <a class="nav-link" href="{% url 'db_admin:projects' %}">Projects</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/">Return Home</a>
+                <a class="nav-link" href="{% url 'db_admin:messages' %}">Messages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'home:home' %}">Return Home</a>
             </li>
         </ul>
     </div>
     {% endif %}
 </nav>
-{% if user %}
+{% if user.is_authenticated %}
 <div class="row px-5 mx-0 text-right justify-content-end">
     <small>
-        Welcome, {{user.user_first}}
+        Welcome, {{user.first_name}}
         <span class="mx-3">|</span>
         <em>(@{{user.username}})</em>
         <span class="mx-1"></span>
-        <a href="/admin/logout" class="badge badge-pill badge-warning">Logout</a>
+        <a href="{% url 'logout' %}" class="badge badge-pill badge-warning">Logout</a>
     </small>
 </div>
 {% endif %}

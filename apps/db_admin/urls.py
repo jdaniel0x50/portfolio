@@ -3,14 +3,16 @@ from django.contrib import admin
 
 from . import views as AdminViews
 from ..main import views as MainViews
+from ._messages import views as MessageViews
 from ._projects import views as ProjectViews
+from ._skills import views as SkillViews
 
 urlpatterns = [
     # login routes
-    url(r'^login', AdminViews.admin_login),
+    # url(r'^login', AdminViews.admin_login),
     # url(r'^register', AdminViews.create_admin),
-    url(r'^access_denied', AdminViews.admin_access_denied),
-    url(r'^logout', AdminViews.admin_logout),
+    # url(r'^access_denied', AdminViews.admin_access_denied),
+    # url(r'^logout', AdminViews.admin_logout),
     # url(r'^all$', AdminViews.admin_show_all),
     # url(r'^(?P<id>[0-9]+)$', AdminViews.read_admin),
     # url(r'^(?P<id>[0-9]+)/edit$', AdminViews.edit_admin_page),
@@ -18,20 +20,23 @@ urlpatterns = [
     # url(r'^(?P<id>[0-9]+)/destroy$', AdminViews.destroy_admin),
 
     # skill routes
-    url(r'^skill/index$', AdminViews.skills_index),
-    url(r'^skill/index/sort=(?P<sort_f>[a-zA-Z_\-]+)', AdminViews.skills_index),
-    url(r'^skill/create', AdminViews.skills_create),
-    url(r'^skill/edit/(!P<id>[0-9]+)', AdminViews.skills_index),
-    url(r'^skill/destroy/(!P<id>[0-9]+)', AdminViews.skills_index),
+    url(r'^skill/$', SkillViews.skills_index, name="skills"),
+    url(r'^skill/sort=(?P<sort_f>[a-zA-Z_\-]+)',
+        SkillViews.skills_index, name="skills_sort"),
+    url(r'^skill/create', SkillViews.skills_create, name="skill_create"),
+    url(r'^skill/edit/(?P<id>[0-9]+)',
+        SkillViews.skills_index, name="skill_edit"),
+    url(r'^skill/destroy/(?P<id>[0-9]+)',
+        SkillViews.skills_index, name="skill_destroy"),
 
     # project routes
     url(
-        r'^project/index$', 
+        r'^project/$', 
         ProjectViews.projects_index,
         name="projects"
     ),
     url(
-        r'^project/index/sort=(?P<sort_f>[a-zA-Z_\-]+)',
+        r'^project/sort=(?P<sort_f>[a-zA-Z_\-]+)',
         ProjectViews.projects_index,
         name="projects_sort"
     ),
@@ -48,7 +53,7 @@ urlpatterns = [
     url(
         r'^project/destroy/(?P<id>[0-9]+)', 
         ProjectViews.destroy_project,
-        name="project_remove"
+        name="project_destroy"
     ),
     
     # project images
@@ -80,16 +85,17 @@ urlpatterns = [
     url(
         r'^project/(?P<id>[0-9]+)/image/(?P<image_id>[0-9]+)/remove',
         ProjectViews.destroy_image,
-        name="pimage_remove"
+        name="pimage_destroy"
     ),
 
     # message routes
-    url(r'^message/index$', AdminViews.message_index),
-    url(r'^message/index/sort=(?P<sort_f>[a-zA-Z_\-]+)',
-        AdminViews.message_index),
-    url(r'^message/destroy/(?P<id>[0-9]+)', AdminViews.destroy_message),
+    url(r'^message/$', MessageViews.message_index, name='messages'),
+    url(r'^message/sort=(?P<sort_f>[a-zA-Z_\-]+)',
+        MessageViews.message_index, name='messages_sort'),
+    url(r'^message/destroy/(?P<id>[0-9]+)',
+        MessageViews.destroy_message, name='message_destroy'),
 
     # index route (at end)
-    url(r'^', AdminViews.admin_index),
+    # url(r'^', AdminViews.admin_index),
 
 ]

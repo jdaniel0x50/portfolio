@@ -48,7 +48,7 @@
             <img 
                 id="proj-list-logo-{{ project.id }}" 
                 class="logo-sm" 
-                src="/media/{{ project.featimage_url }}">
+                src="{{ MEDIA_URL }}{{ project.featimage_url }}">
             {% endif %}
         </td>
         <td class="text-center">{{project.skills.count}}</td>
@@ -68,13 +68,14 @@
         <td>
             <a 
                 id="edit_{{project.id}}"
+                projId="{{project.id}}"
                 proj="{{project.project_name}}"
                 href="{% url 'db_admin:project_edit' id=project.id %}" 
                 class="badge badge-pill badge-warning project-edit-link">
                 Edit
             </a>
             <a
-                href="{% url 'db_admin:project_remove' id=project.id %}"
+                href="{% url 'db_admin:project_destroy' id=project.id %}"
                 class="badge badge-pill badge-danger destroy_action">
                 Remove
             </a>

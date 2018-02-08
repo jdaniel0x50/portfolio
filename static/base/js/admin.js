@@ -1,4 +1,10 @@
 // Admin-Specific js Functions
+// URL paths used for js routing
+const u_api = "/admin/main/";
+const u_proj = "project/";
+const u_imgGet = "/image/get/";
+const u_imgAdd = "/image/add/";
+
 $(document).ready(function () {
     // if there errors in the create or edit form, show the new project dropdown
     errors = $('#formErrors').val()
@@ -153,7 +159,7 @@ $(document).ready(function () {
 
     // AJAX -- get all images -- this routine is used frequently
     function get_all_project_images(projId) {
-        url_img_all = "admin/project/" + projId + "/image/get";
+        url_img_all = u_api + u_proj + projId + u_imgGet;
         img_container = $('#projectImageList')
         fetch_get_handler(
             get_url=url_img_all,
@@ -183,9 +189,8 @@ $(document).ready(function () {
         event.preventDefault();
         get_url = $(this).attr("href");
         get_proj = $(this).attr("proj");
-
-        projId = get_url.replace("/admin/project/edit/", "");
-        url_img_form = "admin/project/" + projId + "/image/add";
+        projId = $(this).attr("projId");
+        url_img_form = u_api + u_proj + projId + u_imgAdd;
 
         $('#projectImageTitle').text(get_proj);
         get_all_project_images(projId);

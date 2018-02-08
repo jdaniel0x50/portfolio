@@ -1,0 +1,15 @@
+{% extends 'root.html' %}
+{% block title %}Page Unavailable{% endblock %}
+{% block body %}
+<body>
+    <div class="container p-5">
+        <h1>Page unavailable</h1>
+        <p>Sorry, but the requested page,
+            <strong>
+                <em>({% request_path %})</em>
+            </strong>, is unavailable due to a server hiccup.
+        </p>
+        <p>The server administrator has been notified, so check back later.</p>
+    </div>
+</body>
+{% endblock %}

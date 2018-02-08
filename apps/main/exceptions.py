@@ -16,10 +16,3 @@ def method_not_allowed(request):
     response = HttpResponse("This method is not allowed.")
     response.status_code = 405
     return response
-
-
-def admin_user_confirm(request):
-    if 'user_id' not in request.session:
-        return False
-    else:
-        return True

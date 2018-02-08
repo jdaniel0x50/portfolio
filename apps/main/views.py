@@ -31,14 +31,6 @@ from django.core.mail import EmailMessage, send_mail, BadHeaderError
 from .forms import NewMessageForm
 
 
-def serve(request, what):
-    print "Inside serve function"
-    response = staticserve(request, what, document_root=settings.STATIC_ROOT)
-    print "Response is"
-    print response
-    response['Cache-Control'] = 'no-cache'
-    return response
-
 def main_page(request):
     # on load, clear recaptcha if currently in session
     if 'recaptcha' in request.session:
@@ -47,8 +39,6 @@ def main_page(request):
     # generate form context
     about_file = File(open(os.path.join(_file_path, 'about_me.txt')))
     about_code_file = File(open(os.path.join(_file_path, 'about_code.txt')))
-    about_hiking_file = File(open(os.path.join(_file_path, 'about_hiking.txt')))
-    about_justice_file = File(open(os.path.join(_file_path, 'about_justice.txt')))
     about_motorcycle_file = File(open(os.path.join(_file_path, 'about_motorcycle.txt')))
     about_culture_file = File(open(os.path.join(_file_path, 'about_culture.txt')))
     contact_file = File(open(os.path.join(_file_path, 'contact.txt')))
@@ -67,8 +57,6 @@ def main_page(request):
     context = {
         "about_file": about_file,
         "about_code_file": about_code_file,
-        "about_hiking_file": about_hiking_file,
-        "about_justice_file": about_justice_file,
         "about_motorcycle_file": about_motorcycle_file,
         "about_culture_file": about_culture_file,
         "contact_file": contact_file,
@@ -211,7 +199,7 @@ def send_message(request):
                 )
 
                 reply_subject = "Thank You for Your Message!"
-                reply_template = get_template('email/email_template.txt')
+                reply_template = get_template('email/template.txt')
                 reply_context = {
                     'sender_name': email.sender_name,
                     'sender_email': email.sender_email,
