@@ -13,7 +13,7 @@
     <div class="carousel-inner w-100">
         {% for img in images %}
         <div class="carousel-item justify-content-center {% if forloop.first %}active{% endif %}">
-            <img class="carousel-image d-block" src="/media/{{ img.img_url }}" alt="{{ img.caption }}">
+            <img class="carousel-image d-block" src="{{ img.img_url }}" alt="{{ img.caption }}">
             {% if img.caption %}
             <div class="carousel-caption d-none d-md-block text-dark">
                 <h5>{{ img.caption }}</h5>
