@@ -27,8 +27,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/login/$', login, name='login', ),
     url(r'^accounts/logout/$', logout, name='logout'),
-    # url(r'^api/admin/', include('apps.db_admin.urls', namespace="db_admin")),
-    # url(r'^admin', include('apps.db_admin.urls')),
 ]
 
 if settings.DEBUG:

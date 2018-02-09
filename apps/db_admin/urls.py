@@ -13,11 +13,6 @@ urlpatterns = [
     # url(r'^register', AdminViews.create_admin),
     # url(r'^access_denied', AdminViews.admin_access_denied),
     # url(r'^logout', AdminViews.admin_logout),
-    # url(r'^all$', AdminViews.admin_show_all),
-    # url(r'^(?P<id>[0-9]+)$', AdminViews.read_admin),
-    # url(r'^(?P<id>[0-9]+)/edit$', AdminViews.edit_admin_page),
-    # url(r'^(?P<id>[0-9]+)/edit/update$', AdminViews.update_admin),
-    # url(r'^(?P<id>[0-9]+)/destroy$', AdminViews.destroy_admin),
 
     # skill routes
     url(r'^skill/$', SkillViews.skills_index, name="skills"),
@@ -94,8 +89,5 @@ urlpatterns = [
         MessageViews.message_index, name='messages_sort'),
     url(r'^message/destroy/(?P<id>[0-9]+)',
         MessageViews.destroy_message, name='message_destroy'),
-
-    # index route (at end)
-    # url(r'^', AdminViews.admin_index),
 
 ]

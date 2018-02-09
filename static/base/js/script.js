@@ -166,6 +166,8 @@ $(document).ready(function() {
     // Filter By Language and Replace Projects //
     $(document).on('click', '.project-filter', function (event) {
         event.preventDefault();
+        $('.project-filter').removeClass('active');
+        $(this).addClass('active');
         language = $(this).attr('href');
         language = language.replace('#', '');
         language_class = '.project-' + language;
@@ -346,7 +348,7 @@ $(document).ready(function() {
 
     // *** START PDF.js Section ***
     // PDF.js functions to view PDF documents in canvas tag
-    var url = "/static/base/img/JoshuaDaniel_resume.pdf";
+    var url = "../img/JoshuaDaniel_resume.pdf";
 
     // Disable workers to avoid yet another cross-origin issue (workers need
     // the URL of the script to be loaded, and dynamically loading a cross-origin
