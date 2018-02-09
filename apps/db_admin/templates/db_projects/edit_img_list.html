@@ -7,8 +7,8 @@
             col-sm-11
             {% if project.featimage_url == img.img_url %}img-featured{% endif %}">
         <div class="text-center col-sm-12 mx-0 px-0">
-            <img class="pedit-image-img" src="{{ img.img_url }}" alt="Project Image">
-            <h5>{{img.img_url}}</h5>
+            <img class="pedit-image-img" src="{{ MEDIA_URL }}{{ img.img_url }}" alt="Project Image">
+            <h5>{{ MEDIA_URL }}{{img.img_url}}</h5>
         </div>
         <div class="row mx-0 px-0">
             {% if project.featimage_url == img.img_url %}
