@@ -6,7 +6,12 @@ from settings_environ import *
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'afternoon-hollows-18869.herokuapp.com/',
+    DOMAIN_NAME
+]
 
 # Media File Storage on Amazon S3
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
