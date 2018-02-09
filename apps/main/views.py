@@ -39,7 +39,6 @@ def main_page(request):
     print "*** STARTING PAGE LOAD ***"
     print "Base Directory: " + BASE_DIR
     print "Project Root: " + settings.PROJECT_ROOT
-    print "Media Root: " + settings.MEDIA_ROOT
     print "Static Root: " + settings.STATIC_ROOT
 
     # generate form context
