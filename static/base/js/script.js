@@ -348,8 +348,9 @@ $(document).ready(function() {
 
     // *** START PDF.js Section ***
     // PDF.js functions to view PDF documents in canvas tag
-    var domain = "//afternoon-hollows-18869.herokuapp.com/"
+    var domain = "http://afternoon-hollows-18869.herokuapp.com/";
     var url = domain + "static/base/img/JoshuaDaniel_resume.pdf";
+    console.log(domain);
 
     // Disable workers to avoid yet another cross-origin issue (workers need
     // the URL of the script to be loaded, and dynamically loading a cross-origin
