@@ -227,9 +227,18 @@ class ProjectImage(models.Model):
 
     def delete(self):
         # storage, path = self.img_url.storage, self.img_url.path
+        # storage.delete(path)
+
+        # compare to project featured image
+        p = Project.objects.get(id=self.project)
+        f_img = p.featimage_url
+        print "Project feature image: ", f_img
+        print "Image URL: ", self.img_url.url
+        if self.img_url.url == f_img:
+            p.featimage_url = ""
+            p.save()
         self.img_url.delete(save=False)
         super(ProjectImage, self).delete()
-        # storage.delete(path)
 
 
 class Message(models.Model):
