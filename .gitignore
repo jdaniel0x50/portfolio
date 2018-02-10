@@ -7,6 +7,7 @@
 .env
 venv
 staticfiles
+media/
 
 /apps/main/templates/email/
 /apps/main/static/base/img/

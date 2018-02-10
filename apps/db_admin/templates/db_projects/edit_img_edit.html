@@ -2,7 +2,7 @@
 <div class="row col-md-12 justify-content-center">
     <div class="pedit-image-container col-md-4 col-sm-11">
         <div class="text-center col-sm-12 mx-0 px-0">
-            <img class="pedit-image-img" src="/media/{{image.img_url}}" alt="Project Image">
+            <img class="pedit-image-img" src="{{ MEDIA_URL }}{{image.img_url}}" alt="Project Image">
         </div>
         <div class="row mx-0 px-0">
             <div class="img-order"><sm><strong>{{ image.order }}</strong></sm></div>
