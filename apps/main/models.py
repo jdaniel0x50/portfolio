@@ -135,9 +135,10 @@ class ProjectImageManager(models.Manager):
     def remove(self, id):
         pimage = ProjectImage.objects.get(id=id)
         proj = Project.objects.get(id=pimage.project.id)
-        print "Project featured image: " + proj.featimage_url
-        if proj.featimage_url == pimage.img_url.url:
-            print "they are the same"
+        print "***** Project featured image: " + proj.featimage_url
+        print "***** Selected image: " + pimage.img_url
+        # if proj.featimage_url == pimage.img_url.url:
+        #     print "they are the same"
 
 
 class Skill(models.Model):
