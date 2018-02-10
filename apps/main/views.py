@@ -29,6 +29,7 @@ from django import forms
 from django.forms.utils import ErrorList
 from django.core.mail import EmailMessage, send_mail, BadHeaderError
 from .forms import NewMessageForm
+import portfolio.settings_deploy as deployed
 
 
 def main_page(request):
@@ -40,13 +41,9 @@ def main_page(request):
     print "Base Directory: " + BASE_DIR
     print "Project Root: " + settings.PROJECT_ROOT
     print "Static Root: " + settings.STATIC_ROOT
-    try:
-        import settings_deploy as deployed
-        print deployed.DEBUG
-        print deployed.MEDIA_ROOT
-        print deployed.MEDIA_URL
-    except:
-        pass
+    print deployed.DEBUG
+    print deployed.MEDIA_ROOT
+    print deployed.MEDIA_URL
 
 
     # generate form context
