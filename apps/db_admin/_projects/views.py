@@ -365,5 +365,6 @@ def destroy_image(request, id, image_id):
     if not request.user.is_authenticated():
         return redirect(const.redirect_403)
     
-    ProjectImage.objects.get(id=image_id).delete()
+    ProjectImage.objects.remove(image_id)
+    # ProjectImage.objects.get(id=image_id).delete()
     return HttpResponse("success")

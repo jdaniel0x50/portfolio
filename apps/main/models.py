@@ -131,7 +131,16 @@ class ProjectImageManager(models.Manager):
     def get_all_project(self, project_id):
         images = ProjectImage.objects.filter(project=project_id).order_by('order')
         return images
-    
+
+    def remove(self, id):
+        pimage = ProjectImage.objects.get(id=id)
+        proj = Project.objects.get(id=pimage.project)
+        print "Got Project!"
+        print "Project featured image: " + proj.featimage_url
+        if proj.featimage_url == pimage.img_url:
+            print "they are the same"
+
+
 class Skill(models.Model):
     # Encapsulate the skill type choices within the skill model
     class SkillTypeChoices(models.Model):
