@@ -133,14 +133,14 @@ class ProjectImageManager(models.Manager):
         return images
 
     def remove(self, id):
+        # compare the selected image to the project featured image
         pimage = ProjectImage.objects.get(id=id)
         proj = Project.objects.get(id=pimage.project.id)
-        print "***** Project featured image: " + proj.featimage_url
-        print "***** Selected image: " + pimage.img_url.name
         if proj.featimage_url == pimage.img_url.name:
-            print "they are the same"
             proj.featimage_url = ""
             proj.save()
+        # remove the image from the db and fileserver
+        pimage.delete()
 
 
 class Skill(models.Model):
@@ -239,15 +239,6 @@ class ProjectImage(models.Model):
     def delete(self):
         # storage, path = self.img_url.storage, self.img_url.path
         # storage.delete(path)
-
-        # compare to project featured image
-        p = Project.objects.get(id=self.project)
-        f_img = p.featimage_url
-        print "Project feature image: ", f_img
-        print "Image URL: ", self.img_url.url
-        if self.img_url.url == f_img:
-            p.featimage_url = ""
-            p.save()
         self.img_url.delete(save=False)
         super(ProjectImage, self).delete()
 

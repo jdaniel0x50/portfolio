@@ -366,5 +366,4 @@ def destroy_image(request, id, image_id):
         return redirect(const.redirect_403)
     
     ProjectImage.objects.remove(image_id)
-    # ProjectImage.objects.get(id=image_id).delete()
     return HttpResponse("success")
