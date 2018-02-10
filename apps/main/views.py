@@ -40,6 +40,14 @@ def main_page(request):
     print "Base Directory: " + BASE_DIR
     print "Project Root: " + settings.PROJECT_ROOT
     print "Static Root: " + settings.STATIC_ROOT
+    try:
+        import settings_deploy as deployed
+        print deployed.DEBUG
+        print deployed.MEDIA_ROOT
+        print deployed.MEDIA_URL
+    except:
+        pass
+
 
     # generate form context
     about_file = File(open(os.path.join(_file_path, 'about_me.txt')))
@@ -47,7 +55,7 @@ def main_page(request):
     about_motorcycle_file = File(open(os.path.join(_file_path, 'about_motorcycle.txt')))
     about_culture_file = File(open(os.path.join(_file_path, 'about_culture.txt')))
     contact_file = File(open(os.path.join(_file_path, 'contact.txt')))
-    print contact_file
+
     # get skills by each type
     skills_language = Skill.objects.get_by_type("LN")
     skills_backend = Skill.objects.get_by_type("BE")

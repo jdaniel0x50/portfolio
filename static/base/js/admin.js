@@ -402,15 +402,7 @@ $(document).ready(function () {
             function callback(projId) {
                 // upon img removal, refresh image view
                 get_all_project_images(projId);
-                // url_img_all = "admin/project/" + projId + "/image/get";
-                // fetch_get_handler(
-                //     get_url=url_img_all,
-                //     res_container=$('#projectImageList'),
-                //     context="",
-                //     callback=function() { 
-                        $('.edit-img-remove').off('click') 
-                //     }
-                // )
+                $('.edit-img-remove').off('click') 
             }
             fetch_get_handler(
                 get_url=get_url,
