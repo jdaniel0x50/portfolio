@@ -136,7 +136,7 @@ class ProjectImageManager(models.Manager):
         pimage = ProjectImage.objects.get(id=id)
         proj = Project.objects.get(id=pimage.project.id)
         print "***** Project featured image: " + proj.featimage_url
-        print "***** Selected image: " + pimage.img_url.url
+        print "***** Selected image: " + pimage.img_url.name
         # if proj.featimage_url == pimage.img_url.url:
         #     print "they are the same"
 
