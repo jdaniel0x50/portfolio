@@ -225,10 +225,10 @@ class ProjectImage(models.Model):
     def filename(self):
         return os.path.basename(self.img_url.name)
 
-    def delete(self):
-        # storage, path = self.img_url.storage, self.img_url.path
-        super(ProjectImage, self).delete()
-        # storage.delete(path)
+    # def delete(self):
+    #     # storage, path = self.img_url.storage, self.img_url.path
+    #     super(ProjectImage, self).delete()
+    #     # storage.delete(path)
 
 
 class Message(models.Model):
