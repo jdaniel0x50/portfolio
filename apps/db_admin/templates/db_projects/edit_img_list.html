@@ -56,28 +56,6 @@
                     <em><strong>{{ img.caption }}</strong></em>
                 </small>
             </div>
-            <div class="text-dark col-sm-12 px-0">
-                <small>
-                    File:
-                    <em>{{ img.img_url.name }}</em>
-                </small>
-            </div>
-            <div class="text-dark col-sm-12 px-0">
-                <small>
-                    URL:
-                    <em>
-                        <a href="{{ img.img_url.url }}">
-                            {{ img.img_url.url }}
-                        </a>
-                    </em>
-                </small>
-            </div>
-            <div class="text-dark col-sm-12 px-0">
-                <small>
-                    Size:
-                    <em>{{ img.img_url.size|filesizeformat }}</em>
-                </small>
-            </div>
         </div>
     </div>
     {% endfor %}
