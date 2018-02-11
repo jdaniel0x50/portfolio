@@ -358,7 +358,7 @@ def destroy_project(request, id):
     for image in images:
         image.delete()      # remove project images
     Project.objects.get(id=id).delete()
-    return redirect(reverse('projects'))
+    return redirect(reverse('db_admin', 'projects'))
 
 
 def destroy_image(request, id, image_id):

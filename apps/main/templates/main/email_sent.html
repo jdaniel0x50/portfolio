@@ -13,13 +13,13 @@
                 </div>
                 <div class="col-sm-12 my-4">
                     <h6 class="col-sm-12 p-0"><u><strong>Message Sent:</strong></u></h6>
-                    <ul class="list-group col-sm-12">
-                        <li class="list-group-item bg-gray col-sm-12">
+                    <ul class="list-group col-sm-12 px-0">
+                        <li class="list-group-item bg-white border-gray rounded-0 col-sm-12">
                             <span class="row">From: {{email.sender_name}} (<a class="text-dark" href="{{email.sender_email}}">{{email.sender_email}}</a>)</span>
                             <span class="row">To: Joshua Daniel (<a class="text-dark" href="jdaniel.jobs@gmail.com">jdaniel.jobs@gmail.com</a>)</span>
                             <span class="row">Subject: {{email.subject}}</span>
                         </li>
-                        <li class="list-group-item bg-gray col-sm-12">
+                        <li class="list-group-item bg-white border-gray rounded-0 col-sm-12">
                             {{email.message_text}}
                         </li>
                     </ul>

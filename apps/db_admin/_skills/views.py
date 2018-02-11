@@ -77,4 +77,4 @@ def skills_create(request):
         # form data has validation errors
         form_values = form.cleaned_data
         request.session['form_values'] = form_values
-    return redirect(reverse('skills'))
+    return redirect(reverse('db_admin', 'skills'))
