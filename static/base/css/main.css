@@ -25,6 +25,9 @@ textarea {
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
+.height-full {
+	height: 100%;
+}
 .bg-lightorange {
   background-color: var(--lightorange) !important;
   border-color: var(--orange) !important;
@@ -295,47 +298,76 @@ body::-webkit-scrollbar {
 #projects-gallery {
 	padding: 20px;
 }
-#projects .card {
+.flipbox {
+	position: relative;
 	border: none;
+	-webkit-perspective: 1000;
+	-ms-perspective: 1000;
 	perspective: 1000px;
-}
-.card .flipper:hover, .card.hover .flipper {
-	-webkit-transform: rotateY(180deg) translateZ(2px);
-	transform: rotateY(180deg);
+	-moz-transform: perspective(1000px);
+	-ms-transform: perspective(1000px);
+	-moz-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d; 
 }
 .flipper {
 	height: 100%;
 	position: relative;
 	transform-style: preserve-3d;
-    -webkit-transition: all 0.65s ease;
-    -moz-transition: all 0.65s ease;
-    -o-transition: all 0.65s ease;
-	transition: all 0.65s ease;
+	-webkit-transform-style: preserve-3d;
+	-webkit-perspective: 1000;
+	-ms-perspective: 1000;
+	perspective: 1000px;
+	pointer-events: none;
 }
-#projects .front, #projects .back {
+.flip-horizontal .flip-back{
+    -webkit-transform:rotateY(180deg);
+    transform:rotateY(180deg)
+}
+.flip-horizontal:hover .flip-front{
+    -webkit-transform:rotateY(-180deg);
+    transform:rotateY(-180deg)
+}
+.flip-horizontal:hover .flip-back{
+    -webkit-transform:rotateY(0);
+    transform:rotateY(0)
+}
+.flipbox .flip-front, #projects .flip-back {
+	transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform-origin: center;
+	-webkit-transform-origin: center;
 	backface-visibility: hidden;
-	position: absolute;
+	-webkit-backface-visibility: hidden; 
+	display: table;
+	width: 100%;
+	height: 100%;
 	top: 0;
 	left: 0;
 }
-#projects .front {
+.flipbox .flip-front {
+	position: absolute;
 	z-index: 2;
-	transform: rotateY(0deg);
 }
-#projects .back {
+.flipbox .flip-back {
+	position: static;
+	pointer-events: auto;
 	z-index: 0;
-	transform: rotateY(180deg);
 	border: 1px solid var(--dark);
 	box-shadow: 2px 2px var(--secondary);
+}
+.bezier-t {
+    -webkit-transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+    -moz-transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+    -o-transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+	transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .project-view {
 	border-radius: 0;
 }
 .project-img {
 	object-fit: contain !important;
-	max-height: 100%;
 }
-.project-hover .card-title {
+.project-hover .flipbox-title {
 	text-align: center;
 	font-weight: bolder;
 	letter-spacing: 2px;
@@ -459,6 +491,10 @@ body::-webkit-scrollbar {
 /* Skills Section */
 #skills .card {
 	border-color: var(--dark);
+	border-radius: 0;
+}
+#skills .card-header {
+	border-radius: 0;
 }
 
 /* Resume Modal Properties; pdf.js */

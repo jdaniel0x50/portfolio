@@ -23,10 +23,11 @@ $(document).ready(function() {
         let ratio = 9.0 / 15.0;
         $('.project-view').css({'height': el_width * ratio});
         $('.project-img').css({'max-width': el_width});
-        $('.flipper .front').css({'height': el_width * ratio});
-        $('.flipper .front').css({ 'width': el_width });
-        $('.flipper .back').css({ 'height': el_width * ratio });
-        $('.flipper .back').css({'width': el_width});
+        $('.flipper .flip-front').css({'height': el_width * ratio});
+        $('.flipper .flip-front').css({ 'width': el_width });
+        $('.flipbox-img').css({ 'max-height': el_width * ratio });
+        $('.flipper .flip-back').css({ 'height': el_width * ratio });
+        $('.flipper .flip-back').css({'width': el_width});
     }
 
     function setElementsCenter(strElementId, strDivId='none') {
@@ -242,11 +243,12 @@ $(document).ready(function() {
     recaptcha_el.onclick = function() {
         // determine whether the server provided the email modal
         var el_modal = document.getElementById('email_modal');
+        var key = $('#recaptcha').attr('key')
         if (el_modal == null) {
             // reCaptcha has not yet verified user is human
             var onclickCallback = function () {
                 grecaptcha.render('recaptcha', {
-                    'sitekey': '6LdegUAUAAAAADtMoHYI94jdEFOmshLNtVVFOemH',
+                    'sitekey': key,
                     'size': 'normal',
                     'theme': 'dark',
                     'callback': onCaptchaSuccess,

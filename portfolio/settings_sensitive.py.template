@@ -5,7 +5,17 @@
 # Remove the .template from the file extension
 
 # Django Application Secret Key
-SECRET_KEY = ''
+SECRET_KEY = 'django-secret-key'
+
+# Domain Name
+DOMAIN_NAME = "domain-name-for-screen-print"
+DOMAIN_URL = "domain-url"
+
+ADMINS = (('admin-name', 'admin-email-address'))
+
+# Google reCaptcha
+RECAPTCHA_SITE_KEY = 'site-key-from-Google-reCaptcha'
+RECAPTCHA_SECRET_KEY = 'secret-key-from-Google-reCaptcha'
 
 # Email Server Settings
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -13,4 +23,5 @@ DEFAULT_FROM_EMAIL = 'testing@example.com'
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
-EMAIL_PORT = 1025
+EMAIL_PORT = ####
+SERVER_EMAIL = EMAIL_HOST_USER

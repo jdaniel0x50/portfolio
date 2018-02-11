@@ -20,6 +20,15 @@ _file_path = os.path.join(BASE_DIR, 'content_files')
 # import settings to handle static files in development (no cache)
 from django.views.static import serve as staticserve
 import portfolio.settings as settings
+import portfolio.settings_environ as settings_environ
+if settings_environ.RECAPTCHA_SITE_KEY != None:
+    from portfolio.settings_environ import RECAPTCHA_SITE_KEY as RECAPTCHA_SITE_KEY
+    from portfolio.settings_environ import RECAPTCHA_SECRET_KEY as RECAPTCHA_SECRET_KEY
+    from portfolio.settings_environ import DOMAIN_NAME as DOMAIN_NAME
+else:
+    from portfolio.settings_sensitive import RECAPTCHA_SITE_KEY as RECAPTCHA_SITE_KEY
+    from portfolio.settings_sensitive import RECAPTCHA_SECRET_KEY as RECAPTCHA_SECRET_KEY
+    from portfolio.settings_sensitive import DOMAIN_NAME as DOMAIN_NAME
 
 # import requests module for api call
 import requests
@@ -29,22 +38,12 @@ from django import forms
 from django.forms.utils import ErrorList
 from django.core.mail import EmailMessage, send_mail, BadHeaderError
 from .forms import NewMessageForm
-import portfolio.settings_deploy as deployed
 
 
 def main_page(request):
     # on load, clear recaptcha if currently in session
     if 'recaptcha' in request.session:
         del request.session['recaptcha']
-
-    print "*** STARTING PAGE LOAD ***"
-    print "Base Directory: " + BASE_DIR
-    print "Project Root: " + settings.PROJECT_ROOT
-    print "Static Root: " + settings.STATIC_ROOT
-    print deployed.DEBUG
-    print deployed.MEDIA_ROOT
-    print deployed.MEDIA_URL
-
 
     # generate form context
     about_file = File(open(os.path.join(_file_path, 'about_me.txt')))
@@ -61,6 +60,8 @@ def main_page(request):
     skills_method = Skill.objects.get_by_type("MT")
     skills_tech = Skill.objects.get_by_type("TE")
 
+    key = RECAPTCHA_SITE_KEY
+
     # get projects
     projects = Project.objects.get_all()
 
@@ -76,7 +77,8 @@ def main_page(request):
         "skills_db": skills_db,
         "skills_method": skills_method,
         "skills_tech": skills_tech,
-        "projects": projects
+        "projects": projects,
+        "key": key,
     }
     return render(request, "main/base.html", context)
 
@@ -116,7 +118,7 @@ def recaptcha_check(request):
     # secret is different from the sitekey on the template
     # response is the data returned by the recaptcha widget
     recaptcha_params = {
-        'secret': "6LdegUAUAAAAACWNaIay-1bhBUrreVHuZRoGZc_0",
+        'secret': RECAPTCHA_SECRET_KEY,
         'response': request.body
     }
     recaptcha_url = "https://www.google.com/recaptcha/api/siteverify"
@@ -133,6 +135,7 @@ def recaptcha_check(request):
             form = NewMessageForm()
             context = {
                 'form': form,
+                'domain': DOMAIN_NAME,
                 'recaptcha': recaptcha_params['response']
             }
             html = render_to_string("main/email_safe.html", context, request)
