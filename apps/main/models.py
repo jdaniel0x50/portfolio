@@ -61,9 +61,13 @@ class SkillManager(models.Manager):
 
 class MessageManager(models.Manager):
     def get_all(self, sort_field="none", default="-message_sent"):
-        lower_field, order_field = case_insensitive_criteria(
-            sort_field, default
-        )
+        if sort_field == "none" or sort_field == "message_sent" or sort_field == "-message_sent":
+            lower_field = sort_field
+            order_field = sort_field
+        else:
+            lower_field, order_field = case_insensitive_criteria(
+                sort_field, default
+            )
         messages = (Message.objects.all()
                     .extra(select={'lower_field':lower_field})
                     .order_by(order_field))
