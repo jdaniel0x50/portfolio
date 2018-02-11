@@ -212,7 +212,7 @@ def send_message(request):
                 )
 
                 reply_subject = "Thank You for Your Message!"
-                reply_template = get_template('email/template.html')
+                reply_template = get_template('main/email_response_temp.html')
                 reply_context = {
                     'sender_name': email.sender_name,
                     'sender_email': email.sender_email,
