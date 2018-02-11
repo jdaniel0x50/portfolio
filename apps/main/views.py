@@ -221,7 +221,6 @@ def send_message(request):
                     'message_text': email.message_text
                 }
                 reply_content = reply_template.render(reply_context)
-                print reply_content
                 send_mail(
                     subject=reply_subject,
                     message=reply_content,
