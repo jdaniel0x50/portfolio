@@ -45,9 +45,9 @@ class SkillManager(models.Manager):
             .order_by(order_field)
         )
         choices = ()
-        for choice in skills:
-            skill_string = choice.skill_name + " [" + choice.skill_type + "]"
-            choices = choices + ((choice.id, skill_string),)
+        # for choice in skills:
+        #     skill_string = choice.skill_name + " [" + choice.skill_type + "]"
+        #     choices = choices + ((choice.id, skill_string),)
         return choices
 
     def get_total(self):
@@ -178,6 +178,7 @@ class Skill(models.Model):
     logo_url = models.CharField(max_length=255)
     logo_img = models.ImageField(
         blank=True,
+        null=True,
         upload_to=skill_logo_directory_path
     )
     skill_level = models.SmallIntegerField()
