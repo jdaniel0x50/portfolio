@@ -2,6 +2,9 @@
     class="carousel slide w-100" 
     data-ride="carousel"
     data-cycle="2000">
+    <button type="button" class="close mx-1 text-primary" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
     <ol class="carousel-indicators">
         {% for img in images %}
         <li data-target="#pImgCarousel" 

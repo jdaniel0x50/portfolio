@@ -45,9 +45,9 @@ class SkillManager(models.Manager):
             .order_by(order_field)
         )
         choices = ()
-        for choice in skills:
-            skill_string = choice.skill_name + " [" + choice.skill_type + "]"
-            choices = choices + ((choice.id, skill_string),)
+        # for choice in skills:
+        #     skill_string = choice.skill_name + " [" + choice.skill_type + "]"
+        #     choices = choices + ((choice.id, skill_string),)
         return choices
 
     def get_total(self):
@@ -147,6 +147,11 @@ class ProjectImageManager(models.Manager):
         pimage.delete()
 
 
+def skill_logo_directory_path(instance, filename):
+    # generate image upload path
+    # file will be uploaded to MEDIA_ROOT/skill/<id>/<filename>
+    return 'skill/{0}/{1}'.format(instance.skill.id, filename)
+
 class Skill(models.Model):
     # Encapsulate the skill type choices within the skill model
     class SkillTypeChoices(models.Model):
@@ -171,6 +176,10 @@ class Skill(models.Model):
         choices=SkillTypeChoices.SKILL_TYPE_CHOICES
     )
     logo_url = models.CharField(max_length=255)
+    logo_img = models.ImageField(
+        blank=True,
+        upload_to=skill_logo_directory_path
+    )
     skill_level = models.SmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
