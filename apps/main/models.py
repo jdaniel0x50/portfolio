@@ -176,11 +176,11 @@ class Skill(models.Model):
         choices=SkillTypeChoices.SKILL_TYPE_CHOICES
     )
     logo_url = models.CharField(max_length=255)
-    logo_img = models.ImageField(
-        blank=True,
-        null=True,
-        upload_to=skill_logo_directory_path
-    )
+    # logo_img = models.ImageField(
+    #     blank=True,
+    #     null=True,
+    #     upload_to=skill_logo_directory_path
+    # )
     skill_level = models.SmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
