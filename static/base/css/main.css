@@ -301,6 +301,7 @@ body::-webkit-scrollbar {
 .flipbox {
 	position: relative;
 	border: none;
+	margin: 5px;
 	-webkit-perspective: 1000;
 	-ms-perspective: 1000;
 	perspective: 1000px;
@@ -331,7 +332,7 @@ body::-webkit-scrollbar {
     -webkit-transform:rotateY(0);
     transform:rotateY(0)
 }
-.flipbox .flip-front, #projects .flip-back {
+.flipbox .flip-front, .flipbox .flip-back {
 	transform-style: preserve-3d;
 	-webkit-transform-style: preserve-3d;
 	transform-origin: center;
@@ -345,6 +346,8 @@ body::-webkit-scrollbar {
 	left: 0;
 }
 .flipbox .flip-front {
+	background-color: white !important;
+	padding: 5px;
 	position: absolute;
 	z-index: 2;
 }
@@ -515,6 +518,7 @@ canvas {
 
 /* Modifications to Bootstrap Navbar-Brand */
 .navbar-brand {
+	margin-left: 5px;
 	letter-spacing: 2px;
 	font-weight: lighter;
 	font-variant: small-caps;

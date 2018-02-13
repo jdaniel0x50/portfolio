@@ -20,12 +20,13 @@ $(document).ready(function() {
         // set project card height to a ratio of the width
         let el_width = $('.project-view:first-child').width();
         // let ratio = 9.0 / 16.0;
-        let ratio = 9.0 / 15.0;
+        let ratio = 9.0 / 12.0;
         $('.project-view').css({'height': el_width * ratio});
         $('.project-img').css({'max-width': el_width});
         $('.flipper .flip-front').css({'height': el_width * ratio});
         $('.flipper .flip-front').css({ 'width': el_width });
-        $('.flipbox-img').css({ 'max-height': el_width * ratio });
+        $('.flipbox-img').css({ 'max-height': el_width * ratio - 10 });
+        $('.flipbox-img').css({ 'max-width': el_width - 10 });
         $('.flipper .flip-back').css({ 'height': el_width * ratio });
         $('.flipper .flip-back').css({'width': el_width});
     }
@@ -81,14 +82,22 @@ $(document).ready(function() {
 
     // hover over main link causes animation
     // font size changes while remaining centered in div
+    let title = $('#particles_link  .splash-title').css('font-size');
+    let subtitle = $('#particles_link  .splash-subtitle').css('font-size');
     $('#particles_link').hover(function () {
         // hover handlerIn
         let aDuration = 1000; // 1 second
-        $('#particles_link  h1').animate({
-            "font-size": "5.25rem"
+        let title_num = title.replace("px", "");
+        title_num = parseInt(title_num) * 0.9;
+        title_change = title_num.toString() + "px";
+        let subtitle_num = subtitle.replace("px", "");
+        subtitle_num = parseInt(subtitle_num) * 1.1;
+        subtitle_change = subtitle_num.toString() + "px";
+        $('#particles_link  .splash-title').animate({
+            "font-size": title_change
         }, aDuration);
-        $('#particles_link  h2').animate({
-            "font-size": "4.75rem"
+        $('#particles_link  .splash-subtitle').animate({
+            "font-size": subtitle_change
         }, {
             duration: aDuration,
             step: function(now, fx) {
@@ -99,10 +108,10 @@ $(document).ready(function() {
         // hover handlerOut
         let aDuration = 1000; // 1 second
         $('#particles_link  h1').animate({
-            "font-size": "5.5rem"
+            "font-size": title
         }, aDuration);
         $('#particles_link  h2').animate({
-            "font-size": "4.5rem"
+            "font-size": subtitle
         }, {
             duration: aDuration,
             step: function(now, fx) {

@@ -8,7 +8,7 @@
             <a class="project-filter nav-link navbar-brand mx-0" href="#MEAN">Node.js/MEAN</a>
         </nav> 
     </div>
-    <div id="projects-gallery" class="col-sm-11 mx-auto justify-content-center">
+    <div id="projects-gallery" class="col-md-12 col-sm-11 mx-auto justify-content-center">
         <div class="row justify-content-center">
         {% for project in projects %}
         {% load static %}
@@ -16,7 +16,7 @@
                         project-view 
                         flip-horizontal
                         height-full
-                        col-md-4 col-sm-10
+                        col-md-3 col-sm-10
                         p-0
                         {% for skill in project.skills.all %}{% if skill.skill_type == 'LN' %}
                             {% if skill.skill_name == 'C#' %}project-Csharp
