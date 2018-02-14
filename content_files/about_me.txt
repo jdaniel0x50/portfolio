@@ -1,5 +1,7 @@
 I am a full stack software engineer specializing in <strong><span class="text-info">Python</span></strong>, <strong><span class="text-info">.NET</span></strong>, and <strong><span class="text-info">MEAN</span></strong>. 
 
-I'm motivated to apply strong technical skills to contribute toward meaningful projects and causes. Originally trained as an electrical engineer, I have nearly 15 years of work experience managing technical projects as an officer in the US Air Force, teaching math and science to secondary students, and designing databases and managing services for nonprofit agencies in India and Chicago. I consistently engage my skills and passions to help others and tackle complex challenges. 
+I'm driven to apply technical skills to contribute toward meaningful projects and causes. Originally trained as an electrical engineer, I have nearly 15 years of work experience managing technical projects as an officer in the US Air Force, teaching math and science to secondary students, and designing databases and managing services for nonprofit agencies in India and Chicago. I consistently engage my skills and passions to help others and solve problems. 
 
-I recently completed an intensive software development training program through Coding Dojo, in Chicago, IL. I am a <strong><span class="text-info">prolific learner</span></strong>, extraordinary <strong><span class="text-info">problem solver</span></strong>, and driven to <strong><span class="text-info">constantly improve</span></strong> not only myself but every organization and team I have been a part of.
+As a software engineer, I am passionate about using my skills to tackle some of the most difficult technical challenges and creating applications that will help companies impact their customer base. 
+
+<span class="text-primary"><strong>I build full stack applications and databases that make a difference.</strong></span>

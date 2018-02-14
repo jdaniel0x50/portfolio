@@ -41,6 +41,13 @@ button.bg-lightorange:hover {
 	color: var(--orange) !important;
 	background-color: var(--lightorange);
 }
+.bg-shading {
+	background-color: var(--dark);
+	opacity: 0.6;
+}
+.bg-shading p {
+	margin: 0;
+}
 
 /* Hexagon Shape Generator */
 .hex-wrap {
@@ -51,7 +58,7 @@ button.bg-lightorange:hover {
     height: 60px;
 }
 .hexagon {
-	background-color: var(--info);
+	background-color: var(--primary);
 	height: 100%;
 	width: calc(100% * 0.57735);
 	display: inline-block;
@@ -163,7 +170,7 @@ body::-webkit-scrollbar {
 }
 .nav-item .nav-link:hover {
 	background-color: var(--info);
-	color: white;
+	color: white !important;
 }
 /* End of Navbar Scrolling Styles */
 
@@ -206,11 +213,11 @@ body::-webkit-scrollbar {
 }
 .parallax-top {
     /* The image used */
-    background-image: url('../img/42600.jpg');
+    background-image: url('../img/computer-1209641_1920.jpg');
 
 }
 .parallax-bottom {
-	background-image: url('../img/42600.jpg');
+	background-image: url('../img/computer-1209641_1920.jpg');
 }
 /* End of Particles.js and Header Styles */
 
@@ -219,14 +226,18 @@ body::-webkit-scrollbar {
 #email_modal a, .collapse_link.collapsed {
 	color: white;
 }
-#footer a, .collapse_link:not(.collapsed) {
+#footer a,  {
 	color: var(--cyan);
+	text-decoration: underline;
+}
+.collapse_link:not(.collapsed), .collapse_link.collapsed:hover {
+	color: var(--lightorange);
 	text-decoration: underline;
 }
 #contact a {
 	color: var(--blue);
 }
-#contact a:hover, #projects a:hover, .collapse_link.collapsed:hover {
+#contact a:hover, #projects a:hover {
 	color: var(--cyan);
 }
 #about, #projects, #skills, #resume, #contact {
@@ -267,14 +278,14 @@ body::-webkit-scrollbar {
 	letter-spacing: 1px;
 }
 #about_feats p {
-	max-width: 55%;
+	max-width: 75%;
 	font-size: 105%;
 	font-weight: lighter;
 	letter-spacing: -0.5px;
 	padding: 5px;
 }
 #skills {
-	background-color: var(--cyan);
+	background-color: var(--secondary);
 	color: white;
 }
 #skills hr {
@@ -374,7 +385,6 @@ body::-webkit-scrollbar {
 	text-align: center;
 	font-weight: bolder;
 	letter-spacing: 2px;
-	padding-bottom: 12px;
 }
 .project-subtitle {
 	color: white;
@@ -471,6 +481,10 @@ body::-webkit-scrollbar {
 	height: 1.5rem;
 	margin: 0px auto;
 }
+.logo-tiny {
+	height: 1.0rem;
+	margin: 0px 2px;
+}
 /* End of Icon Styles */
 
 
@@ -497,6 +511,7 @@ body::-webkit-scrollbar {
 	border-radius: 0;
 }
 #skills .card-header {
+	background-color: var(--dark);
 	border-radius: 0;
 }
 
@@ -504,11 +519,32 @@ body::-webkit-scrollbar {
 /* override Bootstrap media queries to force modal width */
 @media (min-width: 250px) {
 	#resume_modalView {
-		max-width: 100%;
+		max-width: 950px;
 		width: 90%;
 		margin: 1.75rem auto;
 	}
 }
+#resume a {
+	font-weight: bold;
+	color: var(--white);
+}
+#resume_modal .modal-content, #resume_modal .modal-header {
+	border-radius: 0;
+}
+#resume_modal .btn {
+	border-radius: 0;
+	font-weight: bold;
+	margin: 0 5px;
+}
+#resume_modal .btn-outline-secondary {
+	border-color: white !important;
+	color: white !important;
+}
+#resume_modal .btn-outline-secondary:hover {
+	background-color: white !important;
+	color: var(--dark) !important;
+}
+
 canvas {
 	max-width: 95%;
 }
@@ -534,5 +570,5 @@ canvas {
 #citations {
 	position: absolute;
 	background-color: var(--dark);
-	opacity: 0.4;
+	opacity: 0.6;
 }
