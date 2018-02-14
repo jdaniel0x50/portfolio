@@ -10,7 +10,8 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'afternoon-hollows-18869.herokuapp.com',
-    DOMAIN_NAME
+    'joshuadanielcodes.com',
+    'www.joshuadanielcodes.com',
 ]
 
 # Media File Storage on Amazon S3
