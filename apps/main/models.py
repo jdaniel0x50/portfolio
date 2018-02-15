@@ -45,9 +45,9 @@ class SkillManager(models.Manager):
             .order_by(order_field)
         )
         choices = ()
-        # for choice in skills:
-        #     skill_string = choice.skill_name + " [" + choice.skill_type + "]"
-        #     choices = choices + ((choice.id, skill_string),)
+        for choice in skills:
+            skill_string = choice.skill_name + " [" + choice.skill_type + "]"
+            choices = choices + ((choice.id, skill_string),)
         return choices
 
     def get_total(self):
