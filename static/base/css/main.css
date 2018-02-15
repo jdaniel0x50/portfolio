@@ -138,10 +138,10 @@ body::-webkit-scrollbar {
 #navbar {
 	width: 100%;
 }
-#navbar .sps--abv a {
+#navbar.sps--abv a {
 	color: white;
 }
-#navbar .sps--abv .navbar-brand {
+#navbar.sps--abv .navbar-brand {
 	font-size: 1.75rem;
 }
 .sps--blw {
@@ -152,17 +152,17 @@ body::-webkit-scrollbar {
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
-#navbar .sps--blw .nav-item, #navbar .sps--blw .nav-pills {
+#navbar.sps--blw .nav-item, #navbar.sps--blw .nav-pills {
 	padding: 0px;
 }
-#navbar .sps--blw .nav-link {
+#navbar.sps--blw .nav-link {
 	padding: 5px 8px;
 	margin: 0px 10px;
 }
-#navbar .sps--blw a {
+#navbar.sps--blw a {
 	color: var(--primary);
 }
-#navbar .sps--blw a.active {
+#navbar.sps--blw a.active {
 	color: var(--white);
 }
 .nav-item .nav-link {

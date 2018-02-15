@@ -6,7 +6,7 @@ $(document).ready(function() {
         // set dimensions of key elements at the top of page
         $('#particles-js').css('min-height', window_height);
         $('#header').css('min-height', window_height * 1.1);
-        $('#navbar .sps').attr('data-sps-offset', window_height);
+        $('#navbar.sps').attr('data-sps-offset', window_height);
         $('#footer').css('min-height', window_height * 0.8);
 
         // center elements
