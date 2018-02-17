@@ -88,10 +88,10 @@ $(document).ready(function() {
         // hover handlerIn
         let aDuration = 1000; // 1 second
         let title_num = title.replace("px", "");
-        title_num = parseInt(title_num) * 0.9;
+        title_num = parseInt(title_num) * 0.95;
         title_change = title_num.toString() + "px";
         let subtitle_num = subtitle.replace("px", "");
-        subtitle_num = parseInt(subtitle_num) * 1.1;
+        subtitle_num = parseInt(subtitle_num) * 1.05;
         subtitle_change = subtitle_num.toString() + "px";
         $('#particles_link  .splash-title').animate({
             "font-size": title_change
