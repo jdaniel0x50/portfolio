@@ -51,6 +51,11 @@
         <td>{{skill.created_at}}</td>
         <td>
             <a 
+                href="{% url 'db_admin:skill_logo' id=skill.id %}" 
+                class="badge badge-pill badge-warning">
+                Logo
+            </a>
+            <a 
                 href="{% url 'db_admin:skill_edit' id=skill.id %}" 
                 class="badge badge-pill badge-warning">
                 Edit

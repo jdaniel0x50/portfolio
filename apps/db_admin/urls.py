@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^skill/create', SkillViews.skills_create, name="skill_create"),
     url(r'^skill/edit/(?P<id>[0-9]+)',
         SkillViews.skills_index, name="skill_edit"),
+    url(r'^skill/logo/(?P<id>[0-9]+)',
+        SkillViews.skills_index, name="skill_logo"),
     url(r'^skill/destroy/(?P<id>[0-9]+)',
         SkillViews.skills_index, name="skill_destroy"),
 

@@ -178,18 +178,18 @@ class Skill(models.Model):
     objects = SkillManager()
 
 
-# def skill_logo_directory_path(instance, filename):
-#     # generate image upload path
-#     # file will be uploaded to MEDIA_ROOT/skill/<id>/<filename>
-#     return 'skill/{0}/{1}'.format(instance.skill.id, filename)
+def skill_logo_directory_path(instance, filename):
+    # generate image upload path
+    # file will be uploaded to MEDIA_ROOT/skill/<id>/<filename>
+    return 'skill/{0}/{1}'.format(instance.skill.id, filename)
 
-# class SkillImage(models.Model):
-#     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-#     img = models.ImageField(
-#         upload_to=skill_logo_directory_path
-#     )
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+class SkillImage(models.Model):
+    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    img = models.ImageField(
+        upload_to=skill_logo_directory_path
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Project(models.Model):
