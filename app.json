@@ -1,0 +1,68 @@
+{
+  "name": "portfolio",
+  "scripts": {
+  },
+  "env": {
+    "ADMINS": {
+      "required": true
+    },
+    "AWS_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "AWS_STORAGE_BUCKET_NAME": {
+      "required": true
+    },
+    "DEBUG_COLLECTSTATIC": {
+      "required": true
+    },
+    "DEFAULT_FROM_EMAIL": {
+      "required": true
+    },
+    "DJANGO_SETTINGS_MODULE": {
+      "required": true
+    },
+    "EMAIL_BACKEND": {
+      "required": true
+    },
+    "EMAIL_HOST": {
+      "required": true
+    },
+    "EMAIL_HOST_PASSWORD": {
+      "required": true
+    },
+    "EMAIL_HOST_USER": {
+      "required": true
+    },
+    "EMAIL_PORT": {
+      "required": true
+    },
+    "EMAIL_USE_TLS": {
+      "required": true
+    },
+    "RECAPTCHA_SECRET_KEY": {
+      "required": true
+    },
+    "RECAPTCHA_SITE_KEY": {
+      "required": true
+    },
+    "SECRET_KEY": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
