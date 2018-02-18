@@ -15,6 +15,9 @@
     "AWS_STORAGE_BUCKET_NAME": {
       "required": true
     },
+    "DATABASE_URL": {
+      "required": true
+    },
     "DEBUG_COLLECTSTATIC": {
       "required": true
     },
