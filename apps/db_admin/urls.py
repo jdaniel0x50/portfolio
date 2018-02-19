@@ -16,15 +16,17 @@ urlpatterns = [
 
     # skill routes
     url(r'^skill/$', SkillViews.skills_index, name="skills"),
-    url(r'^skill/sort=(?P<sort_f>[a-zA-Z_\-]+)',
+    url(r'^skill/sort=(?P<sort_f>[a-zA-Z_\-]+)$',
         SkillViews.skills_index, name="skills_sort"),
     url(r'^skill/create', SkillViews.skills_create, name="skill_create"),
-    url(r'^skill/edit/(?P<id>[0-9]+)',
+    url(r'^skill/(?P<id>[0-9]+)/edit$',
         SkillViews.skills_index, name="skill_edit"),
-    url(r'^skill/logo/(?P<id>[0-9]+)',
-        SkillViews.skills_index, name="skill_logo"),
-    url(r'^skill/destroy/(?P<id>[0-9]+)',
-        SkillViews.skills_index, name="skill_destroy"),
+    url(r'^skill/(?P<id>[0-9]+)/logo$',
+        SkillViews.skill_logo, name="skill_logo"),
+    url(r'^skill/(?P<id>[0-9]+)/logo/(?P<logo_id>[0-9]+)/destroy$',
+        SkillViews.skill_logo_destroy, name="skill_logo_destroy"),
+    url(r'^skill/(?P<id>[0-9]+)/destroy$',
+        SkillViews.skill_destroy, name="skill_destroy"),
 
     # project routes
     url(
@@ -89,7 +91,7 @@ urlpatterns = [
     url(r'^message/$', MessageViews.message_index, name='messages'),
     url(r'^message/sort=(?P<sort_f>[a-zA-Z_\-]+)',
         MessageViews.message_index, name='messages_sort'),
-    url(r'^message/destroy/(?P<id>[0-9]+)',
+    url(r'^message/(?P<id>[0-9]+)/destroy',
         MessageViews.destroy_message, name='message_destroy'),
 
 ]

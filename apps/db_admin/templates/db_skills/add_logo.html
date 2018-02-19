@@ -1,0 +1,47 @@
+<div class="row col-sm-12 mx-0 px-0 justify-content-start">
+    {% for img in images %}
+        Current Logo:
+        <img class="logo-sm mx-4" src="{{img.img.url}}" alt="logo">
+        <a id="skill-logo-remove" 
+            class="badge badge-pill badge-danger center-vertical"
+            x-type="logo" 
+            x-name="{{img.img.name}}"
+            href="{% url 'db_admin:skill_logo_destroy' id=skill_id logo_id=img.id %}">
+            Remove Logo
+        </a>
+    {% endfor %}
+    <form id="skill-logo"
+        class="col-sm-12"
+        skillId={{skill_id}}
+        action="{% url 'db_admin:skill_logo' id=skill_id %}"
+        enctype="multipart/form-data"
+        method="POST">
+        {% csrf_token %}
+        {% if form_errors == True %}
+        <div class="row col-sm-12 mx-0 px-0 justify-content-end">
+            <h6 class="font-weight-bold text-danger">There were errors in the attempt to upload this file. Please try again.</h6>
+        </div>
+        {% endif %}
+        <div class="row col-sm-12 mx-0 px-0">
+            <input type="hidden" name="skill" value="{{skill_id}}">
+            <div class="form-group row col-sm-12 mx-0 px-0 justify-content-end px-0">
+                <label for="img" class="col-sm-2 col-form-label">New Logo</label>
+                <input type="file" id="skill-logo-file" name="img" class="form-control col-md-3 col-sm-6">
+                <!-- Field Specific Errors -->
+                {% for field in form %}
+                    {% if field.errors and field == "img" %} 
+                        {% for error in field.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                        {% endfor %} 
+                    {% endif %}
+                {% endfor %}
+                <div class="center-vertical">
+                    <img class="logo-contained align-middle mx-4" id="skill-logo-show">
+                </div>
+                <button type="reset" id="skill-logo-cancel" class="btn btn-secondary font-weight-bold mx-3">Cancel</button>
+                <button type="submit" id="skill-logo-add" class="btn btn-primary font-weight-bold">Add</button>
+            </div>
+        </div>
+
+    </form>
+</div>

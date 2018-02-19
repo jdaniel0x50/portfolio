@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from ...main.exceptions import const
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from ...main.exceptions import const, method_not_allowed
 
-from ...main.models import Skill
-from .forms import NewSkillForm
+from ...main.models import Skill, SkillImage
+from .forms import NewSkillForm, NewSkillImageForm
 
 
 def skills_index(request, sort_f="none"):
@@ -77,4 +79,81 @@ def skills_create(request):
         # form data has validation errors
         form_values = form.cleaned_data
         request.session['form_values'] = form_values
-    return redirect(reverse('db_admin', 'skills'))
+    return redirect(reverse('db_admin:skills'))
+
+
+def skill_destroy(request, id):
+    if not request.user.is_authenticated():
+        return redirect(const.redirect_403)
+    print "INSIDE SKILL DESTROY ACTION"
+    images = SkillImage.objects.filter(skill=id)
+    for image in images:
+        image.delete()      # remove project images
+    Skill.objects.get(id=id).delete()
+    return redirect(reverse('db_admin:skills'))
+
+
+def skill_logo(request, id):
+    if not request.user.is_authenticated():
+        return redirect(const.redirect_403)
+
+    if request.method == 'POST':
+        _xHeader = {
+            'value': 'False',
+            'label': 'X-Form-Errors',   # documents whether form has errors
+        }
+        result = {
+            'title': "",
+            'message': ""
+        }
+
+        form = NewSkillImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            result['title'] = "Upload Saved"
+            result['message'] = "The image was successfully uploaded."
+            html = render_to_string('db_projects/edit_response.html', result)
+        else:
+            # errors in the form submission
+            _xHeader['value'] = 'True'
+            images = SkillImage.objects.get_by_skill(id)
+            context = {
+                'form': form,
+                'skill_id': id,
+                'images': images,
+                'form_errors': True
+            }
+            html = render_to_string('db_skills/add_logo.html', context, request)
+
+        _http_response = HttpResponse(html)
+        _http_response.__setitem__(_xHeader['label'], _xHeader['value'])
+        return _http_response
+    
+    elif request.method == 'GET':
+        # get logo image and render form
+        images = SkillImage.objects.get_by_skill(id)
+        context = {
+            'skill_id': id,
+            'images': images,
+        }
+        html = render_to_string('db_skills/add_logo.html', context, request)
+        return HttpResponse(html)
+    else:
+        response = method_not_allowed(request)
+        return response
+
+
+def skill_logo_destroy(request, id, logo_id):
+    if not request.user.is_authenticated():
+        return redirect(const.redirect_403)
+    print "INSIDE LOGO DESTROY ACTION"
+    img = get_object_or_404(SkillImage, id=logo_id)
+    img.delete()
+
+    images = SkillImage.objects.get_by_skill(id)
+    context = {
+        'skill_id': id,
+        'images': images,
+    }
+    html = render_to_string('db_skills/add_logo.html', context, request)
+    return HttpResponse(html)

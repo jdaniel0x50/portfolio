@@ -44,4 +44,4 @@ def destroy_message(request, id):
         return redirect(const.redirect_403)
 
     Message.objects.get(id=id).delete()
-    return redirect(reverse('db_admin', 'messages'))
+    return redirect(reverse('db_admin:messages'))

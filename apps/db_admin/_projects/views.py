@@ -101,7 +101,7 @@ def projects_create(request):
     else:
         # form data has validation errors
         request.session['form_values'] = form_context
-    return redirect(reverse('db_admin', 'projects'))
+    return redirect(reverse('db_admin:projects'))
 
 
 def project_edit(request, id):
@@ -358,7 +358,7 @@ def destroy_project(request, id):
     for image in images:
         image.delete()      # remove project images
     Project.objects.get(id=id).delete()
-    return redirect(reverse('db_admin', 'projects'))
+    return redirect(reverse('db_admin:projects'))
 
 
 def destroy_image(request, id, image_id):

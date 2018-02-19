@@ -43,26 +43,32 @@
     </thead>
     {% load static %}
     {% for skill in skills %}
-    <tr>
+    <tr id="skill_{{skill.id}}">
         <td>{{skill.skill_name}}</td>
         <td>{{skill.get_skill_type_display}}</td>
-        <td class="text-center"><img class="logo-sm" src="{% static skill.logo_url %}"></td>
+        <td class="text-center"><img id="skill-logo-{{skill.id}}" class="logo-sm" src="{% static skill.logo_url %}"></td>
         <td class="text-center">{{skill.skill_level}}</td>
         <td>{{skill.created_at}}</td>
         <td>
             <a 
                 href="{% url 'db_admin:skill_logo' id=skill.id %}" 
-                class="badge badge-pill badge-warning">
+                skillId={{skill.id}}
+                class="badge badge-pill badge-warning btn skill-logo-edit">
                 Logo
             </a>
             <a 
                 href="{% url 'db_admin:skill_edit' id=skill.id %}" 
-                class="badge badge-pill badge-warning">
+                skillId={{skill.id}}
+                class="badge badge-pill badge-warning btn skill-edit">
                 Edit
             </a>
             <a
+                id="skill-remove-{{skill.id}}"
                 href="{% url 'db_admin:skill_destroy' id=skill.id %}"
-                class="badge badge-pill badge-danger destroy_action">
+                skillId={{skill.id}}
+                class="badge badge-pill badge-danger btn destroy_action skill-destroy"
+                x-type="skill"
+                x-name="{{skill.skill_name}}">
                 Remove
             </a>
         </td>

@@ -5,7 +5,8 @@ const u_proj = "project/";
 const u_imgGet = "/image/get/";
 const u_imgAdd = "/image/add/";
 
-$(document).ready(function () {
+
+$(document).ready(function ready() {
     // if there errors in the create or edit form, show the new project dropdown
     errors = $('#formErrors').val()
     edit_errors = $('#formEditErrors').val()
@@ -19,19 +20,48 @@ $(document).ready(function () {
     }
 
 
+    // capitalize first letter of each word
+    function capitalize_words(s) {
+        s = s.toLowerCase();
+        words = s.split(" ");
+        s = "";
+        for (let i=0; i<words.length; i++) {
+            word = words[i];
+            word_first = word[0];
+            word_first = word_first.toUpperCase();
+            word = word_first + word.slice(1) + " ";
+            s += word
+        }
+        s = s.trim();
+        return s;
+    }
+
+    // capitalize all letters in string
+    function all_caps(s) {
+        return s.toUpperCase();
+    }
+
+    // alert user and confirm before removing item
+    // this function does not execute the remove function
+    // it will return the user response (true or false)
+    function confirm_remove(event, elementId) {
+        elementId = "#" + elementId;
+        var type = $(elementId).attr("x-type");  // type of record
+        type = capitalize_words(type);
+        var name = $(elementId).attr("x-name");  // name of record
+        name = all_caps(name);
+
+        var msg = `You are about to delete the ${type}, ${name}. \n\nThis cannot be undone. Would you like to continue?`;
+        return confirm(msg);
+    }
+
     // on clicking any remove action, require confirmation
     $(document).on('click', '.destroy_action', function (event) {
-        // Prevent default anchor click behavior
-        event.preventDefault();
-
-        // Store hash (href)
-        var href_store = $(this).attr("href");
-
-        // Confirm Action
-        var msg = "You are about to delete a record. This cannot be undone. Would you like to continue?";
-        var user_confirm = confirm(msg);
-        if (user_confirm) {
-            window.location.href = href_store
+        event.preventDefault();             // Prevent default anchor click behavior
+        var href = $(this).attr("href");    // url (href)
+        var id = $(this).attr('id');
+        if (confirm_remove(event, id)) {
+            window.location.href = href;
         }
     });
 
@@ -86,6 +116,23 @@ $(document).ready(function () {
         }
         // let form_data_stringify = JSON.stringify(form_data_object);
         return form_data_object;
+    }
+
+
+    // Read Image Input and Show in Target HTML Element
+    function readURL(input, target_img) {
+        if (input || (input.files && input.files[0])) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $(target_img).attr('src', e.target.result);
+            }
+            if (input.files && input.files[0]) {
+                reader.readAsDataURL(input.files[0]);
+            }
+            else {
+                reader.readAsDataURL(input);
+            }
+        }
     }
 
 
@@ -388,14 +435,8 @@ $(document).ready(function () {
     // AJAX -- remove image and refresh images on view
     $(document).on('click', '.edit-img-remove', function (event) {
         event.preventDefault();
-        $('.edit-img-remove').on('click', function(e) {
-            // disable link to avoid multiple removal clicks
-            e.preventDefault();
-            return false;
-        });
-        var msg = "You are about to delete this image. This cannot be undone. Would you like to continue?";
-        var user_confirm = confirm(msg);
-        if (user_confirm) {
+        var id = $(this).attr("id");
+        if (confirm_remove(event, id)) {
             var get_url = $(this).attr('href');
             var projId = $(this).attr('proj');
 
@@ -417,6 +458,133 @@ $(document).ready(function () {
     });
 
 
+    // --- START SKILL LOGO --- //
+    function disable_skill_links() {
+        $('.skill-logo-edit').addClass('disabled');
+        $('.skill-logo-edit').attr('aria-disabled', true);
+        $('.skill-edit').addClass('disabled');
+        $('.skill-edit').attr('aria-disabled', true);
+        $('.skill-destroy').addClass('disabled');
+        $('.skill-destroy').attr('aria-disabled', true);
+    }
+
+    function enable_skill_links() {
+        $('.skill-logo-edit').removeClass('disabled');
+        $('.skill-logo-edit').attr('aria-disabled', false);
+        $('.skill-edit').removeClass('disabled');
+        $('.skill-edit').attr('aria-disabled', false);
+        $('.skill-destroy').removeClass('disabled');
+        $('.skill-destroy').attr('aria-disabled', false);
+    }
+
+    function remove_skill_logo_form() {
+        $('#skill-logo-form').remove();
+    }
+
+
+    // AJAX -- get skill logo edit form
+    $(document).on('click', '.skill-logo-edit', function(event) {
+        event.preventDefault();
+        var get_url = $(this).attr('href');
+        if ($(this).hasClass('disabled')) {
+            return;
+        }
+
+        var id = $(this).attr('skillId');
+        var skill_id = "#skill_" + id.toString();
+        // create container to hold logo form
+        html = "<th colspan='6' id='skill-logo-form' class='col-sm-12 mx-0 px-0'></th>"
+        $(skill_id).after(html);
+        fetch_get_handler(
+            get_url=get_url,
+            res_container=$('#skill-logo-form'),
+            context="",
+            callback=function() {
+                disable_skill_links();
+            }
+        );
+    });
+    
+    // Select Skill Logo File
+    $(document).on('change', '#skill-logo-file', function(event) {
+        readURL(this, '#skill-logo-show');
+    })
+
+    // Cancel Skill Logo Edit
+    $(document).on('click', '#skill-logo-cancel', function(event) {
+        enable_skill_links();
+        remove_skill_logo_form();
+    })
+
+
+    // AJAX -- post new skill logo
+    $(document).on('submit', '#skill-logo-form', function(event) {
+        // disable submit button to avoid multiple uploads
+        event.preventDefault();
+        $('#skill-logo-add').prop('disabled', true);
+        $('#skill-logo').prop('disabled', true);
+
+        var contextForm = $('#skill-logo');
+        var post_url = contextForm.attr('action');
+        var post_type = contextForm.attr('enctype');
+        var skillId = contextForm.attr('skillId');
+        var form_data = formify(contextForm);   // convert to FormData object
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]", contextForm).val();
+        var img_file = $('input:file')[0].files[0]; // select uploaded image
+        form_data.append('img', img_file);      // append to FormData
+
+        function case_all() {
+            $('#skill-logo-add').prop('disabled', false);   // reenable submit
+            $('#skill-logo').prop('disabled', false);       // reenable submit
+        }
+        function case_success(context) {
+            el_img = "#skill-logo-" + context['skillId'];
+            readURL(context['img_file'], el_img);
+            enable_skill_links();
+            remove_skill_logo_form();
+        }
+
+        fetch_post_handler(
+            post_url=post_url,
+            method="POST",
+            csrftoken=csrftoken,
+            form_data=form_data,
+            form_selector=contextForm,
+            context={'skillId':skillId, 'img_file':img_file},
+            response_modal_id="projectEditRes",
+            callback_success=case_success,
+            callback_error=null,
+            callback_all=case_all,
+        );
+    });
+
+
+    // AJAX -- remove skill logo and get form again
+    $(document).on('click', '#skill-logo-remove', function(event) {
+        event.preventDefault();
+        if ($(this).hasClass('disabled')) {
+            return;
+        }
+        var id = $(this).attr('id');
+        if (confirm_remove(event, id)) {
+            var get_url = $(this).attr('href');
+            var skill_id = $('#skill-logo').attr('skillId');
+
+            function callback(skill_id) {
+                var el_img = '#skill-logo-' + skill_id;
+                $(el_img).attr('src', '');
+            }
+
+            fetch_get_handler(
+                get_url=get_url,
+                res_container=$('#skill-logo-form'),
+                context=skill_id,
+                callback=callback
+            );
+        }
+    });
+
+
     // remove temporary modals after hidden
     $('body').on('hidden.bs.modal', '#projectEditRes', function () {
         $('#projectEditRes').remove();
@@ -425,3 +593,4 @@ $(document).ready(function () {
         $('#modal').remove();
     });
 });
+

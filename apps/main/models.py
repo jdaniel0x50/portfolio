@@ -59,6 +59,12 @@ class SkillManager(models.Manager):
         return totals
 
 
+class SkillImageManager(models.Manager):
+    def get_by_skill(self, id):
+        images = SkillImage.objects.filter(skill=id)
+        return images
+
+
 class MessageManager(models.Manager):
     def get_all(self, sort_field="none", default="-message_sent"):
         if sort_field == "none": sort_field = "-message_sent"
@@ -171,7 +177,11 @@ class Skill(models.Model):
         max_length=2,
         choices=SkillTypeChoices.SKILL_TYPE_CHOICES
     )
-    logo_url = models.CharField(max_length=255)
+    logo_url = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+    )
     skill_level = models.SmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -190,6 +200,15 @@ class SkillImage(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = SkillImageManager()
+
+    def filename(self):
+        return os.path.basename(self.img.name)
+
+    def delete(self):
+        self.img.delete(save=False)
+        super(SkillImage, self).delete()
+
 
 
 class Project(models.Model):
