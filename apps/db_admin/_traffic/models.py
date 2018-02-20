@@ -52,6 +52,7 @@ class TrafficManager(models.Manager):
             geo_json = {}
             for item in geolocation_response:
                 print item
+                print type(item)
                 geo_json = json.loads(item)
             print geo_json
             for key in geo_json:
