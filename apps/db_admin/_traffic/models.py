@@ -14,8 +14,8 @@ def api_retry(func):
         while True:
             resp = func(*args, **kwargs)
             print "Retry Status Code = ", resp.status_code
-            for key in resp:
-                print key, resp[key]
+            # for key in resp:
+            #     print key, resp[key]
             if resp.status_code != 200 and tries < MAX_TRIES:
                 tries += 1
                 continue
@@ -47,7 +47,10 @@ class TrafficManager(models.Manager):
         ip_addr = ip_addresses[0]
         while True:
             geolocation_response = self._get_ip_response(ip_addr)
+            print "RETURNED FROM GET IP RESPONSE"
             print geolocation_response
+            print "STATUS CODE IN RETURN = ", geolocation_response.status_code
+            print "STATUS FIELD = ", geolocation_response["status"]
             if geolocation_response.status_code == 200:
                 if geolocation_response["status"] == "fail" and tries < ip_addresses.count:
                     ip_addr = ip_addresses[tries]
