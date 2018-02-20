@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.db import models
 import requests
-import ast
+import json
 
 
 # Retry Method Decorator
@@ -49,22 +49,20 @@ class TrafficManager(models.Manager):
         while True:
             geolocation_response = self._get_ip_response(ip_addr)
             print "RETURNED FROM GET IP RESPONSE"
-            for key in geolocation_response:
-                print ast.literal_eval(key)
-                obj = ast.literal_eval(key)
-                for little_key in obj:
-                    print little_key
+            geo_json = json.loads(geolocation_response[0])
+            for key in geo_json:
+                print key
             print "STATUS CODE IN RETURN = ", geolocation_response.status_code
-            print "STATUS FIELD = ", geolocation_response[0]["status"]
+            print "STATUS FIELD = ", geo_json["status"]
             if geolocation_response.status_code == 200:
-                if geolocation_response[0]["status"] == "fail" and tries < ip_addresses.count:
+                if geo_json["status"] == "fail" and tries < ip_addresses.count:
                     ip_addr = ip_addresses[tries]
                     tries += 1
                     continue
                 geolocation_success = True
             break
         if geolocation_success:
-            return geolocation_response[0]
+            return geo_json
         else:
             return False
 
