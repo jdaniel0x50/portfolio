@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.db import models
 import requests
+import ast
 
 
 # Retry Method Decorator
@@ -49,8 +50,9 @@ class TrafficManager(models.Manager):
             geolocation_response = self._get_ip_response(ip_addr)
             print "RETURNED FROM GET IP RESPONSE"
             for key in geolocation_response:
-                print key
-                for little_key in key:
+                print ast.literal_eval(key)
+                obj = ast.literal_eval(key)
+                for little_key in obj:
                     print little_key
             print "STATUS CODE IN RETURN = ", geolocation_response.status_code
             print "STATUS FIELD = ", geolocation_response[0]["status"]
