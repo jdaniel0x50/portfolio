@@ -36,6 +36,8 @@ class TrafficManager(models.Manager):
     # Continue checking the IP Addresses for valid geolocation
     def _get_geolocation_response(self, ip_addresses):
         MAX_TRIES = ip_addresses.count
+        print "GETTING RESPONSE --- NUMBER of ADDRESSES = ", MAX_TRIES
+        print ip_addresses
         tries = 1
         geolocation_success = False
         ip_addr = ip_addresses[0]

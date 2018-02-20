@@ -2,24 +2,12 @@
 {% block content %}
 
 <div class="row p-0 m-3">
-    <h2 class="col-md-12 my-2">IP-API</h2>
-    {{api.text}}
-    {% for key, val in api.items %}
-        <span class="font-weight-bold">{{key}}</span> --- {{val}}
-    {% endfor %}
-
     <h2 class="col-md-12 my-2">Temporary Headers</h2>
     {% for head, val in headers.items %}
     <div class="col-md-12 my-1">
         <span class="font-weight-bold">{{head}}</span> --- {{val}}
     </div>
     {% endfor %}
-    <h2 class="col-md-12 my-2">Host</h2>
-    {{host}}
-    <h2 class="col-md-12 my-2">User</h2>
-    {{user}}
-    <h2 class="col-md-12 my-2">Path</h2>
-    {{path}}
 </div>
 
 <div class="row p-0 m-0">
