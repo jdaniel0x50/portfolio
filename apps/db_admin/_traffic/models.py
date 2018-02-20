@@ -48,7 +48,10 @@ class TrafficManager(models.Manager):
         while True:
             geolocation_response = self._get_ip_response(ip_addr)
             print "RETURNED FROM GET IP RESPONSE"
-            print geolocation_response
+            for key in geolocation_response:
+                print key
+                for little_key in key:
+                    print little_key
             print "STATUS CODE IN RETURN = ", geolocation_response.status_code
             print "STATUS FIELD = ", geolocation_response[0]["status"]
             if geolocation_response.status_code == 200:
