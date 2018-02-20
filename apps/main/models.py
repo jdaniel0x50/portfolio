@@ -210,7 +210,6 @@ class SkillImage(models.Model):
         super(SkillImage, self).delete()
 
 
-
 class Project(models.Model):
     project_name = models.CharField(max_length=100)
     subtitle = models.CharField(
@@ -289,8 +288,20 @@ class Message(models.Model):
         default="FollowUp to " + DOMAIN_NAME
     )
     message_text = models.TextField()
-    message_sent = models.DateTimeField(auto_now=True)
+    message_sent = models.DateTimeField(auto_now_add=True)
     objects = MessageManager()
 
 
+# class Traffic(models.Model):
+#     user_agent = models.CharField(max_length=255)
+#     forwarded_for = models.CharField(max_length=255)
+#     origin_ip = models.CharField(max_length=255)
+#     referer = models.CharField(max_length=255)
+#     date_visited = models.DateTimeField(auto_now_add=True)
+
+
+# class IPAddress(models.Model):
+#     ip_addr = models.CharField(max_length=255)
+#     first_visited = models.DateTimeField(auto_now_add=True)
+#     last_visited = models.DateTimeField(auto_now=True)
     

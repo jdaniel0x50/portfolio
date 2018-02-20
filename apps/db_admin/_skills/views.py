@@ -3,13 +3,22 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django.template.loader import render_to_string
 from ...main.exceptions import const, method_not_allowed
 
 from ...main.models import Skill, SkillImage
 from .forms import NewSkillForm, NewSkillImageForm
 
+
+def get_headers(request):
+    headers = {}
+    for head in request.META:
+        print " --- " + head + " --- "
+        print request.META.get(head)
+        print " --- *** --- "
+        headers[head] = request.META.get(head)
+    return headers
 
 def skills_index(request, sort_f="none"):
     if not request.user.is_authenticated():
@@ -27,6 +36,12 @@ def skills_index(request, sort_f="none"):
         # generate new skill form template
         form = NewSkillForm()
 
+    headers = get_headers(request)
+    print headers
+    host = request.get_host()
+    print "*** HOST ***"
+    print host
+
     # translate the sort field to a model field
     translator = {
         "none": "none",
@@ -37,7 +52,7 @@ def skills_index(request, sort_f="none"):
         "level": "skill_level",
         "-level": "-skill_level",
         "date": "created_at",
-        "-date": "-created_at"
+        "-date": "-created_at",
     }
     sort_model = translator[sort_f]
     # get all skills currently in the database
@@ -51,7 +66,8 @@ def skills_index(request, sort_f="none"):
         'form': form,
         'skills': skills,
         'skills_totals': skills_totals,
-        # 'user': user
+        "headers": headers,
+        "host": host,
     }
     return render(request, 'db_skills/index.html', context)
 
