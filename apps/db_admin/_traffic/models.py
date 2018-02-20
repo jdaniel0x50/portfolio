@@ -28,6 +28,7 @@ class TrafficManager(models.Manager):
     # Retry the API query until get a successful response
     @api_retry
     def _get_ip_response(self, ip_addr):
+        print "IP ADDRESS IN GET IP CALL = ", ip_addr
         return requests.get(self.IP_API_URL + str(ip_addr))
     
     # Retry Different IP Addresses if first fails
