@@ -41,6 +41,8 @@ def skills_index(request, sort_f="none"):
     host = request.get_host()
     print "*** HOST ***"
     print host
+    user = request.user
+    path = request.path
 
     # translate the sort field to a model field
     translator = {
@@ -68,6 +70,8 @@ def skills_index(request, sort_f="none"):
         'skills_totals': skills_totals,
         "headers": headers,
         "host": host,
+        "user": user,
+        "path": path,
     }
     return render(request, 'db_skills/index.html', context)
 
