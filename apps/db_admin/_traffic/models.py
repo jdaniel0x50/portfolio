@@ -50,16 +50,16 @@ class TrafficManager(models.Manager):
             print "RETURNED FROM GET IP RESPONSE"
             print geolocation_response
             print "STATUS CODE IN RETURN = ", geolocation_response.status_code
-            print "STATUS FIELD = ", geolocation_response["status"]
+            print "STATUS FIELD = ", geolocation_response[0]["status"]
             if geolocation_response.status_code == 200:
-                if geolocation_response["status"] == "fail" and tries < ip_addresses.count:
+                if geolocation_response[0]["status"] == "fail" and tries < ip_addresses.count:
                     ip_addr = ip_addresses[tries]
                     tries += 1
                     continue
                 geolocation_success = True
             break
         if geolocation_success:
-            return geolocation_response
+            return geolocation_response[0]
         else:
             return False
 
