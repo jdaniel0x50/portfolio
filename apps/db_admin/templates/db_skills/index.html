@@ -4,6 +4,10 @@
 <div class="row p-0 m-3">
     <h2 class="col-md-12 my-2">IP-API</h2>
     {{api}}
+    {% for key, val in api.items %}
+        <span class="font-weight-bold">{{key}}</span> --- {{val}}
+    {% endfor %}
+
     <h2 class="col-md-12 my-2">Temporary Headers</h2>
     {% for head, val in headers.items %}
     <div class="col-md-12 my-1">
