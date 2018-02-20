@@ -14,7 +14,8 @@ def api_retry(func):
         while True:
             resp = func(*args, **kwargs)
             print "Retry Status Code = ", resp.status_code
-            print resp
+            for key in resp:
+                print key, resp[key]
             if resp.status_code != 200 and tries < MAX_TRIES:
                 tries += 1
                 continue
