@@ -292,16 +292,73 @@ class Message(models.Model):
     objects = MessageManager()
 
 
-# class Traffic(models.Model):
-#     user_agent = models.CharField(max_length=255)
-#     forwarded_for = models.CharField(max_length=255)
-#     origin_ip = models.CharField(max_length=255)
-#     referer = models.CharField(max_length=255)
-#     date_visited = models.DateTimeField(auto_now_add=True)
+class Traffic(models.Model):
+    path = models.CharField(max_length=255)
+    forwarded_for = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    user_agent = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    referrer = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    remote_addr = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    user = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+    country = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True
+    )
+    region = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True
+    )
+    city = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True
+    )
+    zip = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )
+    lat = models.CharField(
+        max_length=15,
+        blank=True,
+        null=True
+    )
+    lon = models.CharField(
+        max_length=15,
+        blank=True,
+        null=True
+    )
+    isp = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+    org = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+    date_visited = models.DateTimeField(auto_now_add=True)
 
-
-# class IPAddress(models.Model):
-#     ip_addr = models.CharField(max_length=255)
-#     first_visited = models.DateTimeField(auto_now_add=True)
-#     last_visited = models.DateTimeField(auto_now=True)
     

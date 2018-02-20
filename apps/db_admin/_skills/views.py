@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpRequest
 from django.template.loader import render_to_string
 from ...main.exceptions import const, method_not_allowed
+import requests
 
 from ...main.models import Skill, SkillImage
 from .forms import NewSkillForm, NewSkillImageForm
@@ -43,6 +44,9 @@ def skills_index(request, sort_f="none"):
     print host
     user = request.user
     path = request.path
+    source = request.META.get("HTTP_X_FORWARDED_FOR")
+    url = "http://ip-api.com/json/" + source
+    r = requests.get(url)
 
     # translate the sort field to a model field
     translator = {
@@ -72,6 +76,7 @@ def skills_index(request, sort_f="none"):
         "host": host,
         "user": user,
         "path": path,
+        "api": r,
     }
     return render(request, 'db_skills/index.html', context)
 

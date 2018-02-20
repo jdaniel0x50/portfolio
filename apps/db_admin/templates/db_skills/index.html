@@ -2,6 +2,8 @@
 {% block content %}
 
 <div class="row p-0 m-3">
+    <h2 class="col-md-12 my-2">IP-API</h2>
+    {{api}}
     <h2 class="col-md-12 my-2">Temporary Headers</h2>
     {% for head, val in headers.items %}
     <div class="col-md-12 my-1">
