@@ -14,9 +14,6 @@ def api_retry(func):
         tries = 0
         while True:
             resp = func(*args, **kwargs)
-            print "Retry Status Code = ", resp.status_code
-            # for key in resp:
-            #     print key, resp[key]
             if resp.status_code != 200 and tries < MAX_TRIES:
                 tries += 1
                 continue
@@ -32,7 +29,6 @@ class TrafficManager(models.Manager):
     # Retry the API query until get a successful response
     @api_retry
     def _get_ip_response(self, ip_addr):
-        print "IP ADDRESS IN GET IP CALL = ", ip_addr
         return requests.get(self.IP_API_URL + str(ip_addr))
     
     # Retry Different IP Addresses if first fails
@@ -41,32 +37,12 @@ class TrafficManager(models.Manager):
     # Continue checking the IP Addresses for valid geolocation
     def _get_geolocation_response(self, ip_addresses):
         MAX_TRIES = ip_addresses.count
-        print "GETTING RESPONSE --- NUMBER of ADDRESSES = ", MAX_TRIES
-        print ip_addresses
         tries = 1
         geolocation_success = False
         ip_addr = ip_addresses[0]
-        # ip_addr = "216.80.4.142"
         while True:
             geolocation_response = self._get_ip_response(ip_addr)
-            print "RETURNED FROM GET IP RESPONSE"
             geo_json = geolocation_response.json()
-            print type(geo_json)
-            print geo_json
-            # for item in geolocation_response:
-            #     print item
-            # for item in geolocation_response:
-            #     print type(item)
-            #     temp = item.replace("'", "\"")
-            #     print temp
-            #     geo_json = json.loads(temp)
-            #     print type(geo_json)
-            #     # pretty printing of json-formatted string
-            #     print json.dumps(geo_json, sort_keys=True, indent=4)
-            for key in geo_json:
-                print key
-            print "STATUS CODE IN RETURN = ", geolocation_response.status_code
-            print "STATUS FIELD = ", geo_json["status"]
             if geolocation_response.status_code == 200:
                 if geo_json["status"] == "fail" and tries < ip_addresses.count:
                     ip_addr = ip_addresses[tries]
@@ -105,24 +81,11 @@ class TrafficManager(models.Manager):
         return headers
 
 
-    def log_request_traffic(
-        self,
-        request):
-        # path="",
-        # auth_user="",
-        # forwarded_for="",
-        # user_agent="",
-        # referrer="",
-        # remote_addr="",
-        # host_app=""):
-        
+    def log_request_traffic(self,request):
         # get relevant headers
         headers = self._get_header_keys(request)
-        print headers
-
         ip_key = "forwarded_for"
         if headers[ip_key] != None and headers[ip_key] != "":
-            print headers[ip_key]
             addresses = headers[ip_key].split(",")
 
             # get geolocation information from ip-api
