@@ -52,12 +52,13 @@ class TrafficManager(models.Manager):
             print "RETURNED FROM GET IP RESPONSE"
             geo_json = {}
             for item in geolocation_response:
-                print item.json()
+                print item
                 print type(item)
-                print type(item.json())
-                # temp = item.
-                # geo_json = json.loads(item)
-            print geo_json
+                temp = item.replace("'", "\"")
+                print temp
+                geo_json = json.loads(temp)
+                # pretty printing of json-formatted string
+                print json.dumps(geo_json, sort_keys=True, indent=4)
             for key in geo_json:
                 print key
             print "STATUS CODE IN RETURN = ", geolocation_response.status_code
