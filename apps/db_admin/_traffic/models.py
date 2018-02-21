@@ -53,6 +53,7 @@ class TrafficManager(models.Manager):
             geo_json = {}
             for item in geolocation_response:
                 print item
+            for item in geolocation_response:
                 print type(item)
                 temp = item.replace("'", "\"")
                 print temp
