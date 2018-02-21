@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
+import datetime
 import requests
 import json
 
@@ -20,6 +21,20 @@ def api_retry(func):
             break
         return resp
     return retried_func
+
+
+# Global Helper function to generate a case-insensitive
+# sorting query (use return values with .extra() query)
+def case_insensitive_criteria(sort_field, default):
+    if sort_field == "none":
+        sort_field = default
+    if sort_field[0] == '-':
+        order_field = '-lower_field'
+    else:
+        order_field = 'lower_field'
+    field_only = sort_field.strip('-')
+    lower_field = "lower(" + field_only + ")"
+    return (lower_field, order_field)
 
 
 class TrafficManager(models.Manager):
@@ -79,6 +94,28 @@ class TrafficManager(models.Manager):
             except:
                 headers[keys[key]] = ""
         return headers
+
+
+    def get_all(self, sort_field="none", default="date_visited"):
+        if sort_field == "none" or sort_field == "date_visited":
+            traffic = Traffic.objects.all().order_by("date_visited")
+        else:
+            lower_field, order_field = case_insensitive_criteria(
+                sort_field, default
+            )
+            traffic = (Traffic.objects.all()
+                        .extra(select={'lower_field':lower_field})
+                        .order_by(order_field))
+        return traffic
+
+    def get_total(self):
+        totals = {}
+        totals['main'] = Traffic.objects.filter(path="/").count()
+        totals['admin'] = Traffic.objects.filter(path__startswith="admin/").count()
+        totals['today'] = Traffic.objects.filter(date_visited__gte=datetime.date.today())
+        return totals
+
+
 
 
     def log_request_traffic(self,request):

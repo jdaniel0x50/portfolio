@@ -13,15 +13,6 @@ from .._traffic.models import Traffic
 from .forms import NewSkillForm, NewSkillImageForm
 
 
-# def get_headers(request):
-#     headers = {}
-#     for head in request.META:
-#         print " --- " + head + " --- "
-#         print request.META.get(head)
-#         print " --- *** --- "
-#         headers[head] = request.META.get(head)
-#     return headers
-
 def skills_index(request, sort_f="none"):
     traffic = Traffic.objects.log_request_traffic(request)
     headers = traffic
@@ -41,24 +32,6 @@ def skills_index(request, sort_f="none"):
         # generate new skill form template
         form = NewSkillForm()
 
-    # headers = get_headers(request)
-    # print headers
-    # host = request.get_host()
-    # print "*** HOST ***"
-    # print host
-    # user = request.user
-    # path = request.path
-    # try:
-    #     source = request.META.get("HTTP_X_FORWARDED_FOR")
-    # except:
-    #     source = "24.136.6.99"
-    # if source == None:
-    #     source = "216.80.4.142"
-    # url = "http://ip-api.com/json/" + str(source)
-    # print url
-    # r = requests.get(url)
-    # print r.text
-
     # translate the sort field to a model field
     translator = {
         "none": "none",
@@ -76,18 +49,11 @@ def skills_index(request, sort_f="none"):
     skills = Skill.objects.get_all(sort_model)
     skills_totals = Skill.objects.get_total()
 
-    # # logged in user
-    # user = construct_session_context(request)
-
     context = {
         'form': form,
         'skills': skills,
         'skills_totals': skills_totals,
         "headers": headers,
-        # "host": host,
-        # "user": user,
-        # "path": path,
-        # "api": r,
     }
     return render(request, 'db_skills/index.html', context)
 

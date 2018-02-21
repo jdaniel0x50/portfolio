@@ -1,0 +1,52 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                IP Address
+                <a href="{% url 'db_admin:skills_sort' sort_f='-skill' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:skills_sort' sort_f='skill' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Path
+                <a href="{% url 'db_admin:skills_sort' sort_f='-category' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:skills_sort' sort_f='category' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th class="text-center" scope="col">Logo</th>
+            <th class="text-center" scope="col">
+                City
+                <a href="{% url 'db_admin:skills_sort' sort_f='-level' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:skills_sort' sort_f='level' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Date Visited
+                <a href="{% url 'db_admin:skills_sort' sort_f='-date' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:skills_sort' sort_f='date' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    {% for visit in traffic %}
+    <tr>
+        <td>{{visit.forwarded_for}}</td>
+        <td>{{visit.path}}</td>
+        <td>{{visit.city}}</td>
+        <td>{{visit.date_visited}}</td>
+    </tr>
+    {% endfor %}
+</table>

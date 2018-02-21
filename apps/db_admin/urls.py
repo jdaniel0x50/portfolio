@@ -6,6 +6,7 @@ from ..main import views as MainViews
 from ._messages import views as MessageViews
 from ._projects import views as ProjectViews
 from ._skills import views as SkillViews
+from ._traffic import views as TrafficViews
 
 urlpatterns = [
     # login routes
@@ -93,5 +94,10 @@ urlpatterns = [
         MessageViews.message_index, name='messages_sort'),
     url(r'^message/(?P<id>[0-9]+)/destroy',
         MessageViews.destroy_message, name='message_destroy'),
+
+    # traffic routes
+    url(r'^traffic/$', TrafficViews.traffic_index, name='traffic'),
+    url(r'^traffic/sort=(?P<sort_f>[a-zA-Z_\-]+)',
+        TrafficViews.traffic_index, name='traffic_sort'),
 
 ]
