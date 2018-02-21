@@ -82,9 +82,9 @@ class TrafficManager(models.Manager):
     def _get_header_keys(self, request):
         headers = {}
         headers["path"] = request.path
-        try:
-            headers["auth_user"] = request.user()
-        except:
+        if request.user.is_authenticated():
+            headers["auth_user"] = request.user.username
+        else:
             headers["auth_user"] = ""
         keys = {
             "HTTP_X_FORWARDED_FOR": "forwarded_for",
