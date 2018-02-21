@@ -46,14 +46,17 @@ class TrafficManager(models.Manager):
         tries = 1
         geolocation_success = False
         ip_addr = ip_addresses[0]
+        # ip_addr = "216.80.4.142"
         while True:
             geolocation_response = self._get_ip_response(ip_addr)
             print "RETURNED FROM GET IP RESPONSE"
             geo_json = {}
             for item in geolocation_response:
-                print item
+                print item.json()
                 print type(item)
-                geo_json = json.loads(item)
+                print type(item.json())
+                # temp = item.
+                # geo_json = json.loads(item)
             print geo_json
             for key in geo_json:
                 print key
