@@ -101,6 +101,7 @@ class TrafficManager(models.Manager):
                 headers["org"] = geolocation_response["org"]
                 headers["ip_geo"] = geolocation_response["query"]
         traffic = self.create(**headers)
+        print traffic
         # for key in headers:
         #     traffic._meta.get_field()
         # traffic = self.create(
