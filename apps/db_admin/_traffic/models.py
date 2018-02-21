@@ -57,6 +57,7 @@ class TrafficManager(models.Manager):
                 temp = item.replace("'", "\"")
                 print temp
                 geo_json = json.loads(temp)
+                print type(geo_json)
                 # pretty printing of json-formatted string
                 print json.dumps(geo_json, sort_keys=True, indent=4)
             for key in geo_json:
