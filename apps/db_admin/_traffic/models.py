@@ -50,17 +50,19 @@ class TrafficManager(models.Manager):
         while True:
             geolocation_response = self._get_ip_response(ip_addr)
             print "RETURNED FROM GET IP RESPONSE"
-            geo_json = {}
-            for item in geolocation_response:
-                print item
-            for item in geolocation_response:
-                print type(item)
-                temp = item.replace("'", "\"")
-                print temp
-                geo_json = json.loads(temp)
-                print type(geo_json)
-                # pretty printing of json-formatted string
-                print json.dumps(geo_json, sort_keys=True, indent=4)
+            geo_json = geolocation_response.json()
+            print type(geo_json)
+            print geo_json
+            # for item in geolocation_response:
+            #     print item
+            # for item in geolocation_response:
+            #     print type(item)
+            #     temp = item.replace("'", "\"")
+            #     print temp
+            #     geo_json = json.loads(temp)
+            #     print type(geo_json)
+            #     # pretty printing of json-formatted string
+            #     print json.dumps(geo_json, sort_keys=True, indent=4)
             for key in geo_json:
                 print key
             print "STATUS CODE IN RETURN = ", geolocation_response.status_code
