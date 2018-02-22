@@ -472,7 +472,7 @@ $(document).ready(function() {
 
     // Click: Skill Category
     $('.skill-set').click(function (event) {
-        url = $(this).attr('skill');
+        url = $(this).attr('addr');
         save_click(url);
     })
 
