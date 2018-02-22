@@ -112,7 +112,7 @@ class TrafficManager(models.Manager):
         totals = {}
         totals['main'] = Traffic.objects.filter(path="/").count()
         totals['admin'] = Traffic.objects.filter(path__startswith="admin/").count()
-        totals['today'] = Traffic.objects.filter(date_visited__gte=datetime.date.today())
+        totals['today'] = Traffic.objects.filter(date_visited__gte=datetime.date.today()).count()
         return totals
 
 

@@ -1,6 +1,15 @@
-<table class="table table-striped">
+<table id="traffic-all" class="table table-striped">
     <thead>
         <tr>
+            <th scope="col">
+                Date Visited
+                <a href="{% url 'db_admin:skills_sort' sort_f='-skill' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:skills_sort' sort_f='skill' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
             <th scope="col">
                 IP Address
                 <a href="{% url 'db_admin:skills_sort' sort_f='-skill' %}" alt="Sort Descending">
@@ -11,7 +20,7 @@
                 </a>
             </th>
             <th scope="col">
-                Path
+                Path Visited
                 <a href="{% url 'db_admin:skills_sort' sort_f='-category' %}" alt="Sort Descending">
                     <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
                 </a>
@@ -19,9 +28,8 @@
                     <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
                 </a>
             </th>
-            <th class="text-center" scope="col">Logo</th>
             <th class="text-center" scope="col">
-                City
+                Referrer
                 <a href="{% url 'db_admin:skills_sort' sort_f='-level' %}" alt="Sort Descending">
                     <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
                 </a>
@@ -30,7 +38,7 @@
                 </a>
             </th>
             <th scope="col">
-                Date Visited
+                Environment
                 <a href="{% url 'db_admin:skills_sort' sort_f='-date' %}" alt="Sort Descending">
                     <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
                 </a>
@@ -38,15 +46,53 @@
                     <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
                 </a>
             </th>
-            <th scope="col">Actions</th>
+            <th scope="col">
+                Geolocation
+                <a href="{% url 'db_admin:skills_sort' sort_f='-date' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:skills_sort' sort_f='date' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                IP Affiliation
+                <a href="{% url 'db_admin:skills_sort' sort_f='-date' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:skills_sort' sort_f='date' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Server
+                <a href="{% url 'db_admin:skills_sort' sort_f='-date' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:skills_sort' sort_f='date' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
         </tr>
     </thead>
     {% for visit in traffic %}
     <tr>
+        <td>{{visit.date_visited}}</td>
         <td>{{visit.forwarded_for}}</td>
         <td>{{visit.path}}</td>
-        <td>{{visit.city}}</td>
-        <td>{{visit.date_visited}}</td>
+        <td>{{visit.referrer}}</td>
+        <td>{{visit.user_agent}}</td>
+        <td>
+            <div class="col-sm-12 mx-0 px-0">{{visit.city}}</div>
+            <div class="col-sm-12 mx-0 px-0">{{visit.region}}</div>
+            <div class="col-sm-12 mx-0 px-0">{{visit.zip}}</div>
+            <div class="col-sm-12 mx-0 px-0">{{visit.country}}</div>
+        </td>
+        <td>
+            <div class="col-sm-12 mx-0 px-0">{{visit.isp}}</div>
+            <div class="col-sm-12 mx-0 px-0">{{visit.org}}</div>
+        </td>
+        <td>{{visit.remote_addr}}</td>
     </tr>
     {% endfor %}
 </table>
