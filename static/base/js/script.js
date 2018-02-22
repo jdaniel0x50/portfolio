@@ -465,6 +465,7 @@ $(document).ready(function() {
 
     // Submit clicks on page components
     function save_click(url) {
+        alert(url)
         fetch_get_handler(url);
         return;
     }

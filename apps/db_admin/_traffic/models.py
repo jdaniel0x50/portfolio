@@ -144,6 +144,8 @@ class TrafficManager(models.Manager):
     def log_request_traffic(self,request):
         # get relevant headers
         headers = self._get_header_keys(request)
+        print "*** MESSAGE PATH ***"
+        print request.path
         ip_key = "forwarded_for"
         if headers[ip_key] != None and headers[ip_key] != "":
             addresses = headers[ip_key].split(",")
