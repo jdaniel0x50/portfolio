@@ -37,7 +37,7 @@ class SkillManager(models.Manager):
         sort_field = translator[sorter]
 
         if "date" in sort_field or "level" in sort_field:
-            skills = Skill.objects.all().order_by(sort_field)
+            skills = Skill.objects.all().order_by(sort_field).include
         else:
             # get variables to generate case-insensitive sort query
             lower_field, order_field = case_insensitive_criteria(
@@ -211,7 +211,7 @@ def skill_logo_directory_path(instance, filename):
     return 'skill/{0}/{1}'.format(instance.skill.id, filename)
 
 class SkillImage(models.Model):
-    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    skill = models.OneToOneField(Skill, on_delete=models.CASCADE)
     img = models.ImageField(
         upload_to=skill_logo_directory_path
     )
