@@ -24,7 +24,7 @@ class NewSkillForm(forms.Form):
     )
     logo_url = forms.CharField(
         label="Logo URL",
-        required=True,
+        required=False,
         max_length=255,
         strip=True,
         validators=[

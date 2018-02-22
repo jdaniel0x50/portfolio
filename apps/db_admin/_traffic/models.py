@@ -135,17 +135,19 @@ class TrafficManager(models.Manager):
 
     def get_total(self):
         totals = {}
-        totals['main'] = Traffic.objects.filter(path="/").count()
+        totals['main'] = Traffic.objects.exclude(path__startswith="/admin/").count()
         totals['admin'] = Traffic.objects.filter(path__startswith="/admin/").count()
-        totals['today'] = Traffic.objects.filter(date_visited__gte=datetime.date.today()).count()
+        totals['today'] = Traffic.objects.exclude(
+                path__startswith="/admin/"
+            ).filter(
+                date_visited__gte=datetime.date.today()
+            ).count()
         return totals
 
 
     def log_request_traffic(self,request):
         # get relevant headers
         headers = self._get_header_keys(request)
-        print "*** MESSAGE PATH ***"
-        print request.path
         ip_key = "forwarded_for"
         if headers[ip_key] != None and headers[ip_key] != "":
             addresses = headers[ip_key].split(",")

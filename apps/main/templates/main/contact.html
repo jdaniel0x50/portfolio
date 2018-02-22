@@ -48,5 +48,18 @@
                 </div>
             </a>
         </div>
+        <div class="col-md-4 col-sm-10 mx-auto">
+            <a class="contact_link click-set" 
+                href="https://www.surveymonkey.com/r/J5QJQP7" 
+                addr="{% url 'home:click_contact' address='survey' %}"
+                target="_blank">
+                {% load static %}
+                <img src="{% static 'base/img/surveymonkey.png' %}" class="icon icon-about" style="height: 2rem" aria-hidden="true">
+                <!-- <i class="fa fa-comment-alt icon icon-about" style="font-size: 2rem" aria-hidden="true"></i> -->
+                <div class="row col-md-12 px-0 mx-0 justify-content-center">
+                    <small>Have some feedback? Submit it here.</small>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
