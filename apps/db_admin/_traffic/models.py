@@ -119,7 +119,7 @@ class TrafficManager(models.Manager):
         }
         sort_field = translator[sorter]
 
-        if sort_field == "none" or sort_field == "-date_visited":
+        if "date" in sorter:
             traffic = Traffic.objects.all().order_by("-date_visited")
         else:
             lower_field, order_field = case_insensitive_criteria(
@@ -133,7 +133,7 @@ class TrafficManager(models.Manager):
     def get_total(self):
         totals = {}
         totals['main'] = Traffic.objects.filter(path="/").count()
-        totals['admin'] = Traffic.objects.filter(path__startswith="admin/").count()
+        totals['admin'] = Traffic.objects.filter(path__startswith="/admin/").count()
         totals['today'] = Traffic.objects.filter(date_visited__gte=datetime.date.today()).count()
         return totals
 

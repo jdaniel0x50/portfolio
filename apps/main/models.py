@@ -21,14 +21,31 @@ def case_insensitive_criteria(sort_field, default):
 
 
 class SkillManager(models.Manager):
-    def get_all(self, sort_field="none", default="skill_name"):
-        # get variables to generate case-insensitive sort query
-        lower_field, order_field = case_insensitive_criteria(
-            sort_field, default
-        )
-        skills = (Skill.objects.all()
-            .extra(select={'lower_field':lower_field})
-            .order_by(order_field))
+    def get_all(self, sorter="none", default="skill_name"):
+        # translate the sort field to a model field
+        translator = {
+            "none": default,
+            "skill": "skill_name",
+            "-skill": "-skill_name",
+            "category": "skill_type",
+            "-category": "-skill_type",
+            "level": "skill_level",
+            "-level": "-skill_level",
+            "date": "created_at",
+            "-date": "-created_at",
+        }
+        sort_field = translator[sorter]
+
+        if "date" in sorter or "level" in sorter:
+            skills = Skill.objects.all().order_by(sort_field)
+        else:
+            # get variables to generate case-insensitive sort query
+            lower_field, order_field = case_insensitive_criteria(
+                sort_field, default
+            )
+            skills = (Skill.objects.all()
+                .extra(select={'lower_field':lower_field})
+                .order_by(order_field))
         return skills
 
     def get_by_type(self, type):

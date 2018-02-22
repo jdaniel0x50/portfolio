@@ -32,21 +32,8 @@ def skills_index(request, sort_f="none"):
         # generate new skill form template
         form = NewSkillForm()
 
-    # translate the sort field to a model field
-    translator = {
-        "none": "none",
-        "skill": "skill_name",
-        "-skill": "-skill_name",
-        "category": "skill_type",
-        "-category": "-skill_type",
-        "level": "skill_level",
-        "-level": "-skill_level",
-        "date": "created_at",
-        "-date": "-created_at",
-    }
-    sort_model = translator[sort_f]
     # get all skills currently in the database
-    skills = Skill.objects.get_all(sort_model)
+    skills = Skill.objects.get_all(sort_f)
     skills_totals = Skill.objects.get_total()
 
     context = {
