@@ -36,7 +36,7 @@ class SkillManager(models.Manager):
         }
         sort_field = translator[sorter]
 
-        if "date" in sorter or "level" in sorter:
+        if "date" in sort_field or "level" in sort_field:
             skills = Skill.objects.all().order_by(sort_field)
         else:
             # get variables to generate case-insensitive sort query

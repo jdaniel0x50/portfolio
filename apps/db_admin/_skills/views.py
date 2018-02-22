@@ -14,8 +14,7 @@ from .forms import NewSkillForm, NewSkillImageForm
 
 
 def skills_index(request, sort_f="none"):
-    traffic = Traffic.objects.log_request_traffic(request)
-    headers = traffic
+    Traffic.objects.log_request_traffic(request)
 
     if not request.user.is_authenticated():
         return redirect(const.redirect_403)
@@ -40,7 +39,6 @@ def skills_index(request, sort_f="none"):
         'form': form,
         'skills': skills,
         'skills_totals': skills_totals,
-        "headers": headers,
     }
     return render(request, 'db_skills/index.html', context)
 

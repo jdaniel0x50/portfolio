@@ -78,6 +78,17 @@
                 </div>
             </th>
             <th scope="col">
+                Auth User
+                <div class="col-sm-12 mx-0 px-0">
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='-user' %}" alt="Sort Descending">
+                        <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='user' %}" alt="Sort Ascending">
+                        <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
                 Server
                 <div class="col-sm-12 mx-0 px-0">
                     <a href="{% url 'db_admin:traffic_sort' sort_f='-server' %}" alt="Sort Descending">
@@ -107,6 +118,7 @@
             <div class="col-sm-12 mx-0 px-0">{{visit.isp}}</div>
             <div class="col-sm-12 mx-0 px-0">{{visit.org}}</div>
         </td>
+        <td>{{visit.auth_user}}</td>
         <td>{{visit.remote_addr}}</td>
     </tr>
     {% endfor %}

@@ -11,6 +11,7 @@ from portfolio.settings_environ import DEFAULT_FROM_EMAIL
 
 from django.shortcuts import get_object_or_404
 from .models import Skill, Project, ProjectImage, Message
+from ..db_admin._traffic.models import Traffic
 
 # import path to get content from text files to import to templates
 import os
@@ -41,6 +42,7 @@ from .forms import NewMessageForm
 
 
 def main_page(request):
+    Traffic.objects.log_request_traffic(request)    # record main page visits
     # on load, clear recaptcha if currently in session
     if 'recaptcha' in request.session:
         del request.session['recaptcha']
@@ -103,6 +105,7 @@ def filter_project(request, language):
 
 
 def get_project(request, id):
+    Traffic.objects.log_request_traffic(request)    # record project clicks
     project = get_object_or_404(Project, id=id)
     images = ProjectImage.objects.filter(project=id)
     context = {
@@ -113,6 +116,7 @@ def get_project(request, id):
     return HttpResponse(html)
 
 def recaptcha_check(request):
+    Traffic.objects.log_request_traffic(request)    # record recaptcha clicks
     # verify whether the recaptcha check passed successfully
     # through the Google ReCaptcha API
     # secret is different from the sitekey on the template
@@ -177,6 +181,7 @@ def pretty_request(request):
 
 
 def send_message(request):
+    Traffic.objects.log_request_traffic(request)    # record message clicks
     # transform form data to json
     form_json = json.loads(request.body)
     # setup partial template addresses

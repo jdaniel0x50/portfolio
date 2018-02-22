@@ -114,13 +114,15 @@ class TrafficManager(models.Manager):
             "-geo": "-city",
             "org": "org",
             "-org": "-org",
+            "user": "user_agent",
+            "-user": "-user_agent",
             "server": "remote_addr",
             "-server": "-remote_addr",
         }
         sort_field = translator[sorter]
 
-        if "date" in sorter:
-            traffic = Traffic.objects.all().order_by("-date_visited")
+        if "date" in sort_field:
+            traffic = Traffic.objects.all().order_by(sort_field)
         else:
             lower_field, order_field = case_insensitive_criteria(
                 sort_field, default
@@ -130,14 +132,13 @@ class TrafficManager(models.Manager):
                         .order_by(order_field))
         return traffic
 
+
     def get_total(self):
         totals = {}
         totals['main'] = Traffic.objects.filter(path="/").count()
         totals['admin'] = Traffic.objects.filter(path__startswith="/admin/").count()
         totals['today'] = Traffic.objects.filter(date_visited__gte=datetime.date.today()).count()
         return totals
-
-
 
 
     def log_request_traffic(self,request):
@@ -160,29 +161,9 @@ class TrafficManager(models.Manager):
                 headers["org"] = geolocation_response["org"]
                 headers["ip_geo"] = geolocation_response["query"]
         traffic = self.create(**headers)
-        print traffic
-        # for key in headers:
-        #     traffic._meta.get_field()
-        # traffic = self.create(
-        #     path=headers["path"],
-        #     auth_user=headers["auth_user"],
-        #     forwarded_for=headers["forwarded_for"],
-        #     user_agent=headers["user_agent"],
-        #     referrer=headers["referrer"],
-        #     remote_addr=headers["remote_addr"],
-        #     host_app=headers["host_app"],
-        #     ):
-            
-        # )
         return traffic
         
             
-
-
-
-
-
-
 
 class Traffic(models.Model):
     path = models.CharField(max_length=255)
