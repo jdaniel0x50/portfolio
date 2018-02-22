@@ -96,9 +96,31 @@ class TrafficManager(models.Manager):
         return headers
 
 
-    def get_all(self, sort_field="none", default="date_visited"):
-        if sort_field == "none" or sort_field == "date_visited":
-            traffic = Traffic.objects.all().order_by("date_visited")
+    def get_all(self, sorter="none", default="-date_visited"):
+        # translate the sort field to a model field
+        translator = {
+            "none": default,
+            "date": "date_visited",
+            "-date": "-date_visited",
+            "ip": "forwarded_for",
+            "-ip": "-forwarded_for",
+            "path": "path",
+            "-path": "-path",
+            "referrer": "referrer",
+            "-referrer": "-referrer",
+            "env": "user_agent",
+            "-env": "-user_agent",
+            "geo": "city",
+            "-geo": "-city",
+            "org": "org",
+            "-org": "-org",
+            "server": "remote_addr",
+            "-server": "-remote_addr",
+        }
+        sort_field = translator[sorter]
+
+        if sort_field == "none" or sort_field == "-date_visited":
+            traffic = Traffic.objects.all().order_by("-date_visited")
         else:
             lower_field, order_field = case_insensitive_criteria(
                 sort_field, default
