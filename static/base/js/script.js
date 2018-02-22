@@ -461,6 +461,20 @@ $(document).ready(function() {
         // Initial/first page rendering
         renderPage(pageNum);
     });
+
+
+    // Submit clicks on page components
+    function save_click(url) {
+        fetch_get_handler(url);
+        return;
+    }
+
+    // Click: Skill Category
+    $('.skill-set').click(function (event) {
+        url = $(this).attr('skill');
+        save_click(url);
+    })
+
 })
 
 

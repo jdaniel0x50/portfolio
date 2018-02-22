@@ -107,6 +107,7 @@ $(document).ready(function ready() {
     });
 
 
+    // Convert form data to json-ready object of serialized strings
     function formify(form) {
         let form_data_serialize = form.serializeArray();
         let form_data_object = new FormData();
@@ -114,7 +115,6 @@ $(document).ready(function ready() {
             // form_data_object[form_data_serialize[i]['name']] = form_data_serialize[i]['value'];
             form_data_object.append(form_data_serialize[i]['name'], form_data_serialize[i]['value']);
         }
-        // let form_data_stringify = JSON.stringify(form_data_object);
         return form_data_object;
     }
 
