@@ -27,7 +27,10 @@
             </script>
         </div>
         <div class="col-md-4 col-sm-10">
-            <a class="contact_link" href="https://www.linkedin.com/in/joshua-daniel-profile/" target="_blank">
+            <a class="contact_link click-set" 
+                href="https://www.linkedin.com/in/joshua-daniel-profile/" 
+                addr="{% url 'home:click_contact' address='linkedin' %}"
+                target="_blank">
                 <i class="fa fa-linkedin icon icon-about" style="font-size: 2rem" aria-hidden="true"></i>
                 <div class="row col-md-12 px-0 mx-0 justify-content-center">
                     <small>Connect with me on LinkedIn</small>
@@ -35,7 +38,10 @@
             </a>
         </div>
         <div class="col-md-4 col-sm-10">
-            <a class="contact_link" href="https://github.com/jdjustdata" target="_blank">
+            <a class="contact_link click-set" 
+                href="https://github.com/jdjustdata" 
+                addr="{% url 'home:click_contact' address='github' %}"
+                target="_blank">
                 <i class="fa fa-github icon icon-about" style="font-size: 2rem" aria-hidden="true"></i>
                 <div class="row col-md-12 px-0 mx-0 justify-content-center">
                     <small>Check out my projects on GitHub</small>

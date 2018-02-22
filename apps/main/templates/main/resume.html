@@ -1,10 +1,18 @@
 <div class="container-fluid px-0 mx-0" id="resume">
     <h2 class="section_heading">Resume</h2>
     <hr class="section_hr mb-5">
-    <a type="button" class="btn btn-secondary mx-5" data-toggle="modal" data-target="#resume_modal">
+    <a type="button" 
+        class="btn btn-secondary mx-5 click-set" 
+        addr="{% url 'home:click_resume' address='view' %}"
+        data-toggle="modal" 
+        data-target="#resume_modal">
         View Resume
     </a>
-    <a type="button" class="btn btn-secondary mx-5" href="/static/base/img/JoshuaDaniel_resume.pdf" download>
+    <a type="button" 
+        class="btn btn-secondary mx-5 click-set" 
+        href="/static/base/img/JoshuaDaniel_resume.pdf" 
+        addr="{% url 'home:click_resume' address='download' %}"
+        download>
         Download
     </a>
 </div>

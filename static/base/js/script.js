@@ -465,17 +465,14 @@ $(document).ready(function() {
 
     // Submit clicks on page components
     function save_click(url) {
-        alert(url)
         fetch_get_handler(url);
         return;
     }
-
     // Click: Skill Category
-    $('.skill-set').click(function (event) {
+    $('.click-set').click(function (event) {
         url = $(this).attr('addr');
         save_click(url);
     })
-
 })
 
 
