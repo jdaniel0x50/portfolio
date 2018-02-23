@@ -4,7 +4,7 @@ const u_api = "/admin/main/";
 const u_proj = "project/";
 const u_imgGet = "/image/get/";
 const u_imgAdd = "/image/add/";
-const u_resList = "/resume/list";
+const u_resList = "resume/list";
 
 $(document).ready(function ready() {
     // if there errors in the create or edit form, show the new project dropdown
