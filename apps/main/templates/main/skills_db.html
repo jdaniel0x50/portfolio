@@ -22,7 +22,7 @@
             {% for skill in skills_db %}
             <img 
                 class="logo" 
-                src="{% static skill.logo_url %}" 
+                src="{%if skill.skillimage%}{{ MEDIA_URL }}{{ skill.skillimage.img }}{%endif%}" 
                 alt="{{skill.skill_name}}" 
                 data-toggle="tooltip" 
                 data-placement="top"
