@@ -37,7 +37,7 @@ class SkillManager(models.Manager):
         sort_field = translator[sorter]
 
         if "date" in sort_field or "level" in sort_field:
-            skills = Skill.objects.all().order_by(sort_field).include
+            skills = Skill.objects.all().order_by(sort_field)
         else:
             # get variables to generate case-insensitive sort query
             lower_field, order_field = case_insensitive_criteria(
@@ -62,9 +62,9 @@ class SkillManager(models.Manager):
             .order_by(order_field)
         )
         choices = ()
-        # for choice in skills:
-        #     skill_string = choice.skill_name + " [" + choice.skill_type + "]"
-        #     choices = choices + ((choice.id, skill_string),)
+        for choice in skills:
+            skill_string = choice.skill_name + " [" + choice.skill_type + "]"
+            choices = choices + ((choice.id, skill_string),)
         return choices
 
     def get_total(self):
