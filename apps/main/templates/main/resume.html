@@ -3,9 +3,11 @@
     <hr class="section_hr mb-5">
     <a type="button" 
         class="btn btn-secondary mx-5 click-set" 
+        href="{{ MEDIA_URL }}{{ resume.res_file }}"
         addr="{% url 'home:click_resume' address='view' %}"
-        data-toggle="modal" 
-        data-target="#resume_modal">
+        target="_blank">
+        <!-- data-toggle="modal" 
+        data-target="#resume_modal"> -->
         View Resume
     </a>
     <a type="button" 
