@@ -60,12 +60,12 @@
                 class="badge badge-pill badge-warning btn skill-logo-edit">
                 Logo
             </a>
-            <a 
+            <!-- <a 
                 href="{% url 'db_admin:skill_edit' id=skill.id %}" 
                 skillId={{skill.id}}
                 class="badge badge-pill badge-warning btn skill-edit">
                 Edit
-            </a>
+            </a> -->
             <a
                 id="skill-remove-{{skill.id}}"
                 href="{% url 'db_admin:skill_destroy' id=skill.id %}"
