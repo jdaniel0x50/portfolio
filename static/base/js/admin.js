@@ -314,6 +314,7 @@ $(document).ready(function ready() {
             }
             function case_success(projId) {
                 get_all_project_images(projId);
+                document.getElementById("img-add-form").reset();
             }
 
             fetch_post_handler(
@@ -542,6 +543,7 @@ $(document).ready(function ready() {
             readURL(context['img_file'], el_img);
             enable_skill_links();
             remove_skill_logo_form();
+            document.getElementById("skill-logo").reset();
         }
 
         fetch_post_handler(
@@ -588,10 +590,9 @@ $(document).ready(function ready() {
     // AJAX -- get resume list
     function get_resume_list() {
         var get_url = u_api + u_resList;
-        var res_container = "#resume-list";
         fetch_get_handler(
             get_url=get_url,
-            res_container=res_container,
+            res_container=$("#resume-list"),
             context="",
             callback=null
         );
@@ -617,6 +618,7 @@ $(document).ready(function ready() {
         }
         function case_success(context) {
             get_resume_list()
+            document.getElementById("resume-upload-form").reset();
         }
 
         fetch_post_handler(
