@@ -56,6 +56,18 @@ def upload(request):
     return redirect(reverse('db_admin:resume'))
 
 
+def list(request):
+    if not request.user.is_authenticated():
+        return redirect(const.redirect_403)
+
+    resumes = Resume.objects.get_all()
+    context = {
+        "resumes": resumes
+    }
+    http = render_to_string('db_resume/list.html', context, request)
+    return HttpResponse(http)
+
+
 def destroy(request, id):
     if not request.user.is_authenticated():
         return redirect(const.redirect_403)

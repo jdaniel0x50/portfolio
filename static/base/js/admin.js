@@ -4,7 +4,7 @@ const u_api = "/admin/main/";
 const u_proj = "project/";
 const u_imgGet = "/image/get/";
 const u_imgAdd = "/image/add/";
-
+const u_resList = "/resume/list";
 
 $(document).ready(function ready() {
     // if there errors in the create or edit form, show the new project dropdown
@@ -585,6 +585,19 @@ $(document).ready(function ready() {
     });
 
 
+    // AJAX -- get resume list
+    function get_resume_list() {
+        var get_url = u_api + u_resList;
+        var res_container = "#resume-list";
+        fetch_get_handler(
+            get_url=get_url,
+            res_container=res_container,
+            context="",
+            callback=null
+        );
+    }
+
+
     // AJAX -- upload resume
     $(document).on('submit', '#resume-upload-form', function(event) {
         // disable submit button to avoid multiple uploads
@@ -603,6 +616,7 @@ $(document).ready(function ready() {
             $('#resume-upload-submit').prop('disabled', false);   // reenable submit
         }
         function case_success(context) {
+            get_resume_list()
         }
 
         fetch_post_handler(

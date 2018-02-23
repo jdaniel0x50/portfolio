@@ -99,6 +99,7 @@ urlpatterns = [
     # resume routes
     url(r'^resume/$', ResumeViews.index, name='resume'),
     url(r'^resume/add$', ResumeViews.upload, name='resume_upload'),
+    url(r'^resume/list$', ResumeViews.list, name='resume_list'),
     url(r'^resume/(?P<id>[0-9]+)/destroy$', ResumeViews.destroy, name='resume_destroy'),
 
     # traffic routes
