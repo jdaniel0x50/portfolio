@@ -46,7 +46,7 @@
     <tr id="skill_{{skill.id}}">
         <td>{{skill.skill_name}}</td>
         <td>{{skill.get_skill_type_display}}</td>
-        <td class="text-center"><img id="skill-logo-{{skill.id}}" class="logo-sm" src="{{ MEDIA_URL }}{{ skill.skillimage.img }}"></td>
+        <td class="text-center"><img id="skill-logo-{{skill.id}}" class="logo-sm" src="{%if skill.skillimage%}{{ MEDIA_URL }}{{ skill.skillimage.img }}{%endif%}"></td>
         <td class="text-center">{{skill.skill_level}}</td>
         <td>{{skill.created_at}}</td>
         <td>
