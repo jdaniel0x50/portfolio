@@ -15,7 +15,7 @@ class ResumeManager(models.Manager):
 def resume_directory_path(instance, filename):
     # generate file upload path
     # file will be uploaded to MEDIA_ROOT/resume/<filename>
-    return 'resume/{1}'.format(filename)
+    return 'resume/{0}'.format(filename)
 
 
 class Resume(models.Model):
