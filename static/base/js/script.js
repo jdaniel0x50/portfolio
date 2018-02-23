@@ -359,8 +359,9 @@ $(document).ready(function() {
 
     // *** START PDF.js Section ***
     // PDF.js functions to view PDF documents in canvas tag
-    var domain = "https://afternoon-hollows-18869.herokuapp.com/";
-    var url = domain + "static/base/img/JoshuaDaniel_Resume.pdf";
+    // var domain = "https://afternoon-hollows-18869.herokuapp.com/";
+    // var url = domain + "static/base/img/JoshuaDaniel_Resume.pdf";
+    var url = $("#resume-download").attr(href);
     console.log(url);
 
     // Disable workers to avoid yet another cross-origin issue (workers need

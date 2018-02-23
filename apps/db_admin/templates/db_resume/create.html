@@ -13,7 +13,7 @@
         {% endif %}
         <div class="row col-sm-12 mx-0 px-0">
             <div class="form-group row col-sm-12 mx-0 px-0 justify-content-end px-0">
-                <label for="upload" class="col-sm-2 col-form-label">File</label>
+                <label for="upload" class="col-sm-2 col-form-label text-right">File</label>
                 <input type="file" id="resume-upload-file" name="upload" class="form-control col-md-3 col-sm-6">
                 <!-- Field Specific Errors -->
                 {% for field in form %} {% if field.errors and field == "res_file" %} {% for error in field.errors %}

@@ -11,6 +11,7 @@ from portfolio.settings_environ import DEFAULT_FROM_EMAIL
 
 from django.shortcuts import get_object_or_404
 from .models import Skill, Project, ProjectImage, Message
+from ..db_admin._resume.models import Resume
 from ..db_admin._traffic.models import Traffic
 
 # import path to get content from text files to import to templates
@@ -71,6 +72,7 @@ def main_page(request):
 
     # get projects
     projects = Project.objects.get_all()
+    resume = Resume.objects.most_recent()
 
     context = {
         "about_file": about_file,
@@ -85,6 +87,7 @@ def main_page(request):
         "skills_method": skills_method,
         "skills_tech": skills_tech,
         "projects": projects,
+        "resume": resume,
         "key": key,
     }
     return render(request, "main/base.html", context)

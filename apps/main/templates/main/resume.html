@@ -9,8 +9,9 @@
         View Resume
     </a>
     <a type="button" 
+        id="resume-download"
         class="btn btn-secondary mx-5 click-set" 
-        href="/static/base/img/JoshuaDaniel_resume.pdf" 
+        href="{{ MEDIA_URL }}{{ skill.skillimage.img }}" 
         addr="{% url 'home:click_resume' address='download' %}"
         download>
         Download
