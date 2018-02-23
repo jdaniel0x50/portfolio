@@ -585,6 +585,41 @@ $(document).ready(function ready() {
     });
 
 
+    // AJAX -- upload resume
+    $(document).on('submit', '#resume-upload-form', function(event) {
+        // disable submit button to avoid multiple uploads
+        event.preventDefault();
+        $('#resume-upload-submit').prop('disabled', true);
+
+        var contextForm = $('#resume-upload-form');
+        var post_url = contextForm.attr('action');
+        var post_type = contextForm.attr('enctype');
+        var form_data = formify(contextForm);   // convert to FormData object
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]", contextForm).val();
+        var up_file = $('input:file')[0].files[0]; // select uploaded image
+        form_data.append('res_file', up_file);      // append to FormData
+
+        function case_all() {
+            $('#resume-upload-submit').prop('disabled', false);   // reenable submit
+        }
+        function case_success(context) {
+        }
+
+        fetch_post_handler(
+            post_url=post_url,
+            method="POST",
+            csrftoken=csrftoken,
+            form_data=form_data,
+            form_selector=contextForm,
+            context="",
+            response_modal_id="projectEditRes",
+            callback_success=case_success,
+            callback_error=null,
+            callback_all=case_all,
+        );
+    });
+
+
     // remove temporary modals after hidden
     $('body').on('hidden.bs.modal', '#projectEditRes', function () {
         $('#projectEditRes').remove();
