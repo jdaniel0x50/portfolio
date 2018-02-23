@@ -7,6 +7,7 @@ from ._messages import views as MessageViews
 from ._projects import views as ProjectViews
 from ._skills import views as SkillViews
 from ._traffic import views as TrafficViews
+from ._resume import views as ResumeViews
 
 urlpatterns = [
     # login routes
@@ -94,6 +95,11 @@ urlpatterns = [
         MessageViews.message_index, name='messages_sort'),
     url(r'^message/(?P<id>[0-9]+)/destroy',
         MessageViews.destroy_message, name='message_destroy'),
+
+    # resume routes
+    url(r'^resume/$', ResumeViews.index, name='resume'),
+    url(r'^resume/add$', ResumeViews.upload, name='resume_upload'),
+    url(r'^resume/(?P<id>[0-9]+)/destroy$', ResumeViews.destroy, name='resume_destroy'),
 
     # traffic routes
     url(r'^traffic/$', TrafficViews.traffic_index, name='traffic'),

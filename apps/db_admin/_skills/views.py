@@ -72,7 +72,6 @@ def skills_create(request):
 def skill_destroy(request, id):
     if not request.user.is_authenticated():
         return redirect(const.redirect_403)
-    print "INSIDE SKILL DESTROY ACTION"
     images = SkillImage.objects.filter(skill=id)
     for image in images:
         image.delete()      # remove project images
@@ -133,7 +132,6 @@ def skill_logo(request, id):
 def skill_logo_destroy(request, id, logo_id):
     if not request.user.is_authenticated():
         return redirect(const.redirect_403)
-    print "INSIDE LOGO DESTROY ACTION"
     img = get_object_or_404(SkillImage, id=logo_id)
     img.delete()
 

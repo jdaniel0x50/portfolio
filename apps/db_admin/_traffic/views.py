@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect, get_list_or_404
+from ...main.exceptions import const, method_not_allowed
 
 from .models import Traffic
 
 
 def traffic_index(request, sort_f="none"):
+    if not request.user.is_authenticated():
+        return redirect(const.redirect_403)
+
     traffic = Traffic.objects.get_all(sort_f)
     totals = Traffic.objects.get_total()
     

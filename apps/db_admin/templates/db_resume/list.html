@@ -1,0 +1,26 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Filename</th>
+            <th scope="col">Date Added</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    {% for res in resumes %}
+    <tr id="resume_{{res.id}}">
+        <td>{{res.res_file.name}}</td>
+        <td>{{res.created_at}}</td>
+        <td>
+            <a
+                id="resume-remove-{{res.id}}"
+                href="{% url 'db_admin:resume_destroy' id=res.id %}"
+                resumeId={{res.id}}
+                class="badge badge-pill badge-danger btn destroy_action resume-destroy"
+                x-type="resume"
+                x-name="{{res.res_file.name}}">
+                Remove
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
