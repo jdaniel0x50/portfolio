@@ -119,14 +119,16 @@ $(document).ready(function() {
     
     // hover over navmenu when collapsed
     // causes menu to expand or collapse
-    $('.navbar-toggler').hover(function (event) {
+    $('.navbar-toggler').mouseenter(function (event) {
         // hover handlerIn
         let window_width = $(window).width();
         if (window_width < 992) {
             // menu collapsed --> expand
             $('#navCollapse').collapse('show');
         }
-    }, function(event) {
+    });
+    // hover off whole navbar element
+    $('#navbar').mouseleave(function(event) {
         // hover handlerOut
         let window_width = $(window).width();
         if (window_width < 992) {
