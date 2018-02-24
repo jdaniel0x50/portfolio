@@ -88,20 +88,13 @@ $(document).ready(function() {
 
     // hover over main link causes animation
     // font size changes while remaining centered in div
-    // let title = $('#particles_link  .splash-title').css('font-size');
     let subtitle = $('#particles_link  .splash-subtitle').css('font-size');
     $('#particles_link').hover(function () {
         // hover handlerIn
         let aDuration = 1000; // 1 second
-        // let title_num = title.replace("px", "");
-        // title_num = parseInt(title_num) * 0.95;
-        // title_change = title_num.toString() + "px";
         let subtitle_num = subtitle.replace("px", "");
         subtitle_num = parseInt(subtitle_num) * 1.05;
         subtitle_change = subtitle_num.toString() + "px";
-        // $('#particles_link  .splash-title').animate({
-        //     "font-size": title_change
-        // }, aDuration);
         $('#particles_link  .splash-subtitle').animate({
             "font-size": subtitle_change
         }, {
@@ -113,9 +106,6 @@ $(document).ready(function() {
     }, function(event) {
         // hover handlerOut
         let aDuration = 1000; // 1 second
-        // $('#particles_link  h1').animate({
-        //     "font-size": title
-        // }, aDuration);
         $('#particles_link  h2').animate({
             "font-size": subtitle
         }, {
@@ -125,7 +115,25 @@ $(document).ready(function() {
             }
         });
     });
+
     
+    // hover over navmenu when collapsed
+    // causes menu to expand or collapse
+    $('.navbar-toggler').hover(function (event) {
+        // hover handlerIn
+        let window_width = $(window).width();
+        if (window_width < 992) {
+            // menu collapsed --> expand
+            $('#navCollapse').collapse('show');
+        }
+    }, function(event) {
+        // hover handlerOut
+        let window_width = $(window).width();
+        if (window_width < 992) {
+            $('#navCollapse').collapse();
+        }
+    });
+
 
     // Add smooth scrolling to all links
     $("a").on('click', function (event) {
