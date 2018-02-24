@@ -1,10 +1,11 @@
 <div class="card bg-white">
     <div class="card-header" role="tab" id="headingThree">
         <h5 class="mb-0">
-            <a class="collapse_link collapsed" 
+            <a class="collapse_link collapsed click-set" 
                 data-toggle="collapse" 
                 href="#collapseThree" 
                 role="button" 
+                addr="{% url 'home:click_skill' address='frontend' %}"
                 aria-expanded="false" 
                 aria-controls="collapseThree">
                 Front End Frameworks
@@ -17,11 +18,10 @@
         aria-labelledby="headingThree" 
         data-parent="#accordionOne">
         <div class="card-body">
-            {% load static %}
             {% for skill in skills_frontend %}
             <img 
                 class="logo" 
-                src="{% static skill.logo_url %}" 
+                src="{%if skill.skillimage%}{{ MEDIA_URL }}{{ skill.skillimage.img }}{%endif%}" 
                 alt="{{skill.skill_name}}" 
                 data-toggle="tooltip" 
                 data-placement="top"

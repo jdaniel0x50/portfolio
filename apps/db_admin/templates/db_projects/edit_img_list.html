@@ -40,10 +40,12 @@
                         <i class="fa fa-pencil text-dark" aria-hidden="true"></i>
                     </small>
                 </a>
-                <a 
+                <a id="project-img-destroy-{{img.id}}"
                     class="edit-img-remove" 
                     proj="{{img.project.id}}" 
                     img="{{img.id}}" 
+                    x-type="image" 
+                    x-name="{{img.img_url.name}}"
                     href="{% url 'db_admin:pimage_destroy' id=project.id image_id=img.id %}">
                     <small>
                         <i class="fa fa-trash-o text-danger" aria-hidden="true"></i>

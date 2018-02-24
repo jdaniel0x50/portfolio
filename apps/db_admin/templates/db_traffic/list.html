@@ -1,0 +1,125 @@
+<table id="traffic-all" class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Date Visited
+                <div class="col-sm-12 mx-0 px-0">
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='-date' %}" alt="Sort Descending">
+                        <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='date' %}" alt="Sort Ascending">
+                        <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                IP Address
+                <div class="col-sm-12 mx-0 px-0">
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='-ip' %}" alt="Sort Descending">
+                        <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='ip' %}" alt="Sort Ascending">
+                        <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                Path Visited
+                <div class="col-sm-12 mx-0 px-0">
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='-path' %}" alt="Sort Descending">
+                        <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='path' %}" alt="Sort Ascending">
+                        <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                Referrer
+                <div class="col-sm-12 mx-0 px-0">
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='-referrer' %}" alt="Sort Descending">
+                        <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='referrer' %}" alt="Sort Ascending">
+                        <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                Environment
+                <div class="col-sm-12 mx-0 px-0">
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='-env' %}" alt="Sort Descending">
+                        <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='env' %}" alt="Sort Ascending">
+                        <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                Geolocation
+                <div class="col-sm-12 mx-0 px-0">
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='-geo' %}" alt="Sort Descending">
+                        <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='geo' %}" alt="Sort Ascending">
+                        <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                    </a>
+            </th>
+            <th scope="col">
+                IP Affiliation
+                <div class="col-sm-12 mx-0 px-0">
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='-org' %}" alt="Sort Descending">
+                        <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='org' %}" alt="Sort Ascending">
+                        <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                Auth User
+                <div class="col-sm-12 mx-0 px-0">
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='-user' %}" alt="Sort Descending">
+                        <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='user' %}" alt="Sort Ascending">
+                        <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th scope="col">
+                Server
+                <div class="col-sm-12 mx-0 px-0">
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='-server' %}" alt="Sort Descending">
+                        <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'db_admin:traffic_sort' sort_f='server' %}" alt="Sort Ascending">
+                        <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    {% for visit in traffic %}
+    <tr>
+        <td>{{visit.date_visited}}</td>
+        <td>{{visit.forwarded_for}}</td>
+        <td>{{visit.path}}</td>
+        <td>{{visit.referrer}}</td>
+        <td>{{visit.user_agent}}</td>
+        <td>
+            <div class="col-sm-12 mx-0 px-0">{{visit.city}}</div>
+            <div class="col-sm-12 mx-0 px-0">{{visit.region}}</div>
+            <div class="col-sm-12 mx-0 px-0">{{visit.zip}}</div>
+            <div class="col-sm-12 mx-0 px-0">{{visit.country}}</div>
+        </td>
+        <td>
+            <div class="col-sm-12 mx-0 px-0">{{visit.isp}}</div>
+            <div class="col-sm-12 mx-0 px-0">{{visit.org}}</div>
+        </td>
+        <td>{{visit.auth_user}}</td>
+        <td>{{visit.remote_addr}}</td>
+    </tr>
+    {% endfor %}
+</table>

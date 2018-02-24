@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'apps.db_admin._messages',
     'apps.db_admin._projects',
     'apps.db_admin._skills',
+    'apps.db_admin._resume',
 ]
 
 MIDDLEWARE = [

@@ -21,14 +21,31 @@ def case_insensitive_criteria(sort_field, default):
 
 
 class SkillManager(models.Manager):
-    def get_all(self, sort_field="none", default="skill_name"):
-        # get variables to generate case-insensitive sort query
-        lower_field, order_field = case_insensitive_criteria(
-            sort_field, default
-        )
-        skills = (Skill.objects.all()
-            .extra(select={'lower_field':lower_field})
-            .order_by(order_field))
+    def get_all(self, sorter="none", default="skill_name"):
+        # translate the sort field to a model field
+        translator = {
+            "none": default,
+            "skill": "skill_name",
+            "-skill": "-skill_name",
+            "category": "skill_type",
+            "-category": "-skill_type",
+            "level": "skill_level",
+            "-level": "-skill_level",
+            "date": "created_at",
+            "-date": "-created_at",
+        }
+        sort_field = translator[sorter]
+
+        if "date" in sort_field or "level" in sort_field:
+            skills = Skill.objects.all().order_by(sort_field)
+        else:
+            # get variables to generate case-insensitive sort query
+            lower_field, order_field = case_insensitive_criteria(
+                sort_field, default
+            )
+            skills = (Skill.objects.all()
+                .extra(select={'lower_field':lower_field})
+                .order_by(order_field))
         return skills
 
     def get_by_type(self, type):
@@ -45,9 +62,9 @@ class SkillManager(models.Manager):
             .order_by(order_field)
         )
         choices = ()
-        # for choice in skills:
-        #     skill_string = choice.skill_name + " [" + choice.skill_type + "]"
-        #     choices = choices + ((choice.id, skill_string),)
+        for choice in skills:
+            skill_string = choice.skill_name + " [" + choice.skill_type + "]"
+            choices = choices + ((choice.id, skill_string),)
         return choices
 
     def get_total(self):
@@ -57,6 +74,12 @@ class SkillManager(models.Manager):
             _count = Skill.objects.filter(skill_type=key).count()
             totals[key] = _count
         return totals
+
+
+class SkillImageManager(models.Manager):
+    def get_by_skill(self, id):
+        images = SkillImage.objects.filter(skill=id)
+        return images
 
 
 class MessageManager(models.Manager):
@@ -171,7 +194,11 @@ class Skill(models.Model):
         max_length=2,
         choices=SkillTypeChoices.SKILL_TYPE_CHOICES
     )
-    logo_url = models.CharField(max_length=255)
+    logo_url = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+    )
     skill_level = models.SmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -184,12 +211,20 @@ def skill_logo_directory_path(instance, filename):
     return 'skill/{0}/{1}'.format(instance.skill.id, filename)
 
 class SkillImage(models.Model):
-    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    skill = models.OneToOneField(Skill, on_delete=models.CASCADE)
     img = models.ImageField(
         upload_to=skill_logo_directory_path
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = SkillImageManager()
+
+    def filename(self):
+        return os.path.basename(self.img.name)
+
+    def delete(self):
+        self.img.delete(save=False)
+        super(SkillImage, self).delete()
 
 
 class Project(models.Model):
@@ -270,8 +305,7 @@ class Message(models.Model):
         default="FollowUp to " + DOMAIN_NAME
     )
     message_text = models.TextField()
-    message_sent = models.DateTimeField(auto_now=True)
+    message_sent = models.DateTimeField(auto_now_add=True)
     objects = MessageManager()
-
 
     

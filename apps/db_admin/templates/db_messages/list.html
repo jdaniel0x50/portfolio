@@ -50,7 +50,10 @@
         <td>{{msg.message_sent}}</td>
         <td>
             <a 
+                id="message-destroy-{{msg.id}}"
                 href="{% url 'db_admin:message_destroy' id=msg.id %}" 
+                x-type="message" 
+                x-name="from {{msg.sender_name}}, on {{msg.message_sent}}"
                 class="badge badge-pill badge-danger destroy_action">
                 Remove
             </a>

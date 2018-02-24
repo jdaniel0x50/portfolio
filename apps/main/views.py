@@ -11,6 +11,8 @@ from portfolio.settings_environ import DEFAULT_FROM_EMAIL
 
 from django.shortcuts import get_object_or_404
 from .models import Skill, Project, ProjectImage, Message
+from ..db_admin._resume.models import Resume
+from ..db_admin._traffic.models import Traffic
 
 # import path to get content from text files to import to templates
 import os
@@ -40,7 +42,13 @@ from django.core.mail import EmailMessage, send_mail, BadHeaderError
 from .forms import NewMessageForm
 
 
+def log_traffic(request):
+    Traffic.objects.log_request_traffic(request)
+    return
+
+
 def main_page(request):
+    log_traffic(request)    # record main page visits
     # on load, clear recaptcha if currently in session
     if 'recaptcha' in request.session:
         del request.session['recaptcha']
@@ -64,6 +72,7 @@ def main_page(request):
 
     # get projects
     projects = Project.objects.get_all()
+    resume = Resume.objects.most_recent()
 
     context = {
         "about_file": about_file,
@@ -78,12 +87,14 @@ def main_page(request):
         "skills_method": skills_method,
         "skills_tech": skills_tech,
         "projects": projects,
+        "resume": resume,
         "key": key,
     }
     return render(request, "main/base.html", context)
 
 
 def filter_project(request, language):
+    log_traffic(request)    # record language filter clicks
     if language == "csharp": language = "c#"
     if language == "all":
         projects = Project.objects.all()
@@ -103,6 +114,7 @@ def filter_project(request, language):
 
 
 def get_project(request, id):
+    log_traffic(request)    # record project clicks
     project = get_object_or_404(Project, id=id)
     images = ProjectImage.objects.filter(project=id)
     context = {
@@ -113,6 +125,7 @@ def get_project(request, id):
     return HttpResponse(html)
 
 def recaptcha_check(request):
+    log_traffic(request)    # record recaptcha clicks
     # verify whether the recaptcha check passed successfully
     # through the Google ReCaptcha API
     # secret is different from the sitekey on the template
@@ -177,6 +190,7 @@ def pretty_request(request):
 
 
 def send_message(request):
+    log_traffic(request)    # record message clicks
     # transform form data to json
     form_json = json.loads(request.body)
     # setup partial template addresses
@@ -263,3 +277,8 @@ def send_message(request):
     _http_response = HttpResponse(html)
     _http_response.__setitem__(_xheader, _header_value)
     return _http_response
+
+def record_click(request, address):
+    log_traffic(request)
+    return HttpResponse('')
+

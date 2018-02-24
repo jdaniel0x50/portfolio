@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator
-from ...main.models import Skill
+from ...main.models import Skill, SkillImage
 
 
 class NewSkillForm(forms.Form):
@@ -24,7 +24,7 @@ class NewSkillForm(forms.Form):
     )
     logo_url = forms.CharField(
         label="Logo URL",
-        required=True,
+        required=False,
         max_length=255,
         strip=True,
         validators=[
@@ -41,3 +41,9 @@ class NewSkillForm(forms.Form):
         max_value=5,
         initial=4
     )
+
+
+class NewSkillImageForm(forms.ModelForm):
+    class Meta:
+        model=SkillImage
+        fields=('skill', 'img')

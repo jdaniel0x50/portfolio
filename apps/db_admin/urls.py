@@ -6,23 +6,23 @@ from ..main import views as MainViews
 from ._messages import views as MessageViews
 from ._projects import views as ProjectViews
 from ._skills import views as SkillViews
+from ._traffic import views as TrafficViews
+from ._resume import views as ResumeViews
 
 urlpatterns = [
-    # login routes
-    # url(r'^login', AdminViews.admin_login),
-    # url(r'^register', AdminViews.create_admin),
-    # url(r'^access_denied', AdminViews.admin_access_denied),
-    # url(r'^logout', AdminViews.admin_logout),
-
     # skill routes
     url(r'^skill/$', SkillViews.skills_index, name="skills"),
-    url(r'^skill/sort=(?P<sort_f>[a-zA-Z_\-]+)',
+    url(r'^skill/sort=(?P<sort_f>[a-zA-Z_\-]+)$',
         SkillViews.skills_index, name="skills_sort"),
     url(r'^skill/create', SkillViews.skills_create, name="skill_create"),
-    url(r'^skill/edit/(?P<id>[0-9]+)',
+    url(r'^skill/(?P<id>[0-9]+)/edit$',
         SkillViews.skills_index, name="skill_edit"),
-    url(r'^skill/destroy/(?P<id>[0-9]+)',
-        SkillViews.skills_index, name="skill_destroy"),
+    url(r'^skill/(?P<id>[0-9]+)/logo$',
+        SkillViews.skill_logo, name="skill_logo"),
+    url(r'^skill/(?P<id>[0-9]+)/logo/(?P<logo_id>[0-9]+)/destroy$',
+        SkillViews.skill_logo_destroy, name="skill_logo_destroy"),
+    url(r'^skill/(?P<id>[0-9]+)/destroy$',
+        SkillViews.skill_destroy, name="skill_destroy"),
 
     # project routes
     url(
@@ -87,7 +87,18 @@ urlpatterns = [
     url(r'^message/$', MessageViews.message_index, name='messages'),
     url(r'^message/sort=(?P<sort_f>[a-zA-Z_\-]+)',
         MessageViews.message_index, name='messages_sort'),
-    url(r'^message/destroy/(?P<id>[0-9]+)',
+    url(r'^message/(?P<id>[0-9]+)/destroy',
         MessageViews.destroy_message, name='message_destroy'),
+
+    # resume routes
+    url(r'^resume/$', ResumeViews.index, name='resume'),
+    url(r'^resume/add$', ResumeViews.upload, name='resume_upload'),
+    url(r'^resume/list$', ResumeViews.list, name='resume_list'),
+    url(r'^resume/(?P<id>[0-9]+)/destroy$', ResumeViews.destroy, name='resume_destroy'),
+
+    # traffic routes
+    url(r'^traffic/$', TrafficViews.traffic_index, name='traffic'),
+    url(r'^traffic/sort=(?P<sort_f>[a-zA-Z_\-]+)',
+        TrafficViews.traffic_index, name='traffic_sort'),
 
 ]

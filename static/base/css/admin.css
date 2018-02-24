@@ -67,3 +67,10 @@
     max-width: 100%;
     margin: 0 auto;
 }
+
+#traffic-all th {
+    font-size: 80%;
+}
+#traffic-all td {
+    font-size: 60%;
+}
