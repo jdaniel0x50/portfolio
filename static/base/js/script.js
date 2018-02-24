@@ -1,22 +1,4 @@
 $(document).ready(function() {
-    function setElementDimensions() {
-        let window_height = $(window).height();
-        let window_width = $(window).width();
-
-        // set dimensions of key elements at the top of page
-        $('#particles-js').css('min-height', window_height);
-        $('#particles-cover').css('min-height', window_height);
-        $('#header').css('min-height', window_height * 1.1);
-        $('#navbar.sps').attr('data-sps-offset', window_height);
-        $('#footer').css('min-height', window_height * 0.8);
-
-        // center elements
-        setElementsCenter('particles-overlay');
-        setElementsCenter('citations', 'footer');
-
-        setElementHeight();
-    }
-
     function setElementHeight() {
         // set project card height to a ratio of the width
         let el_width = $('.project-view:first-child').width();
@@ -32,6 +14,29 @@ $(document).ready(function() {
         $('.flipper .flip-back').css({'width': el_width});
     }
 
+    function setElementDimensions() {
+        let window_height = $(window).height();
+        let window_width = $(window).width();
+
+        // set dimensions of key elements at the top of page
+        $('#particles-js').css('min-height', window_height);
+        $('#particles-cover').css('min-height', window_height);
+        $('#header').css('min-height', window_height * 1.1);
+        $('#navbar.sps').attr('data-sps-offset', window_height);
+        $('#footer').css('min-height', window_height * 0.8);
+
+        // collapse menu bar if small window
+        if (window_width < 992) {
+            $('#navCollapse').collapse();
+        }
+
+        // center elements
+        setElementsCenter('particles-overlay');
+        setElementsCenter('citations', 'footer');
+
+        setElementHeight();
+    }
+    
     function setElementsCenter(strElementId, strDivId='none') {
         // this function centers elements to the window
         // or a designated parent div
