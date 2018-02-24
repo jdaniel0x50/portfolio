@@ -10,12 +10,6 @@ from ._traffic import views as TrafficViews
 from ._resume import views as ResumeViews
 
 urlpatterns = [
-    # login routes
-    # url(r'^login', AdminViews.admin_login),
-    # url(r'^register', AdminViews.create_admin),
-    # url(r'^access_denied', AdminViews.admin_access_denied),
-    # url(r'^logout', AdminViews.admin_logout),
-
     # skill routes
     url(r'^skill/$', SkillViews.skills_index, name="skills"),
     url(r'^skill/sort=(?P<sort_f>[a-zA-Z_\-]+)$',
