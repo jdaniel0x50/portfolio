@@ -130,7 +130,7 @@ $(document).ready(function() {
         // hover handlerOut
         let window_width = $(window).width();
         if (window_width < 992) {
-            $('#navCollapse').collapse();
+            $('#navCollapse').collapse('hide');
         }
     });
 
