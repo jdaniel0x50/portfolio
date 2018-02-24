@@ -106,8 +106,13 @@ button.bg-lightorange:hover {
 		display: block;
 	}
 }
-@media (max-width: 800px) {
+@media (max-width: 850px) {
 	#particles-js {
+		display: none;
+	}
+}
+@media (min-width: 850px) {
+	#particles-cover {
 		display: none;
 	}
 }
@@ -182,6 +187,9 @@ body::-webkit-scrollbar {
 
 /* Particles.js and Header Style Properties */
 #particles-js {
+	height: 100%;
+}
+#particles-cover {
 	height: 100%;
 }
 #particles-overlay {
