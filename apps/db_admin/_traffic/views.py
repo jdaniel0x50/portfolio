@@ -8,7 +8,6 @@ from datetime import datetime
 
 from .models import Traffic
 
-@login_required
 def traffic_index(request, sort_f="none"):
     if not request.user.is_authenticated():
         return redirect(const.redirect_403)
