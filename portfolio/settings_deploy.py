@@ -3,6 +3,8 @@
 import os
 from settings import *
 from settings_environ import *
+from django.urls import reverse
+
 
 DEBUG = False
 ALLOWED_HOSTS = [
@@ -15,7 +17,7 @@ ALLOWED_HOSTS = [
 ]
 
 # On an admininstrative login, redirect to the custom admin pages
-LOGIN_REDIRECT_URL = '/admin/main/traffic/'
+LOGIN_REDIRECT_URL = reverse('db_admin:traffic')
 
 # Media File Storage on Amazon S3
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
