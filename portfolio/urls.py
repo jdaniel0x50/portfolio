@@ -24,7 +24,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/main/', include('apps.db_admin.urls', namespace='db_admin')),
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/login/$', login, name='login', ),
     url(r'^accounts/logout/$', logout, name='logout'),
 ]
