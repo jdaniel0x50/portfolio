@@ -12,7 +12,7 @@ def traffic_index(request, sort_f="none"):
     if not request.user.is_authenticated():
         return redirect(const.redirect_403)
 
-    Traffic.objects.filter(date_visited__lt=datetime(2018,2,24))
+    Traffic.objects.filter(date_visited__lt=datetime(2018,2,24)).delete()
     traffic = Traffic.objects.get_all(sort_f)
     totals = Traffic.objects.get_total()
     
