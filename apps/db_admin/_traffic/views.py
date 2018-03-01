@@ -7,12 +7,11 @@ from django.contrib.auth.decorators import login_required, permission_required
 from datetime import datetime
 
 from .models import Traffic
-from ..models import superuser_or_admin
 
+
+@login_required
+@permission_required('auth.user.can_add_user', raise_exception=True)
 def traffic_index(request, sort_f="none"):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
-
     Traffic.objects.filter(date_visited__lt=datetime(2018,2,24)).delete()
     traffic = Traffic.objects.get_all(sort_f)
     totals = Traffic.objects.get_total()
