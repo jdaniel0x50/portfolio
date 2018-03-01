@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect, get_list_or_404
-from ...main.exceptions import const, method_not_allowed
 from django.contrib.auth.decorators import login_required, permission_required
 
 from datetime import datetime
-
 from .models import Traffic
 
 
