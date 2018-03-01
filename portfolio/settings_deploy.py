@@ -13,6 +13,9 @@ ALLOWED_HOSTS = [
     'afternoon-hollows-18869.herokuapp.com',
     'afternoon-hollows-18869-pr-2.herokuapp.com',
     'afternoon-hollows-18869-pr-3.herokuapp.com',
+    'afternoon-hollows-18869-pr-4.herokuapp.com',
+    'afternoon-hollows-18869-pr-5.herokuapp.com',
+    'afternoon-hollows-18869-pr-6.herokuapp.com',
     'joshuadanielcodes.com',
     'www.joshuadanielcodes.com',
 ]
