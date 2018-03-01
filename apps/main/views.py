@@ -7,7 +7,6 @@ from django.template.loader import render_to_string, get_template
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
-from portfolio.settings_environ import DEFAULT_FROM_EMAIL
 
 from django.shortcuts import get_object_or_404
 from .models import Skill, Project, ProjectImage, Message
@@ -27,10 +26,16 @@ if settings_environ.RECAPTCHA_SITE_KEY != None:
     from portfolio.settings_environ import RECAPTCHA_SITE_KEY as RECAPTCHA_SITE_KEY
     from portfolio.settings_environ import RECAPTCHA_SECRET_KEY as RECAPTCHA_SECRET_KEY
     from portfolio.settings_environ import DOMAIN_NAME as DOMAIN_NAME
+    from portfolio.settings_environ import DEFAULT_FROM_EMAIL
+    from portfolio.settings_environ import EMAIL_HOST_USER
+
 else:
     from portfolio.settings_sensitive import RECAPTCHA_SITE_KEY as RECAPTCHA_SITE_KEY
     from portfolio.settings_sensitive import RECAPTCHA_SECRET_KEY as RECAPTCHA_SECRET_KEY
     from portfolio.settings_sensitive import DOMAIN_NAME as DOMAIN_NAME
+    from portfolio.settings_sensitive import DEFAULT_FROM_EMAIL
+    from portfolio.settings_sensitive import EMAIL_HOST_USER
+
 
 # import requests module for api call
 import requests
@@ -244,7 +249,8 @@ def send_message(request):
 
                 # generate modal html string to tell user message sent
                 context = {
-                    'email': email
+                    'email': email,
+                    'from_email': my_email
                 }
                 html = render_to_string(render_success_partial, context)
                 # header to tell client javascript how to handle the response
