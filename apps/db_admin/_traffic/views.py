@@ -21,3 +21,9 @@ def traffic_index(request, sort_f="none"):
         'totals': totals,
     }
     return render(request, "db_traffic/index.html", context)
+
+@login_required
+@permission_required('db_admin.traffic.can_add_traffic')
+def test_perm(request):
+    return render(request, 'db_traffic/test.html')
+    

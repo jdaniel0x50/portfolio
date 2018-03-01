@@ -2,6 +2,7 @@
 {% block content %}
 
 <div class="row p-0 m-0">
+    <a href="{% url 'db_admin:traffic_test' %}">Test Permissions</a>
     <div class="row col-sm-12 px-0 mx-0 my-4">
         <!-- Traffic Totals -->
         {% include 'db_traffic/totals.html' %}

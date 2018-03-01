@@ -98,6 +98,7 @@ urlpatterns = [
 
     # traffic routes
     url(r'^traffic/$', TrafficViews.traffic_index, name='traffic'),
+    url(r'^traffic/test$', TrafficViews.test_perm, name='traffic_test'),
     url(r'^traffic/sort=(?P<sort_f>[a-zA-Z_\-]+)',
         TrafficViews.traffic_index, name='traffic_sort'),
 
