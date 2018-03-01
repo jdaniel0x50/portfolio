@@ -3,16 +3,15 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from ...main.exceptions import const
+from django.contrib.auth.decorators import login_required, permission_required
 
 from ...main.models import Message
 
 
-def message_index(request, sort_f="none"):
-    if not request.user.is_authenticated():
-        # if not admin_user_confirm(request):
-        return redirect(const.redirect_403)
 
+@login_required
+@permission_required('auth.user.can_add_user', raise_exception=True)
+def message_index(request, sort_f="none"):
     # get all messages currently in the database
     # translate the sort field to a model field
     translator = {
@@ -38,10 +37,8 @@ def message_index(request, sort_f="none"):
     return render(request, 'db_messages/index.html', context)
 
 
+@login_required
+@permission_required('auth.user.can_add_user', raise_exception=True)
 def destroy_message(request, id):
-    if not request.user.is_authenticated():
-        # if not admin_user_confirm(request):
-        return redirect(const.redirect_403)
-
     Message.objects.get(id=id).delete()
     return redirect(reverse('db_admin:messages'))

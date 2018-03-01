@@ -4,16 +4,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.urls import reverse
-from ...main.exceptions import const, method_not_allowed
+from django.contrib.auth.decorators import login_required, permission_required
 
 from .models import Resume
 from .forms import UploadResumeForm
 
 
-def index(request):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
 
+@login_required
+def index(request):
     resumes = Resume.objects.get_all()
     context = {
         "resumes": resumes
@@ -21,10 +20,9 @@ def index(request):
     return render(request, 'db_resume/index.html', context)
 
 
+@login_required
+@permission_required('auth.user.can_add_user', raise_exception=True)
 def upload(request):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
-
     if request.method == 'POST':
         _xHeader = {
             'value': 'False',
@@ -56,10 +54,8 @@ def upload(request):
     return redirect(reverse('db_admin:resume'))
 
 
+@login_required
 def list(request):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
-
     resumes = Resume.objects.get_all()
     context = {
         "resumes": resumes
@@ -68,10 +64,9 @@ def list(request):
     return HttpResponse(http)
 
 
+@login_required
+@permission_required('auth.user.can_add_user', raise_exception=True)
 def destroy(request, id):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
-
     res = get_object_or_404(Resume, id=id)
     res.delete()
     return redirect(reverse('db_admin:resume'))

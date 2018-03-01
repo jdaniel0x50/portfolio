@@ -7,6 +7,7 @@ from datetime import datetime
 from .models import Traffic
 
 
+
 @login_required
 @permission_required('auth.user.can_add_user', raise_exception=True)
 def traffic_index(request, sort_f="none"):
@@ -19,6 +20,7 @@ def traffic_index(request, sort_f="none"):
         'totals': totals,
     }
     return render(request, "db_traffic/index.html", context)
+
 
 @login_required
 @permission_required('auth.user.can_add_user', raise_exception=True)
