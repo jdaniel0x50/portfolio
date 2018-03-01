@@ -9,8 +9,8 @@ from django.db import models
 # import bcrypt
 
 
-def superuser_or_admin(user):
-    return user.is_superuser
+# def superuser_or_admin(user):
+#     return user.is_superuser
 
 # PASSWORD_REGEX = re.compile(
 #     r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])[\w\d!@#$%^&?._]{8,15}$')
