@@ -27,8 +27,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/login/', LoginView.as_view(template_name='db_admin/login.html'), name='login'),
     url(r'^accounts/logout/', LogoutView.as_view(template_name='db_admin/logout.html'), name='logout'),
-    # url(r'^accounts/login/$', login, name='login', ),
-    # url(r'^accounts/logout/$', logout, name='logout'),
 ]
 
 if settings.DEBUG:

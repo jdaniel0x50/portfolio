@@ -20,5 +20,4 @@ urlpatterns = [
     url(r'^accounts/guest/', views.get_guest_login, name="get_guest_login"),
 
     url(r'^', views.main_page, name="home"),
-
 ]

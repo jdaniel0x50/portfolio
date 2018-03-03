@@ -11,6 +11,6 @@ staticfiles
 media/
 
 /apps/main/templates/email/
-/apps/static/old-files/
-/apps/static/base/js/scrollpos-styler/
-/apps/static/base/js/pdf-js/
+/static/old-files/
+/static/base/js/scrollpos-styler/
+/static/base/js/pdf-js/
