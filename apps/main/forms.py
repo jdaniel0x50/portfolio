@@ -44,3 +44,40 @@ class NewMessageForm(forms.Form):
         strip=True,
     )
 
+
+class NewGuestForm(forms.Form):
+    first_name = forms.CharField(
+        label="First Name",
+        required=True,
+        min_length=2,
+        max_length=30,
+        strip=True,
+        validators=[
+            RegexValidator(
+                regex='[a-zA-Z\-\s\.]+',
+                message='Names may contain letters, spaces, hyphen, underscore, and periods'
+            ),
+        ]
+    )
+    last_name = forms.CharField(
+        label="Last Name",
+        required=True,
+        min_length=2,
+        max_length=30,
+        strip=True,
+        validators=[
+            RegexValidator(
+                regex='[a-zA-Z\-\s\.]+',
+                message='Names may contain letters, spaces, hyphen, underscore, and periods'
+            ),
+        ]
+    )
+    email = forms.EmailField(
+        label="Email",
+        required=True,
+        min_length=4,
+        max_length=100,
+        validators=[
+            EmailValidator()
+        ]
+    )

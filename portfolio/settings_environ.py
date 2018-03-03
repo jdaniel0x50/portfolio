@@ -9,6 +9,7 @@ DOMAIN_NAME = "joshuadanielcodes.com"
 DOMAIN_URL = "http://www.joshuadanielcodes.com"
 
 ADMINS = os.environ.get('ADMINS')
+MANAGERS = os.environ.get('ADMINS')
 
 # Google reCaptcha
 RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
@@ -26,4 +27,7 @@ EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
-SERVER_EMAIL = EMAIL_HOST_USER
+GUEST_USERNAME = os.environ.get('GUEST_USERNAME')
+GUEST_PASSWORD = os.environ.get('GUEST_PASSWORD')
+PERMISSION_REQUIRED = os.environ.get('PERMISSION_REQUIRED')
+SERVER_EMAIL = os.environ.get('EMAIL_HOST_USER')

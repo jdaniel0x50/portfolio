@@ -17,7 +17,7 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth.views import login, logout
+from django.contrib.auth.views import login, logout, LoginView, LogoutView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 admin.autodiscover()
 
@@ -25,8 +25,10 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^admin/main/', include('apps.db_admin.urls', namespace='db_admin')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^accounts/login/$', login, name='login', ),
-    url(r'^accounts/logout/$', logout, name='logout'),
+    url(r'^accounts/login/', LoginView.as_view(template_name='db_admin/login.html'), name='login'),
+    url(r'^accounts/logout/', LogoutView.as_view(template_name='db_admin/logout.html'), name='logout'),
+    # url(r'^accounts/login/$', login, name='login', ),
+    # url(r'^accounts/logout/$', logout, name='logout'),
 ]
 
 if settings.DEBUG:

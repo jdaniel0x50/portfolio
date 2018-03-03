@@ -13,12 +13,12 @@ ALLOWED_HOSTS = [
     'afternoon-hollows-18869.herokuapp.com',
     'afternoon-hollows-18869-pr-2.herokuapp.com',
     'afternoon-hollows-18869-pr-3.herokuapp.com',
+    'afternoon-hollows-18869-pr-4.herokuapp.com',
+    'afternoon-hollows-18869-pr-5.herokuapp.com',
+    'afternoon-hollows-18869-pr-6.herokuapp.com',
     'joshuadanielcodes.com',
     'www.joshuadanielcodes.com',
 ]
-
-# On an admininstrative login, redirect to the custom admin pages
-LOGIN_REDIRECT_URL = 'db_admin:traffic'
 
 # Media File Storage on Amazon S3
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME

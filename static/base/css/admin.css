@@ -4,6 +4,11 @@
 .icon-sorting {
     margin: 0rem 0.1rem;
 }
+#navAdminCollapse .nav-item .nav-link:hover {
+	background-color: var(--danger);
+	color: white !important;
+}
+
 
 /* Skill Form Styles */
 .select_skillChoices {

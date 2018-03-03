@@ -24,6 +24,13 @@ $(document).ready(function() {
         $('#header').css('min-height', window_height * 1.1);
         $('#navbar.sps').attr('data-sps-offset', window_height);
         $('#footer').css('min-height', window_height * 0.8);
+        $('#login-view').css('min-height', window_height);
+        if (window_width > 768) {
+            $('#login-view .center-vertical').css('min-height', window_height);
+        }
+        else {
+            $('#login-view .center-vertical').css('min-height', 0);
+        }
 
         // collapse menu bar if small window
         if (window_width < 992) {
@@ -73,10 +80,12 @@ $(document).ready(function() {
     }
 
     /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-    particlesJS.load('particles-js', '/static/base/js/particles-js/particlesjs-config.json', function () {
-        // modify size and position of key elements to the window dimensions
-        setElementDimensions();
-    });
+    if ( $('#particles-js').length ) {
+        particlesJS.load('particles-js', '/static/base/js/particles-js/particlesjs-config.json', function () {
+            // modify size and position of key elements to the window dimensions
+        });
+    }
+    setElementDimensions();
 
 
     // on window resize, adjust element dimensions
@@ -167,6 +176,20 @@ $(document).ready(function() {
     });
 
 
+    // Change Login Card Margin on Guest Preview Click
+    $(".login-view-footer").on('click', function(event) {
+        let collapsed = $(this).attr('aria-expanded');
+        if (collapsed == "false") {
+            $('#login-view-card').removeClass('my-5');
+            $('#login-view-card').addClass('my-1');
+        }
+        else {
+            $('#login-view-card').addClass('my-5');
+            $('#login-view-card').removeClass('my-1');
+        }
+    });
+
+
     // *** START Project Modal SECTION ***
     // AJAX -- Fetch() GET Handler
     function fetch_get_handler(
@@ -234,60 +257,6 @@ $(document).ready(function() {
         $('#modal').remove();
     });
     // *** END Project Modal SECTION *** 
-
-    
-    // *** START reCaptcha Section ***
-    // reCaptcha functions to view email and send message
-    var recaptcha_el = document.getElementById("email_link");
-    var onCaptchaSuccess = function (data_captcha) {
-        var url = "/email"
-        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-        // ajax to get email html partial on captcha success
-        // html partial is appended to body and shown in modal
-        fetch(url, {
-            method: "POST",
-            body: data_captcha,
-            credentials: 'include',
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
-            })
-        })
-            .then(response => response.text())
-            .then(response => {
-                $(document.body).append(response);
-                $('#email_modal').modal('show');
-            })
-            .catch(function (error) {
-                console.log(error.json());
-            })
-        // hide reCaptcha as it is no longer needed
-        $('#recaptcha').css("display", "none");
-    };
-
-    recaptcha_el.onclick = function() {
-        // determine whether the server provided the email modal
-        var el_modal = document.getElementById('email_modal');
-        var key = $('#recaptcha').attr('key')
-        if (el_modal == null) {
-            // reCaptcha has not yet verified user is human
-            var onclickCallback = function () {
-                grecaptcha.render('recaptcha', {
-                    'sitekey': key,
-                    'size': 'normal',
-                    'theme': 'dark',
-                    'callback': onCaptchaSuccess,
-                });
-            };
-            onclickCallback();
-        }
-        else {
-            // reCaptcha verification complete; show modal
-            $("#email_modal").modal('show');
-        }
-        return false;
-    }
-    // *** END reCaptcha Section ***
 
 
     // *** START Send Message Modal Section ***
@@ -358,6 +327,51 @@ $(document).ready(function() {
         });
     });
 
+
+    // *** Submit Request for Guest Login ***
+    // AJAX Post Name and Email; 
+    // Await confirmation message sent or validation errors
+    $(document).on('click', '#guest_user_submit', function() {
+        event.preventDefault();
+        let addr = $(this).attr('addr');
+
+        // create an object of the form data
+        var form_data_serialize = $('#guest-user-form').serializeArray();
+        var form_data_object = {};
+        for (let i = 0; i < form_data_serialize.length; i++) {
+            form_data_object[form_data_serialize[i]['name']] = form_data_serialize[i]['value'];
+        }
+        // compose the object as a JSON string ready to send via httprequest
+        form_data_stringify = JSON.stringify(form_data_object);
+
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+
+        // ajax fetch to get response from email send function
+        fetch(addr, {
+            method: "POST",
+            body: form_data_stringify,
+            credentials: 'include',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            })
+        })
+            .then(response => {
+                // evaluate custom header to determine whether method succeeded
+                let email_sent = response.headers.get('Response-Email-Sent');
+                // use the response as an html partial (text)
+                response.text().then(html_response => {
+                    $(document.body).append(html_response);
+                    // modal contents will display whether message sent
+                    $('#email_sent').modal('show');
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    })
+
+
     // button to cancel the message -- clear all input
     $(document).on('click', '#cancel_email', function () {
         $('#eform_sender_name').val("");
@@ -384,6 +398,62 @@ $(document).ready(function() {
         url = $(this).attr('addr');
         save_click(url);
     })
+
+
+    // *** START reCaptcha Section ***
+    // reCaptcha functions to view email and send message
+    if ($("#email_link").length) {
+        var recaptcha_el = document.getElementById("email_link");
+        var onCaptchaSuccess = function (data_captcha) {
+            var url = "/email"
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+            // ajax to get email html partial on captcha success
+            // html partial is appended to body and shown in modal
+            fetch(url, {
+                method: "POST",
+                body: data_captcha,
+                credentials: 'include',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                })
+            })
+                .then(response => response.text())
+                .then(response => {
+                    $(document.body).append(response);
+                    $('#email_modal').modal('show');
+                })
+                .catch(function (error) {
+                    console.log(error.json());
+                })
+            // hide reCaptcha as it is no longer needed
+            $('#recaptcha').css("display", "none");
+        };
+
+        recaptcha_el.onclick = function() {
+            // determine whether the server provided the email modal
+            var el_modal = document.getElementById('email_modal');
+            var key = $('#recaptcha').attr('key')
+            if (el_modal == null) {
+                // reCaptcha has not yet verified user is human
+                var onclickCallback = function () {
+                    grecaptcha.render('recaptcha', {
+                        'sitekey': key,
+                        'size': 'normal',
+                        'theme': 'dark',
+                        'callback': onCaptchaSuccess,
+                    });
+                };
+                onclickCallback();
+            }
+            else {
+                // reCaptcha verification complete; show modal
+                $("#email_modal").modal('show');
+            }
+            return false;
+        }
+    }
+    // *** END reCaptcha Section ***
 })
 
 

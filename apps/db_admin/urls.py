@@ -3,6 +3,7 @@ from django.contrib import admin
 
 from . import views as AdminViews
 from ..main import views as MainViews
+from ._contacts import views as ContactViews
 from ._messages import views as MessageViews
 from ._projects import views as ProjectViews
 from ._skills import views as SkillViews
@@ -89,6 +90,13 @@ urlpatterns = [
         MessageViews.message_index, name='messages_sort'),
     url(r'^message/(?P<id>[0-9]+)/destroy',
         MessageViews.destroy_message, name='message_destroy'),
+
+    # contact routes
+    url(r'^contact/$', ContactViews.contact_index, name='contacts'),
+    url(r'^contact/sort=(?P<sort_f>[a-zA-Z_\-]+)',
+        ContactViews.contact_index, name='contacts_sort'),
+    url(r'^contact/(?P<id>[0-9]+)/destroy',
+        ContactViews.destroy_contact, name='contact_destroy'),
 
     # resume routes
     url(r'^resume/$', ResumeViews.index, name='resume'),

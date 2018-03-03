@@ -6,9 +6,15 @@ import json
 from datetime import date, datetime
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
-from ...main.exceptions import method_not_allowed, const
+from django.contrib.auth.decorators import login_required, permission_required
+
+import portfolio.settings_environ as settings_environ
+if settings_environ.PERMISSION_REQUIRED != None:
+    from portfolio.settings_environ import PERMISSION_REQUIRED
+else:
+    from portfolio.settings_sensitive import PERMISSION_REQUIRED
 
 # import forms and related modules
 from django import forms
@@ -22,10 +28,9 @@ from django.shortcuts import get_object_or_404
 from ...main.models import Skill, Project, ProjectImage
 
 
-def projects_index(request, sort_f="none"):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
 
+@login_required
+def projects_index(request, sort_f="none"):
     # check if the user previously submitted a form with errors
     errors = False
     if 'form_values' in request.session:
@@ -64,10 +69,9 @@ def projects_index(request, sort_f="none"):
     return render(request, 'db_projects/index.html', context)
 
 
+@login_required
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def projects_create(request):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
-
     # use forms.py to validate form data
     form_context = {
         'project_name': request.POST['project_name'],
@@ -104,102 +108,102 @@ def projects_create(request):
     return redirect(reverse('db_admin:projects'))
 
 
-def project_edit(request, id):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
+@login_required
+def project_edit_get_form(request, id):
+    # GET project for edit form; returns a partial view
+    project = Project.objects.get(id=id)
+    form_context = {
+        'project_name': project.project_name,
+        'subtitle': project.subtitle,
+        'description': project.description,
+        'impact': project.impact,
+        'feat_order': project.feat_order,
+        'deploy_url': project.deploy_url,
+        'code_url': project.code_url,
+    }
+    form_context['project_timeline'] = project.project_timeline.isoformat()
+    skills = []
+    for skill in project.skills.all():
+        skills.append(skill.id)
+    form_context['skills'] = skills
+    edit_form = NewProjectForm(form_context)
+    request.session['form_data'] = edit_form.data
 
-    if request.method == "GET":
-        # GET project for edit form; returns a partial view
-        project = Project.objects.get(id=id)
-        form_context = {
-            'project_name': project.project_name,
-            'subtitle': project.subtitle,
-            'description': project.description,
-            'impact': project.impact,
-            'feat_order': project.feat_order,
-            'deploy_url': project.deploy_url,
-            'code_url': project.code_url,
-        }
-        form_context['project_timeline'] = project.project_timeline.isoformat()
-        skills = []
-        for skill in project.skills.all():
-            skills.append(skill.id)
-        form_context['skills'] = skills
-        edit_form = NewProjectForm(form_context)
-        request.session['form_data'] = edit_form.data
+    context = {
+        'project': project,
+        'edit_form': edit_form,
+    }
+    html = render_to_string("db_projects/edit_form.html", context, request)
+    return HttpResponse(html)
 
-        context = {
-            'project': project,
-            'edit_form': edit_form,
-        }
-        html = render_to_string("db_projects/edit_form.html", context, request)
-        return HttpResponse(html)
-    
-    if request.method == "POST":
-        # POST updated project from edit form
-        # use forms.py to validate form data
-        initial_data = request.session['form_data']
-        del request.session['form_data']
-        form_data = {}
-        skills = request.POST.getlist('skills')
-        form_data['skills'] = skills
 
-        for key in request.POST:
-            if key == 'skills': continue
-            if request.POST[key] == "on": continue
-            form_data[key] = request.POST[key]
+@login_required
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
+def project_edit_post_form(request, id):
+    # POST updated project from edit form
+    # use forms.py to validate form data
+    initial_data = request.session['form_data']
+    del request.session['form_data']
+    form_data = {}
+    skills = request.POST.getlist('skills')
+    form_data['skills'] = skills
 
-        # set html and header variables
-        html = ""
-        _xHeader = {
-            'value': 'False',
-            'label': 'X-Form-Errors',   # documents whether form has errors
-        }
-        result = {
-            'title': "",
-            'message': ""
-        }
+    for key in request.POST:
+        if key == 'skills': continue
+        if request.POST[key] == "on": continue
+        form_data[key] = request.POST[key]
 
-        project = get_object_or_404(Project, id=id)
-        form = NewProjectForm(form_data, initial=initial_data)
-        if form.has_changed():
-            # there were changes in the form submission
-            if form.is_valid():
-                result['title'] = "Changes Saved"
-                for field in form.changed_data:
-                    setattr(project, field, form_data[field])
-                    result['message'] += "<div class='row col-sm-12'>" \
-                                        + "<p class='text-dark'><strong>" \
-                                        + form[field].label \
-                                        + "</strong> changed"
-                    if field != 'skills':
-                        result['message'] += " to <span class='text-danger'>" \
-                                            + "<strong><em>" \
-                                            + form_data[field] \
-                                            + "</em></strong></span>"
-                    result['message'] += "</p></div>"
-                
-                if 'skills' in form.changed_data:
-                    form.changed_data.remove('skills')
-                project.save(update_fields=form.changed_data)
+    # set html and header variables
+    html = ""
+    _xHeader = {
+        'value': 'False',
+        'label': 'X-Form-Errors',   # documents whether form has errors
+    }
+    result = {
+        'title': "",
+        'message': ""
+    }
 
-                # generate html partial from result
-                html = render_to_string('db_projects/edit_response.html', result)
-            else:
-                # form data has validation errors
-                request.session['form_data'] = form.data
-                context = {
-                    'project': project,
-                    'edit_form': form,
-                    'edit_errors': True
-                }
-                html = render_to_string("db_projects/edit_form.html", context, request)
-                _xHeader['value'] = 'True'
-        else:
-            # no changes in form submission
-            result['title'] = "No Changes"
-            result['message'] = "No changes submitted"
+    project = get_object_or_404(Project, id=id)
+    form = NewProjectForm(form_data, initial=initial_data)
+    if form.has_changed():
+        # there were changes in the form submission
+        if form.is_valid():
+            result['title'] = "Changes Saved"
+            for field in form.changed_data:
+                setattr(project, field, form_data[field])
+                result['message'] += "<div class='row col-sm-12'>" \
+                                    + "<p class='text-dark'><strong>" \
+                                    + form[field].label \
+                                    + "</strong> changed"
+                if field != 'skills':
+                    result['message'] += " to <span class='text-danger'>" \
+                                        + "<strong><em>" \
+                                        + form_data[field] \
+                                        + "</em></strong></span>"
+                result['message'] += "</p></div>"
+            
+            if 'skills' in form.changed_data:
+                form.changed_data.remove('skills')
+            project.save(update_fields=form.changed_data)
+
+            # generate html partial from result
             html = render_to_string('db_projects/edit_response.html', result)
+        else:
+            # form data has validation errors
+            request.session['form_data'] = form.data
+            context = {
+                'project': project,
+                'edit_form': form,
+                'edit_errors': True
+            }
+            html = render_to_string("db_projects/edit_form.html", context, request)
+            _xHeader['value'] = 'True'
+    else:
+        # no changes in form submission
+        result['title'] = "No Changes"
+        result['message'] = "No changes submitted"
+        html = render_to_string('db_projects/edit_response.html', result)
 
     # return success or error html partial with custom header
     _http_response = HttpResponse(html)
@@ -208,56 +212,72 @@ def project_edit(request, id):
     return _http_response
 
 
-def img_upload(request, id):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
+@login_required
+def project_edit(request, id):
+    if request.method == "GET":
+        return project_edit_get_form(request, id)
+    
+    elif request.method == "POST":
+        return project_edit_post_form(request, id)
 
-    if request.method == 'POST':
-        _xHeader = {
-            'value': 'False',
-            'label': 'X-Form-Errors',   # documents whether form has errors
-        }
-        result = {
-            'title': "",
-            'message': ""
-        }
 
-        form = NewImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            result['title'] = "Upload Saved"
-            result['message'] = "The image was successfully uploaded."
-            html = render_to_string('db_projects/edit_response.html', result)
-        else:
-            # errors in the form submission
-            _xHeader['value'] = 'True'
-            project = Project.objects.get(id=id)
-            context = {
-                'form': form,
-                'project': project,
-                'form_errors': True
-            }
-            html = render_to_string(
-                'db_projects/edit_img_add.html', context, request)
+@login_required
+def img_upload_get_form(request, id):
+    form = NewImageForm()
+    project = Project.objects.get(id=id)
+    context = {
+        'form': form,
+        'project': project,
+    }
+    html = render_to_string('db_projects/edit_img_add.html', context, request)
+    return HttpResponse(html)
 
-        _http_response = HttpResponse(html)
-        _http_response.__setitem__(_xHeader['label'], _xHeader['value'])
-        return _http_response
+
+@login_required
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
+def img_upload_post_form(request, id):
+    _xHeader = {
+        'value': 'False',
+        'label': 'X-Form-Errors',   # documents whether form has errors
+    }
+    result = {
+        'title': "",
+        'message': ""
+    }
+
+    form = NewImageForm(request.POST, request.FILES)
+    if form.is_valid():
+        form.save()
+        result['title'] = "Upload Saved"
+        result['message'] = "The image was successfully uploaded."
+        html = render_to_string('db_projects/edit_response.html', result)
     else:
-        form = NewImageForm()
+        # errors in the form submission
+        _xHeader['value'] = 'True'
         project = Project.objects.get(id=id)
         context = {
             'form': form,
             'project': project,
+            'form_errors': True
         }
-        html = render_to_string('db_projects/edit_img_add.html', context, request)
-        return HttpResponse(html)
+        html = render_to_string(
+            'db_projects/edit_img_add.html', context, request)
+
+    _http_response = HttpResponse(html)
+    _http_response.__setitem__(_xHeader['label'], _xHeader['value'])
+    return _http_response
 
 
+@login_required
+def img_upload(request, id):
+    if request.method == 'GET':
+        return img_upload_get_form(request, id)
+    elif request.method == 'POST':
+        return img_upload_post_form(request, id)
+
+
+@login_required
 def img_getall(request, id):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
-
     project = Project.objects.get(id=id)
     images = ProjectImage.objects.get_all_project(id)
     context = {
@@ -268,78 +288,85 @@ def img_getall(request, id):
     return HttpResponse(html)
 
 
-def img_edit(request, id, image_id):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
+@login_required
+def img_edit_get_form(request, id, image_id):
+    image = get_object_or_404(ProjectImage, id=image_id)
+    project = get_object_or_404(Project, id=id)
+    form = EditImageForm(image)
+    title = ("Editing Image " 
+            + "<small><u>"
+            + image.filename() 
+            + "</u> for <strong>"
+            + project.project_name
+            + "</small></strong>")
+    context = {
+        'title': title,
+        'form': form,
+        'image': image,
+        'project': project,
+    }
+    html = render_to_string(
+        'db_projects/edit_img_edit.html', context, request)
+    return HttpResponse(html)
 
-    if request.method == 'POST':
-        _xHeader = {
-            'value': 'False',
-            'label': 'X-Form-Errors',   # documents whether form has errors
-        }
-        result = {
-            'title': "",
-            'message': ""
-        }
 
-        instance = get_object_or_404(ProjectImage, id=image_id)
-        form = EditImageForm(request.POST or None, instance=instance)
-        if form.is_valid():
-            form.save()
-            result['title'] = "Updates Saved"
-            result['message'] = "The image was successfully updated."
-            html = render_to_string('db_projects/edit_response.html', result)
-        else:
-            # errors in the form submission
-            _xHeader['value'] = 'True'
-            project = get_object_or_404(Project, id=id)
-            title = ("Editing Image "
-                    + "<small><u>"
-                    + instance.filename()
-                    + "</u> for <strong>"
-                    + project.project_name
-                    + "</small></strong>")
-            context = {
-                'title': title,
-                'form': form,
-                'image': instance,
-                'project': project,
-                'form_errors': True
-            }
-            html = render_to_string(
-                'db_projects/edit_img_add.html', context, request)
+@login_required
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
+def img_edit_post_form(request, id, image_id):
+    _xHeader = {
+        'value': 'False',
+        'label': 'X-Form-Errors',   # documents whether form has errors
+    }
+    result = {
+        'title': "",
+        'message': ""
+    }
 
-        _http_response = HttpResponse(html)
-        _http_response.__setitem__(_xHeader['label'], _xHeader['value'])
-        return _http_response
-    elif request.method == 'GET':
-        image = get_object_or_404(ProjectImage, id=image_id)
+    instance = get_object_or_404(ProjectImage, id=image_id)
+    form = EditImageForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        result['title'] = "Updates Saved"
+        result['message'] = "The image was successfully updated."
+        html = render_to_string('db_projects/edit_response.html', result)
+    else:
+        # errors in the form submission
+        _xHeader['value'] = 'True'
         project = get_object_or_404(Project, id=id)
-        form = EditImageForm(image)
-        title = ("Editing Image " 
+        title = ("Editing Image "
                 + "<small><u>"
-                + image.filename() 
+                + instance.filename()
                 + "</u> for <strong>"
                 + project.project_name
                 + "</small></strong>")
         context = {
             'title': title,
             'form': form,
-            'image': image,
+            'image': instance,
             'project': project,
+            'form_errors': True
         }
         html = render_to_string(
-            'db_projects/edit_img_edit.html', context, request)
-        return HttpResponse(html)
+            'db_projects/edit_img_add.html', context, request)
+
+    _http_response = HttpResponse(html)
+    _http_response.__setitem__(_xHeader['label'], _xHeader['value'])
+    return _http_response
+
+
+@login_required
+def img_edit(request, id, image_id):
+    if request.method == 'POST':
+        return img_edit_post_form(request, id, image_id)
+    elif request.method == 'GET':
+        return img_edit_get_form(request, id, image_id)
     else:
-        response = method_not_allowed(request)
-        return response
+        return HttpResponseForbidden()
 
 
+@login_required
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def img_mark_feature(request, id, image_id):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
-
     if request.method == "POST":
         project = get_object_or_404(Project, id=id)
         image = get_object_or_404(ProjectImage, id=image_id)
@@ -347,13 +374,12 @@ def img_mark_feature(request, id, image_id):
         project.save()
         return HttpResponse("success")
     else:
-        response = method_not_allowed(request)
-        return response
+        return HttpResponseForbidden()
 
+
+@login_required
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def destroy_project(request, id):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
-
     images = ProjectImage.objects.filter(project=id)
     for image in images:
         image.delete()      # remove project images
@@ -361,9 +387,8 @@ def destroy_project(request, id):
     return redirect(reverse('db_admin:projects'))
 
 
+@login_required
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def destroy_image(request, id, image_id):
-    if not request.user.is_authenticated():
-        return redirect(const.redirect_403)
-    
     ProjectImage.objects.remove(image_id)
     return HttpResponse("success")

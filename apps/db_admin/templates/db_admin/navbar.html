@@ -15,9 +15,11 @@
     {% if user.is_authenticated %}
     <div class="navbar-collapse collapse show text-right justify-content-end" id="navAdminCollapse">
         <ul class="navbar-nav nav-pills">
+            {% if user.is_staff %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'admin:index' %}">Admin Module</a>
             </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'db_admin:skills' %}">Skills</a>
             </li>
@@ -26,6 +28,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'db_admin:messages' %}">Messages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'db_admin:contacts' %}">Contacts</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'db_admin:resume' %}">Resume</a>
@@ -41,13 +46,17 @@
     {% endif %}
 </nav>
 {% if user.is_authenticated %}
-<div class="row px-5 mx-0 text-right justify-content-end">
-    <small>
-        Welcome, {{user.first_name}}
+<div class="row px-4 mx-0 text-right justify-content-end sticky-top">
+    <p>
+        Welcome, {{user.get_full_name}}
         <span class="mx-3">|</span>
+        {% for group in user.groups.all %}
+        <span class="text-primary font-weight-bold">This is a {{group}} User Account</span>
+        <span class="mx-3">|</span>
+        {% endfor %}
         <em>(@{{user.username}})</em>
         <span class="mx-1"></span>
-        <a href="{% url 'logout' %}" class="badge badge-pill badge-warning">Logout</a>
-    </small>
+        <a href="{% url 'logout' %}" class="badge badge-pill badge-danger px-3">Logout</a>
+    </p>
 </div>
 {% endif %}

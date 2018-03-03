@@ -250,7 +250,10 @@ body::-webkit-scrollbar {
 #contact a {
 	color: var(--blue);
 }
-#contact a:hover, #projects a:hover {
+#contact a:hover, 
+#projects a:hover, 
+#login-view a.navbar-brand:hover,
+#login-view a.login-view-footer:hover {
 	color: var(--cyan);
 }
 #about, #projects, #skills, #resume, #contact {
@@ -574,6 +577,8 @@ canvas {
 	letter-spacing: 2px;
 	font-weight: lighter;
 	font-variant: small-caps;
+	white-space: normal;
+	line-height: normal;
 }
 
 .g-recaptcha {

@@ -1,12 +1,16 @@
 # # -*- coding: utf-8 -*-
-# from __future__ import unicode_literals
+from __future__ import unicode_literals
 
-# # local app-specific imports
-# from django.db import models
+# local app-specific imports
+from django.db import models
 # from django.core.exceptions import ValidationError
 # from django.core.validators import RegexValidator
 # import re
 # import bcrypt
+
+
+# def superuser_or_admin(user):
+#     return user.is_superuser
 
 # PASSWORD_REGEX = re.compile(
 #     r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])[\w\d!@#$%^&?._]{8,15}$')
