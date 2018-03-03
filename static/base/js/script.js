@@ -333,7 +333,7 @@ $(document).ready(function() {
     // Await confirmation message sent or validation errors
     $(document).on('click', '#guest_user_submit', function() {
         event.preventDefault();
-        let addr = $(this).attr('addr');
+        let addr = $(this).attr('addr-submit');
 
         // create an object of the form data
         var form_data_serialize = $('#guest-user-form').serializeArray();
