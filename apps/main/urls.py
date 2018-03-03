@@ -7,12 +7,16 @@ urlpatterns = [
         views.filter_project, name="filter_project"),
     url(r'^project/(?P<id>[0-9]+)$',
         views.get_project, name="get_project"),
+
     url(r'^email$', views.recaptcha_check, name="msg_recaptcha"),
     url(r'^email/send_msg$', views.send_message, name="msg_send"),
-    url(r'^project/(?P<address>[-a-zA-Z]+)$', views.record_click, name="click_project"),
-    url(r'^skill/(?P<address>[-a-z]+)$', views.record_click, name="click_skill"),
-    url(r'^resume/(?P<address>[-a-z]+)$', views.record_click, name="click_resume"),
-    url(r'^contact/(?P<address>[-a-z]+)$', views.record_click, name="click_contact"),
+
+    url(r'^click/contact/(?P<address>[-a-zA-Z]+)$', views.record_click, name="click_contact"),
+    url(r'^click/login/(?P<address>[-a-zA-Z]+)$', views.record_click, name="click_login"),
+    url(r'^click/project/(?P<address>[-a-zA-Z]+)$', views.record_click, name="click_project"),
+    url(r'^click/resume/(?P<address>[-a-zA-Z]+)$', views.record_click, name="click_resume"),
+    url(r'^click/skill/(?P<address>[-a-zA-Z]+)$', views.record_click, name="click_skill"),
+
     url(r'^accounts/guest/', views.get_guest_login, name="get_guest_login"),
 
     url(r'^', views.main_page, name="home"),

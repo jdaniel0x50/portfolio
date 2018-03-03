@@ -48,7 +48,10 @@
                             </tr>
                         </table>
                         <div class="form-group my-3 text-right">
-                            <input class="btn btn-warning font-weight-bold text-white py-1 px-4" type="submit" value="Login" />
+                            <input class="btn btn-warning font-weight-bold text-white py-1 px-4 click-set" 
+                                addr="{% url 'home:click_login' address='user-login-button' %}"
+                                type="submit" 
+                                value="Login" />
                             <input type="hidden" name="next" value="{{ next }}" />
                         </div>
                     </form>
@@ -102,7 +105,12 @@
                                 </tr>
                             </table>
                             <div class="form-group my-3 text-right">
-                                <button id="guest_user_submit" addr="{% url 'home:get_guest_login' %}" class="btn btn-warning font-weight-bold text-white py-1 px-4">Get Guest Login</button>
+                                <button id="guest_user_submit" 
+                                    addr="{% url 'home:click_login' address='guest-credentials' %}"
+                                    addr-submit="{% url 'home:get_guest_login' %}" 
+                                    class="btn btn-warning font-weight-bold text-white click-set py-1 px-4">
+                                    Get Guest Login
+                                </button>
                             </div>
                         </form>
                     </div>

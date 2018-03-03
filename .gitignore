@@ -12,7 +12,5 @@ media/
 
 /apps/main/templates/email/
 /apps/static/old-files/
-/apps/static/base/img/logos/
-/apps/static/base/img/tileable-fabric-textures-1
 /apps/static/base/js/scrollpos-styler/
 /apps/static/base/js/pdf-js/
