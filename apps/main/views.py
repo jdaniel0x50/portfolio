@@ -9,7 +9,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
 
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User, Group
 from .models import Skill, Project, ProjectImage, Message
+from ..db_admin._contacts.models import Contact
 from ..db_admin._resume.models import Resume
 from ..db_admin._traffic.models import Traffic
 
@@ -28,13 +30,16 @@ if settings_environ.RECAPTCHA_SITE_KEY != None:
     from portfolio.settings_environ import DOMAIN_NAME as DOMAIN_NAME
     from portfolio.settings_environ import DEFAULT_FROM_EMAIL
     from portfolio.settings_environ import EMAIL_HOST_USER
-
+    from portfolio.settings_environ import GUEST_USERNAME
+    from portfolio.settings_environ import GUEST_PASSWORD
 else:
     from portfolio.settings_sensitive import RECAPTCHA_SITE_KEY as RECAPTCHA_SITE_KEY
     from portfolio.settings_sensitive import RECAPTCHA_SECRET_KEY as RECAPTCHA_SECRET_KEY
     from portfolio.settings_sensitive import DOMAIN_NAME as DOMAIN_NAME
     from portfolio.settings_sensitive import DEFAULT_FROM_EMAIL
     from portfolio.settings_sensitive import EMAIL_HOST_USER
+    from portfolio.settings_sensitive import GUEST_USERNAME
+    from portfolio.settings_sensitive import GUEST_PASSWORD
 
 
 # import requests module for api call
@@ -44,7 +49,7 @@ import requests
 from django import forms
 from django.forms.utils import ErrorList
 from django.core.mail import EmailMessage, send_mail, BadHeaderError
-from .forms import NewMessageForm
+from .forms import NewMessageForm, NewGuestForm
 
 
 def log_traffic(request):
@@ -194,6 +199,32 @@ def pretty_request(request):
     )
 
 
+def full_name_to_first_last(full_name):
+    names = full_name.split(" ")
+    if len(names) == 1:
+        first_name = names[0]
+        last_name = names[0]
+    elif len(names) == 2:
+        first_name = names[0]
+        last_name = names[1]
+    elif len(names) > 2:
+        first_name = names[0]
+        last_name = ' '.join(names[1:])
+
+    return first_name, last_name
+
+
+def get_or_define_new_contact(first_name, last_name, email):
+    contact, created = Contact.objects.get_or_create_contact(
+        first_name=first_name,
+        last_name=last_name,
+        email=email.lower()
+    )
+    if not created:
+        Contact.objects.update_timestamp(contact.email)
+    return contact
+
+
 def send_message(request):
     log_traffic(request)    # record message clicks
     # transform form data to json
@@ -207,7 +238,7 @@ def send_message(request):
         # use forms.py to validate form data
         form = NewMessageForm(form_json)
         if form.is_valid():
-            # form data is valid
+            # form data is valid -- create message record
             my_email = DEFAULT_FROM_EMAIL
             email = Message.objects.create(
                 sender_name=form_json['sender_name'],
@@ -215,6 +246,11 @@ def send_message(request):
                 subject=form_json['subject'],
                 message_text=form_json['message_text']
             )
+
+            # create contact record
+            first_name, last_name = full_name_to_first_last(email.sender_name)
+            get_or_define_new_contact(first_name, last_name, email.sender_email)
+
             # send message and automatically reply to user
             email_subject = "[Portfolio Website] " + email.subject
             email_subject += " -- FROM " + email.sender_name
@@ -231,7 +267,7 @@ def send_message(request):
                 )
 
                 reply_subject = "Thank You for Your Message!"
-                reply_template = get_template('main/email_response_temp.html')
+                reply_template = get_template('db_messages/email_response_temp.html')
                 reply_context = {
                     'sender_name': email.sender_name,
                     'sender_email': email.sender_email,
@@ -283,6 +319,83 @@ def send_message(request):
     _http_response = HttpResponse(html)
     _http_response.__setitem__(_xheader, _header_value)
     return _http_response
+
+
+def get_guest_login(request):
+    log_traffic(request)    # record guest login requests
+    # transform form data to json
+    form_json = json.loads(request.body)
+
+    # use forms.py to validate form data
+    form = NewGuestForm(form_json)
+    if form.is_valid():
+        # form data is valid
+
+        # determine whether user previously submitted email
+        guest, created = Contact.objects.get_or_create_contact(
+            first_name=form_json['first_name'],
+            last_name=form_json['last_name'],
+            email=form_json['email'].lower()
+        )
+        if created:
+            # a new contact was created -- generate a user auth profile
+            user = User.objects.create_user(
+                username=guest.email,
+                email=guest.email,
+                password=GUEST_PASSWORD,
+                first_name=form_json['first_name'],
+                last_name=form_json['last_name'],
+                is_staff=False
+            )
+            group = Group.objects.get(name='Guest')
+            group.user_set.add(user)
+            message_repeat = ""
+        else:
+            Contact.objects.update_timestamp(guest.email)
+            user = User.objects.get(email=guest.email)
+            message_repeat = "It appears you have previously requested a guest login. As a courtesy, I am resending the login information."
+        # send message with guest login information
+        email_subject = "Guest Login for JoshuaDanielCodes.com"
+        email_template = get_template('db_contacts/email_guest_login.html')
+        email_context = {
+            'first_name': guest.first_name,
+            'username': guest.email,
+            'password': GUEST_PASSWORD
+        }
+        email_content = email_template.render(email_context)
+        user.email_user(
+            subject=email_subject,
+            message=email_content
+        )
+
+        # generate modal html string to tell user message sent
+        context = {
+            'message_repeat': message_repeat,
+            'email': guest.email,
+            'first_name': guest.first_name
+        }
+        html = render_to_string('db_contacts/email_sent.html', context)
+        # header to tell client javascript how to handle the response
+        _header_value = "True"
+
+    else:
+        # form data is not valid
+        # render the form partial with errors and request
+        context = {
+            'form': form,
+        }
+
+        # regenerate form modal html string to display errors
+        html = render_to_string('db_contacts/email_errors.html', context)
+        # header to tell client javascript how to handle the response
+        _header_value = "False"
+
+    # return success or error html partial with custom header
+    _xheader = "Response-Email-Sent"
+    _http_response = HttpResponse(html)
+    _http_response.__setitem__(_xheader, _header_value)
+    return _http_response
+
 
 def record_click(request, address):
     log_traffic(request)

@@ -1,0 +1,29 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="email_sent">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title">Validation Error: Message Could Not Send</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>I could not send the login information to you.</p>
+                <p>Please review the errors below and submit the form again.</p>
+                <table>
+                    {% for field in form %}
+                    <tr>
+                        <td class="px-2">{{ field.label }}</td>
+                        <td class="px-2">{{ field.value }}</td>
+                        <td class="px-2 text-danger">{% if field.errors %}
+                                {% for error in field.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            {% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

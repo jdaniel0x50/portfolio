@@ -8,6 +8,12 @@ from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required, permission_required
 import requests
 
+import portfolio.settings_environ as settings_environ
+if settings_environ.PERMISSION_REQUIRED != None:
+    from portfolio.settings_environ import PERMISSION_REQUIRED
+else:
+    from portfolio.settings_sensitive import PERMISSION_REQUIRED
+
 from ...main.models import Skill, SkillImage
 from .._traffic.models import Traffic
 from .forms import NewSkillForm, NewSkillImageForm
@@ -43,7 +49,7 @@ def skills_index(request, sort_f="none"):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def skills_create(request):
     # use forms.py to validate form data
     form = NewSkillForm(request.POST)
@@ -68,7 +74,7 @@ def skills_create(request):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def skill_destroy(request, id):
     images = SkillImage.objects.filter(skill=id)
     for image in images:
@@ -89,7 +95,7 @@ def skill_logo_get_form(request, id):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def skill_logo_post_form(request, id):
     result = {
         'title': "",
@@ -121,6 +127,7 @@ def skill_logo_post_form(request, id):
     _http_response.__setitem__(_xHeader['label'], _xHeader['value'])
     return _http_response
 
+
 @login_required
 def skill_logo(request, id):
     if request.method == 'POST':
@@ -135,7 +142,7 @@ def skill_logo(request, id):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def skill_logo_destroy(request, id, logo_id):
     img = get_object_or_404(SkillImage, id=logo_id)
     img.delete()

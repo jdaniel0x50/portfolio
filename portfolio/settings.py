@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'storages',
     'apps.main',
     'apps.db_admin',
+    'apps.db_admin._contacts',
     'apps.db_admin._messages',
     'apps.db_admin._projects',
     'apps.db_admin._skills',
@@ -101,6 +102,10 @@ TIME_ZONE = 'America/Chicago'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = False
+
+# On an admininstrative login, redirect to the custom admin pages
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'db_admin:traffic'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

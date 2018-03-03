@@ -2,10 +2,26 @@
     <hr class="section_hr">
     <div class="projects-filter col-md-9 col-sm-12 mx-auto">
         <nav class="nav justify-content-center">
-            <a class="project-filter nav-link active navbar-brand mx-0" href="#All">All</a>
-            <a class="project-filter nav-link navbar-brand mx-0" href="#Python">Python/Django</a>
-            <a class="project-filter nav-link navbar-brand mx-0" href="#Csharp">C#/.NET</a>
-            <a class="project-filter nav-link navbar-brand mx-0" href="#MEAN">Node.js/MEAN</a>
+            <a class="project-filter click-set nav-link active navbar-brand mx-0" 
+                addr="{% url 'home:click_project' address='filter-ALL' %}"
+                href="#All">
+                All
+            </a>
+            <a class="project-filter click-set nav-link navbar-brand mx-0" 
+                addr="{% url 'home:click_project' address='filter-Python' %}"
+                href="#Python">
+                Python/Django
+            </a>
+            <a class="project-filter click-set nav-link navbar-brand mx-0" 
+                addr="{% url 'home:click_project' address='filter-NET' %}"
+                href="#Csharp">
+                C#/.NET
+            </a>
+            <a class="project-filter click-set nav-link navbar-brand mx-0" 
+                addr="{% url 'home:click_project' address='filter-MEAN' %}"
+                href="#MEAN">
+                Node.js/MEAN
+            </a>
         </nav> 
     </div>
     <div id="projects-gallery" class="col-md-12 col-sm-11 mx-auto justify-content-center">
@@ -99,4 +115,7 @@
             </div>
         {% endfor %}
         </div>
+    </div>
+    <div class="col-md-8 col-sm-11 mx-auto">
+        {% include 'main/project_see_more.html' %}
     </div>

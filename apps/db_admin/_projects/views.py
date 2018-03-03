@@ -10,6 +10,12 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required, permission_required
 
+import portfolio.settings_environ as settings_environ
+if settings_environ.PERMISSION_REQUIRED != None:
+    from portfolio.settings_environ import PERMISSION_REQUIRED
+else:
+    from portfolio.settings_sensitive import PERMISSION_REQUIRED
+
 # import forms and related modules
 from django import forms
 from django.forms.utils import ErrorList
@@ -64,7 +70,7 @@ def projects_index(request, sort_f="none"):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def projects_create(request):
     # use forms.py to validate form data
     form_context = {
@@ -132,7 +138,7 @@ def project_edit_get_form(request, id):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def project_edit_post_form(request, id):
     # POST updated project from edit form
     # use forms.py to validate form data
@@ -228,7 +234,7 @@ def img_upload_get_form(request, id):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def img_upload_post_form(request, id):
     _xHeader = {
         'value': 'False',
@@ -305,7 +311,7 @@ def img_edit_get_form(request, id, image_id):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def img_edit_post_form(request, id, image_id):
     _xHeader = {
         'value': 'False',
@@ -359,7 +365,7 @@ def img_edit(request, id, image_id):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def img_mark_feature(request, id, image_id):
     if request.method == "POST":
         project = get_object_or_404(Project, id=id)
@@ -372,7 +378,7 @@ def img_mark_feature(request, id, image_id):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def destroy_project(request, id):
     images = ProjectImage.objects.filter(project=id)
     for image in images:
@@ -382,7 +388,7 @@ def destroy_project(request, id):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def destroy_image(request, id, image_id):
     ProjectImage.objects.remove(image_id)
     return HttpResponse("success")

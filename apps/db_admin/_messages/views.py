@@ -5,12 +5,18 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required, permission_required
 
+import portfolio.settings_environ as settings_environ
+if settings_environ.PERMISSION_REQUIRED != None:
+    from portfolio.settings_environ import PERMISSION_REQUIRED
+else:
+    from portfolio.settings_sensitive import PERMISSION_REQUIRED
+
 from ...main.models import Message
 
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def message_index(request, sort_f="none"):
     # get all messages currently in the database
     # translate the sort field to a model field
@@ -38,7 +44,7 @@ def message_index(request, sort_f="none"):
 
 
 @login_required
-@permission_required('auth.user.can_add_user', raise_exception=True)
+@permission_required(PERMISSION_REQUIRED, raise_exception=True)
 def destroy_message(request, id):
     Message.objects.get(id=id).delete()
     return redirect(reverse('db_admin:messages'))

@@ -1,0 +1,71 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                First Name
+                <a href="{% url 'db_admin:contacts_sort' sort_f='-first' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:contacts_sort' sort_f='first' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Last
+                <a href="{% url 'db_admin:contacts_sort' sort_f='-last' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:contacts_sort' sort_f='last' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Email
+                <a href="{% url 'db_admin:contacts_sort' sort_f='-email' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:contacts_sort' sort_f='email' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                First Contact
+                <a href="{% url 'db_admin:contacts_sort' sort_f='-created_at' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:contacts_sort' sort_f='created_at' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Most Recent
+                <a href="{% url 'db_admin:contacts_sort' sort_f='-updated_at' %}" alt="Sort Descending">
+                    <i class="fa fa-caret-down icon-sorting" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'db_admin:contacts_sort' sort_f='updated_at' %}" alt="Sort Ascending">
+                    <i class="fa fa-caret-up icon-sorting" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    {% for c in contacts %}
+    <tr>
+        <td>{{c.first_name}}</td>
+        <td>{{c.last_name}}</td>
+        <td><a href="mailto:{{c.email}}">{{c.email}}</a></td>
+        <td>{{c.created_at}}</td>
+        <td>{{c.updated_at}}</td>
+        <td>
+            <a 
+                id="contact-destroy-{{c.id}}"
+                href="{% url 'db_admin:contact_destroy' id=c.id %}" 
+                x-type="contact" 
+                x-name="{{c.first_name}} {{c.last_name}}"
+                class="badge badge-pill badge-danger destroy_action">
+                Remove
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
