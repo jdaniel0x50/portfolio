@@ -19,12 +19,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import login, logout, LoginView, LogoutView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.generic.base import RedirectView
 admin.autodiscover()
 
 
 urlpatterns = [
     url(r'^admin/main/', include('apps.db_admin.urls', namespace='db_admin')),
-    url(r'^admin/', include(admin.site.urls)),
+    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', RedirectView.as_view(pattern_name='login', permanent=False)),
     url(r'^accounts/login/', LoginView.as_view(template_name='db_admin/login.html'), name='login'),
     url(r'^accounts/logout/', LogoutView.as_view(template_name='db_admin/logout.html'), name='logout'),
 ]

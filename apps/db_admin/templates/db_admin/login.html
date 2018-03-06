@@ -1,7 +1,7 @@
 {% extends "main/root.html" %}
 
 {% block body %}
-<div id="login-view" class="container">
+<div id="login-view" addr="{% url 'home:click_login' address='login-page'  %}" class="container">
     <div class="row center-vertical">
         <div class="col-md-3 col-sm-12 align-self-md-stretch align-self-sm-start bg-warning">
             <div class="center-vertical">
@@ -119,5 +119,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}

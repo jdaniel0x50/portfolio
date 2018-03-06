@@ -398,6 +398,10 @@ $(document).ready(function() {
         url = $(this).attr('addr');
         save_click(url);
     })
+    $('#login-view').ready(function() {
+        url = $('#login-view').attr('addr');
+        save_click(url);
+    })
 
 
     // *** START reCaptcha Section ***
