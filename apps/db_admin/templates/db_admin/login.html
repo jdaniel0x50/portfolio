@@ -57,8 +57,9 @@
                     </form>
                 </div>
                 <div class="footer bg-secondary p-4">
-                    <a class="login-view-footer" 
+                    <a class="login-view-footer click-set" 
                         data-toggle="collapse" 
+                        addr="{% url 'home:click_login' address='preview-guest-dropdown' %}"
                         href="#loginSeeMore" 
                         role="button" 
                         aria-expanded="false" 
@@ -105,7 +106,7 @@
                                 </tr>
                             </table>
                             <div class="form-group my-3 text-right">
-                                <button id="guest_user_submit" 
+                                <button id="guest_user_submit click-set" 
                                     addr="{% url 'home:click_login' address='get-guest-credentials' %}"
                                     addr-submit="{% url 'home:get_guest_login' %}" 
                                     class="btn btn-warning font-weight-bold text-white click-set py-1 px-4">
@@ -119,4 +120,16 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function save_load(url) {
+        fetch(url, {
+            credentials: 'include'
+        })
+    }
+
+    $(document).ready(function () {
+        url = $('#login-view').attr('addr');
+        save_load(url);
+    })
+</script>
 {% endblock %}

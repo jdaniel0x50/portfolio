@@ -13,11 +13,36 @@
         </button>
         <div class="navbar-collapse show text-right justify-content-end collapse" id="navCollapse" style="">
             <ul class="navbar-nav nav-pills">
-                <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="#resume">Resume</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                <li class="nav-item">
+                    <a class="nav-link click-set" href="#projects"
+                        addr="{% url 'home:click_navbar' address='go-to-projects' %}">
+                        Projects
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link click-set" href="#skills"
+                        addr="{% url 'home:click_navbar' address='go-to-skills' %}">
+                        Skills
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link click-set" href="#about"
+                        addr="{% url 'home:click_navbar' address='go-to-about' %}">
+                        About
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link click-set" href="#resume"
+                        addr="{% url 'home:click_navbar' address='go-to-resume' %}">
+                        Resume
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link click-set" href="#contact"
+                        addr="{% url 'home:click_navbar' address='go-to-contact' %}">
+                        Contact
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

@@ -398,11 +398,16 @@ $(document).ready(function() {
         url = $(this).attr('addr');
         save_click(url);
     })
-    $('#login-view').ready(function() {
-        url = $('#login-view').attr('addr');
-        save_click(url);
+    // Scroll Events - Trigger only on first hover
+    var hover_els = {}
+    $('.record-hover').mouseenter(function(event) {
+        el = $(this).attr('hover');
+        if (!(el in hover_els)) {
+            url = $(this).attr('addr');
+            save_click(url);
+            hover_els[el] = true;
+        }
     })
-
 
     // *** START reCaptcha Section ***
     // reCaptcha functions to view email and send message

@@ -32,5 +32,17 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function save_load(url) {
+        fetch(url, {
+            credentials: 'include'
+        })
+    }
+
+    $(document).ready(function () {
+        url = $('#login-view').attr('addr');
+        save_load(url);
+    })
+</script>
 
 {% endblock %}

@@ -31,6 +31,7 @@
                         project-view 
                         flip-horizontal
                         height-full
+                        record-hover
                         col-md-3 col-sm-10
                         p-0
                         {% for skill in project.skills.all %}{% if skill.skill_type == 'LN' %}
@@ -41,6 +42,8 @@
                             {% endif %}
                             {% if skill.skill_name == 'MEAN' %}project-MEAN{% endif %}
                         {% endfor%}"
+                hover="project-{{project.id}}"
+                addr="{% url 'home:record_hover' address=project.project_name %}">
                 ontouchstart="this.classList.toggle('hover');">
                 <div class="flipper bezier-t height-full">
                     <div class="flip-front bezier-t bg-primary">
@@ -116,6 +119,6 @@
         {% endfor %}
         </div>
     </div>
-    <div class="col-md-8 col-sm-11 mx-auto">
+    <div class="col-md-8 col-sm-11 my-5 mx-auto">
         {% include 'main/project_see_more.html' %}
     </div>

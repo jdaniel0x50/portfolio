@@ -8,7 +8,9 @@
         <!-- Navbar - Top of Page -->
         {% include 'main/navbar.html' %}
         <div id="particles-overlay">
-            <a id="particles_link" href="#projects" alt="Go to my projects">
+            <a id="particles_link click-set" 
+                addr="{% url 'home:click_header' address='splash-clicked' %}"
+                href="#projects" alt="Go to my projects">
                 <h2 class="splash-subtitle text-center">Building software applications and databases</h2>
                 <h2 class="splash-subtitle text-center">that make a difference</h2>
             </a>
@@ -19,7 +21,10 @@
         </div>
 
         <!-- Project Portfolio Section -->
-        <div class="container-fluid px-0 mx-0" id="projects">
+        <div class="container-fluid px-0 mx-0 record-hover" 
+            id="projects"
+            hover="projects" 
+            addr="{% url 'home:record_hover' address='projects' %}">
         {% include 'main/projects.html' %}
         </div>
         
@@ -35,7 +40,9 @@
         <!-- Contact Details and Links -->
         {% include 'main/contact.html' %}
 
-        <div class="parallax parallax-bottom px-0 mx-0">
+        <div class="parallax parallax-bottom px-0 mx-0 record-hover" 
+            hover="footer"
+            addr="{% url 'home:record_hover' address='footer' %}">
             <!-- Footer Content and Style -->
             {% include 'main/footer.html' %}
         </div>
