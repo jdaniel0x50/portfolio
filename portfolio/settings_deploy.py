@@ -1,9 +1,8 @@
 # deployment/production settings
 
 import os
-from settings import *
-from settings_environ import *
-from django.urls import reverse
+from portfolio.settings import *
+from portfolio.settings_environ import *
 
 
 DEBUG = False
