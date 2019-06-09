@@ -6,7 +6,6 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpRequest, HttpResponseForbidden
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required, permission_required
-import requests
 
 import portfolio.settings_environ as settings_environ
 if settings_environ.PERMISSION_REQUIRED != None:
