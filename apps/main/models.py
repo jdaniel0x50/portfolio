@@ -283,8 +283,8 @@ class ProjectImage(models.Model):
 
     def print_stuff(self):
         # print self.img_url.upload_to
-        print self.img_url.storage
-        print self.img_url.path
+        print(self.img_url.storage)
+        print(self.img_url.path)
         # print self.img_url.get_filename
 
     def filename(self):

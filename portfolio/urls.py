@@ -14,25 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url, include
+from django.urls import include, re_path
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth.views import login, logout, LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic.base import RedirectView
 admin.autodiscover()
 
 
 urlpatterns = [
-    url(r'^admin/main/', include('apps.db_admin.urls', namespace='db_admin')),
+    re_path(r'^admin/main/', include(('apps.db_admin.urls', 'db_admin'), namespace='db_admin')),
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^admin/', RedirectView.as_view(pattern_name='login', permanent=False)),
-    url(r'^accounts/login/', LoginView.as_view(template_name='db_admin/login.html'), name='login'),
-    url(r'^accounts/logout/', LogoutView.as_view(template_name='db_admin/logout.html'), name='logout'),
+    re_path(r'^admin/', RedirectView.as_view(pattern_name='login', permanent=False)),
+    re_path(r'^accounts/login/', LoginView.as_view(template_name='db_admin/login.html'), name='login'),
+    re_path(r'^accounts/logout/', LogoutView.as_view(template_name='db_admin/logout.html'), name='logout'),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += staticfiles_urlpatterns()
 
-urlpatterns.append(url(r'^', include('apps.main.urls', namespace="home")))
+urlpatterns.append(re_path(r'^', include(('apps.main.urls', 'main'), namespace="home")))

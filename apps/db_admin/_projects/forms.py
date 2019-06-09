@@ -1,8 +1,6 @@
 from django import forms
-from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
-from ...main.models import Skill, Project, ProjectImage
-from datetime import date, datetime
+from ...main.models import Skill, ProjectImage
+from datetime import date
 
 
 def today_as_string():
@@ -56,36 +54,12 @@ class NewProjectForm(forms.Form):
         required=False,
         strip=True
     )
-    # featimage_url = forms.CharField(
-    #     label="Feature Image",
-    #     required=False,
-    #     max_length=255,
-    #     strip=True,
-    #     validators=[
-    #         RegexValidator(
-    #             regex=r'^project/img/[a-zA-Z0-9_\-\.]+',
-    #             message="Invalid format"
-    #         )
-    #     ]
-    # )
     feat_order = forms.IntegerField(
         label="Feature Order",
         min_value=0,
         initial=99,
         help_text="Projects will appear on the page in order, from lower to higher values"
     )
-    # video_url = forms.CharField(
-    #     label="Video URL",
-    #     required=False,
-    #     max_length=255,
-    #     strip=True,
-    #     validators=[
-    #         RegexValidator(
-    #             regex=r'^project/video/[a-zA-Z0-9_\-\.]+',
-    #             message="Invalid format"
-    #         )
-    #     ]
-    # )
     skills = forms.MultipleChoiceField(
         label="Skills",
         choices=(Skill.objects.all_choices())

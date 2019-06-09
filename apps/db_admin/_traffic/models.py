@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 from django.db import models
 import datetime
 import requests
-import json
 
 
 # Retry Method Decorator
@@ -73,7 +72,7 @@ class TrafficManager(models.Manager):
     def _get_header_keys(self, request):
         headers = {}
         headers["path"] = request.path
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             headers["auth_user"] = request.user.username
         else:
             headers["auth_user"] = ""

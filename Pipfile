@@ -7,15 +7,15 @@ name = "pypi"
 
 [packages]
 
-dj-database-url = "==0.4.2"
-django = "*"
-gunicorn = "==19.7.1"
-django-heroku = "*"
-"psycopg2" = "==2.7.3.2"
-whitenoise = "*"
-"autopep8" = "*"
+dj-database-url
+django
+gunicorn
+django-heroku
+psycopg2
+whitenoise
+autopep8
 
 
 [requires]
 
-python_version = "2.7.14"
+python_version = "3.7"
