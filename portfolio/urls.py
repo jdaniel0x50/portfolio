@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.http import HttpResponse
 from django.urls import include, re_path
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -24,6 +25,7 @@ admin.autodiscover()
 
 
 urlpatterns = [
+    re_path(r'robots.txt$', lambda x: HttpResponse("User-Agent: *\nAllow: /$\nDisallow: /", content_type="text/plain"), name="robots_file"),
     re_path(r'^admin/main/', include(('apps.db_admin.urls', 'db_admin'), namespace='db_admin')),
     # url(r'^admin/', include(admin.site.urls)),
     re_path(r'^admin/', RedirectView.as_view(pattern_name='login', permanent=False)),
