@@ -7,13 +7,13 @@ name = "pypi"
 
 [packages]
 
-dj-database-url
-django
-gunicorn
-django-heroku
-psycopg2
-whitenoise
-autopep8
+dj-database-url = "*"
+django = "*"
+gunicorn = "*"
+django-heroku = "*"
+psycopg2 = "*"
+whitenoise = "*"
+autopep8 = "*"
 
 
 [requires]
