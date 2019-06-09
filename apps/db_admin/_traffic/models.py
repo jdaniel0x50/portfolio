@@ -148,24 +148,35 @@ class TrafficManager(models.Manager):
         # get relevant headers
         headers = self._get_header_keys(request)
         ip_key = "forwarded_for"
-        if headers[ip_key] != None and headers[ip_key] != "":
-            addresses = headers[ip_key].split(",")
+        path_start_options = [
+            '/admin',
+            '/click',
+            '/email',
+            '/hover',
+            '/project'
+        ]
+        if any(map(lambda path: headers["path"].startswith(path), path_start_options)) \
+            or headers["path"] == '/':
 
-            # get geolocation information from ip-api
-            geolocation_response = self._get_geolocation_response(addresses)
-            if geolocation_response is not False:
-                headers["country"] = geolocation_response["country"]
-                headers["region"] = geolocation_response["regionName"]
-                headers["city"] = geolocation_response["city"]
-                headers["zip"] = geolocation_response["zip"]
-                headers["lat"] = geolocation_response["lat"]
-                headers["lon"] = geolocation_response["lon"]
-                headers["isp"] = geolocation_response["isp"]
-                headers["org"] = geolocation_response["org"]
-                headers["ip_geo"] = geolocation_response["query"]
-        traffic = self.create(**headers)
-        return traffic
-        
+            if headers[ip_key] != None and headers[ip_key] != "":
+                addresses = headers[ip_key].split(",")
+
+                # get geolocation information from ip-api
+                geolocation_response = self._get_geolocation_response(addresses)
+                if geolocation_response is not False:
+                    headers["country"] = geolocation_response["country"]
+                    headers["region"] = geolocation_response["regionName"]
+                    headers["city"] = geolocation_response["city"]
+                    headers["zip"] = geolocation_response["zip"]
+                    headers["lat"] = geolocation_response["lat"]
+                    headers["lon"] = geolocation_response["lon"]
+                    headers["isp"] = geolocation_response["isp"]
+                    headers["org"] = geolocation_response["org"]
+                    headers["ip_geo"] = geolocation_response["query"]
+            traffic = self.create(**headers)
+            return traffic
+        else:
+            return None
             
 
 class Traffic(models.Model):
