@@ -152,6 +152,10 @@ class TrafficManager(models.Manager):
     def log_request_traffic(self,request):
         # get relevant headers
         headers = self._get_header_keys(request)
+        if headers["auth_user"] == ADMIN_USERNAME:
+            # Don't log traffic for the administrator
+            return None
+
         ip_key = "forwarded_for"
         path_start_options = [
             '/admin',
@@ -163,7 +167,7 @@ class TrafficManager(models.Manager):
         if any(map(lambda path: headers["path"].startswith(path), path_start_options)) \
             or headers["path"] == '/':
 
-            if headers[ip_key] != None and headers[ip_key] != "" and headers["auth_user"] != ADMIN_USERNAME:
+            if headers[ip_key] != None and headers[ip_key] != "":
                 addresses = headers[ip_key].split(",")
 
                 # get geolocation information from ip-api
