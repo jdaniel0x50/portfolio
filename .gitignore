@@ -3,6 +3,7 @@
 /portfolio/settings_developer.py
 
 .git/
+.idea/
 *.pyc
 .env
 venv

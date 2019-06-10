@@ -11,7 +11,7 @@ if settings_environ.PERMISSION_REQUIRED != None:
 else:
     from portfolio.settings_sensitive import PERMISSION_REQUIRED
 
-from models import Contact
+from .models import Contact
 
 
 @login_required
