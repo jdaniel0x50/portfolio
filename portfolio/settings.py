@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    # 'storages',
+    'storages',
     'apps.main',
     'apps.db_admin',
     'apps.db_admin._contacts',
