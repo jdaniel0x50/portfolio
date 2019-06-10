@@ -6,6 +6,9 @@
     "ADMINS": {
       "required": true
     },
+    "ADMIN_USERNAME": {
+      "required": true
+    },
     "AWS_ACCESS_KEY_ID": {
       "required": true
     },

@@ -3,7 +3,13 @@ from __future__ import unicode_literals
 from django.db import models
 import datetime
 import requests
+import portfolio.settings_environ as settings_environ
 
+if settings_environ.ADMIN_USERNAME != None:
+    ADMIN_USERNAME = settings_environ.ADMIN_USERNAME
+else:
+    import portfolio.settings_sensitive as settings_sensitive
+    ADMIN_USERNAME = settings_sensitive.ADMIN_USERNAME
 
 # Retry Method Decorator
 # Used to attempt an API Get call multiple times
@@ -158,7 +164,7 @@ class TrafficManager(models.Manager):
         if any(map(lambda path: headers["path"].startswith(path), path_start_options)) \
             or headers["path"] == '/':
 
-            if headers[ip_key] != None and headers[ip_key] != "":
+            if headers[ip_key] != None and headers[ip_key] != "" and headers["auth_user"] != ADMIN_USERNAME:
                 addresses = headers[ip_key].split(",")
 
                 # get geolocation information from ip-api

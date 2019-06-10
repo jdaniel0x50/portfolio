@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render, redirect, get_list_or_404
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
 
 import portfolio.settings_environ as settings_environ

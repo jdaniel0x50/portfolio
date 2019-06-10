@@ -8,6 +8,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DOMAIN_NAME = "joshuadanielcodes.com"
 DOMAIN_URL = "http://www.joshuadanielcodes.com"
 
+ADMIN_USERNAME = os.environ.get('ADMIN_NAME')
 ADMINS = os.environ.get('ADMINS')
 MANAGERS = os.environ.get('ADMINS')
 
