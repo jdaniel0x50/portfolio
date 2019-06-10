@@ -3,11 +3,12 @@ from __future__ import unicode_literals
 from django.db import models
 import datetime
 import requests
-from portfolio.settings_environ import ADMIN_USERNAME
+import portfolio.settings_environ as settings_environ
 
-if ADMIN_USERNAME == None:
-    import portfolio.settings_sensitive as settings_sensitive
-    ADMIN_USERNAME = settings_sensitive.ADMIN_USERNAME
+if settings_environ.ADMIN_USERNAME != None:
+    from portfolio.settings_environ import ADMIN_USERNAME
+else:
+    from portfolio.settings_sensitive import ADMIN_USERNAME
 
 # Retry Method Decorator
 # Used to attempt an API Get call multiple times
