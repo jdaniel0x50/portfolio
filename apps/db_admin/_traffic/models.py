@@ -3,11 +3,9 @@ from __future__ import unicode_literals
 from django.db import models
 import datetime
 import requests
-import portfolio.settings_environ as settings_environ
+from portfolio.settings_environ import ADMIN_USERNAME
 
-if settings_environ.ADMIN_USERNAME != None:
-    ADMIN_USERNAME = settings_environ.ADMIN_USERNAME
-else:
+if ADMIN_USERNAME == None:
     import portfolio.settings_sensitive as settings_sensitive
     ADMIN_USERNAME = settings_sensitive.ADMIN_USERNAME
 
